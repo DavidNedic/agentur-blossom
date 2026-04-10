@@ -59,20 +59,7 @@ export function PricingSection() {
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {packages.slice(0, 3).map((pkg, i) => (
-            <motion.div
-              key={pkg.number}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <PricingCard {...pkg} />
-            </motion.div>
-          ))}
-        </div>
-        <div className="grid sm:grid-cols-2 gap-6 mt-6 max-w-2xl mx-auto">
-          {packages.slice(3).map((pkg, i) => (
+          {packages.map((pkg, i) => (
             <motion.div
               key={pkg.number}
               initial={{ opacity: 0, y: 20 }}
