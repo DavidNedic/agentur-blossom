@@ -6,19 +6,35 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
 export function CTASection() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [sending, setSending] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.message) return;
-    setSending(true);
+    setStatus("sending");
 
-    const text = `*Neue Anfrage von der Website*%0A%0A*Name:* ${encodeURIComponent(formData.name)}%0A*E-Mail:* ${encodeURIComponent(formData.email)}%0A*Nachricht:* ${encodeURIComponent(formData.message)}`;
-    window.open(`https://wa.me/381621015707?text=${text}`, "_blank");
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/davidnedic@web.de", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `Neue Anfrage von ${formData.name}`,
+          Ime: formData.name,
+          Email: formData.email,
+          Telefon: formData.phone,
+          Poruka: formData.message,
+        }),
+      });
 
-    setSending(false);
-    setFormData({ name: "", email: "", message: "" });
+      if (res.ok) {
+        setStatus("sent");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -83,47 +99,70 @@ export function CTASection() {
           className="bg-card border border-border rounded-xl p-8"
         >
           <h3 className="text-xl font-bold text-foreground mb-6">Pošaljite nam poruku</h3>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="name" className="text-sm text-muted-foreground mb-1 block">Ime i prezime *</label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                placeholder="Vaše ime"
-                required
-              />
+
+          {status === "sent" ? (
+            <div className="text-center py-10 space-y-3">
+              <div className="text-4xl">✅</div>
+              <h4 className="text-lg font-bold text-foreground">Poruka je poslata!</h4>
+              <p className="text-muted-foreground text-sm">Javićemo vam se u najkraćem roku.</p>
+              <Button variant="outline" onClick={() => setStatus("idle")} className="mt-4">
+                Pošaljite još jednu poruku
+              </Button>
             </div>
-            <div>
-              <label htmlFor="email" className="text-sm text-muted-foreground mb-1 block">E-Mail</label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                placeholder="vas@email.com"
-              />
-            </div>
-            <div>
-              <label htmlFor="message" className="text-sm text-muted-foreground mb-1 block">Poruka *</label>
-              <Textarea
-                id="message"
-                value={formData.message}
-                onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-                placeholder="Opišite šta vam treba..."
-                rows={5}
-                required
-              />
-            </div>
-            <Button type="submit" className="w-full" disabled={sending}>
-              <Send className="w-4 h-4 mr-2" />
-              Pošaljite preko WhatsApp
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-            <p className="text-xs text-muted-foreground text-center">
-              Klikom na dugme otvara se WhatsApp sa vašom porukom
-            </p>
-          </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="name" className="text-sm text-muted-foreground mb-1 block">Ime i prezime *</label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                  placeholder="Vaše ime"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="text-sm text-muted-foreground mb-1 block">E-Mail *</label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                  placeholder="vas@email.com"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="phone" className="text-sm text-muted-foreground mb-1 block">Telefon</label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                  placeholder="+381 ..."
+                />
+              </div>
+              <div>
+                <label htmlFor="message" className="text-sm text-muted-foreground mb-1 block">Poruka *</label>
+                <Textarea
+                  id="message"
+                  value={formData.message}
+                  onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
+                  placeholder="Opišite šta vam treba..."
+                  rows={5}
+                  required
+                />
+              </div>
+              {status === "error" && (
+                <p className="text-sm text-destructive">Greška pri slanju. Pokušajte ponovo.</p>
+              )}
+              <Button type="submit" className="w-full" disabled={status === "sending"}>
+                <Send className="w-4 h-4 mr-2" />
+                {status === "sending" ? "Šaljem..." : "Pošaljite poruku"}
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </form>
+          )}
         </motion.div>
       </div>
     </section>
