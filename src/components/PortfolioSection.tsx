@@ -13,23 +13,23 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "Beispiel Projekt 1",
-    description: "Modernes E-Commerce Design mit responsivem Layout und optimierter Benutzererfahrung.",
-    tags: ["Webdesign", "E-Commerce", "SEO"],
+    title: "Primer projekta 1",
+    description: "Moderan e-commerce dizajn sa responzivnim rasporedom i optimizovanim korisničkim iskustvom.",
+    tags: ["Web dizajn", "E-Commerce", "SEO"],
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=700&fit=crop",
     url: "#",
   },
   {
-    title: "Beispiel Projekt 2",
-    description: "Corporate Website mit starkem Branding und Lead-Generierung-Funnel.",
-    tags: ["Corporate", "Branding", "Ads"],
+    title: "Primer projekta 2",
+    description: "Korporativna web stranica sa snažnim brendingom i funnel-om za generisanje kontakata.",
+    tags: ["Korporativno", "Brending", "Oglasi"],
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=700&fit=crop",
     url: "#",
   },
   {
-    title: "Beispiel Projekt 3",
-    description: "Landing Page für eine Social Media Kampagne mit hoher Conversion Rate.",
-    tags: ["Landing Page", "Social Media", "Conversion"],
+    title: "Primer projekta 3",
+    description: "Landing stranica za kampanju na društvenim mrežama sa visokom stopom konverzije.",
+    tags: ["Landing stranica", "Društvene mreže", "Konverzija"],
     image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&h=700&fit=crop",
     url: "#",
   },
@@ -69,10 +69,10 @@ export function PortfolioSection() {
             Portfolio
           </span>
           <h2 className="text-3xl md:text-5xl font-extrabold mt-3">
-            Unsere Arbeiten.
+            Naši radovi.
           </h2>
           <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-            Ein Einblick in Projekte, die Ergebnisse liefern.
+            Uvid u projekte koji donose rezultate.
           </p>
         </div>
 
@@ -89,7 +89,7 @@ export function PortfolioSection() {
               <div className="ml-4 flex-1 max-w-md">
                 <div className="bg-muted/50 rounded-md h-5 px-3 flex items-center">
                   <span className="text-muted-foreground text-xs truncate">
-                    {project.url && project.url !== "#" ? project.url : "www.beispiel.de"}
+                    {project.url && project.url !== "#" ? project.url : "www.primer.rs"}
                   </span>
                 </div>
               </div>
@@ -154,14 +154,14 @@ export function PortfolioSection() {
           <button
             onClick={() => navigate(-1)}
             className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-card/80 backdrop-blur border border-border flex items-center justify-center text-foreground hover:border-primary/50 hover:text-primary transition-colors z-30"
-            aria-label="Vorheriges Projekt"
+            aria-label="Prethodni projekat"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={() => navigate(1)}
             className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-card/80 backdrop-blur border border-border flex items-center justify-center text-foreground hover:border-primary/50 hover:text-primary transition-colors z-30"
-            aria-label="Nächstes Projekt"
+            aria-label="Sledeći projekat"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -180,7 +180,7 @@ export function PortfolioSection() {
                     ? "w-8 bg-primary"
                     : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
                 }`}
-                aria-label={`Projekt ${i + 1}`}
+                aria-label={`Projekat ${i + 1}`}
               />
             ))}
           </div>
@@ -190,7 +190,7 @@ export function PortfolioSection() {
         <div className="text-center mt-10">
           <Button variant="outline" size="lg" className="border-primary/30 text-primary hover:bg-primary/10">
             <ExternalLink className="w-4 h-4 mr-2" />
-            Alle Projekte ansehen
+            Pogledaj sve projekte
           </Button>
         </div>
       </div>
