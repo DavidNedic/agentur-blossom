@@ -6,7 +6,7 @@ import { StatsSection } from "@/components/StatsSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { FunnelSection } from "@/components/FunnelSection";
 import { ProblemsSection } from "@/components/ProblemsSection";
-
+import { PortfolioSection } from "@/components/PortfolioSection";
 import { ComparisonSection } from "@/components/ComparisonSection";
 import { FAQSection } from "@/components/FAQSection";
 import { CTASection } from "@/components/CTASection";
@@ -34,6 +34,7 @@ function Index() {
       <HeroSection />
       <StatsSection />
       <ServicesSection />
+      <PortfolioSection />
       <FunnelSection />
       <ProblemsSection />
       
