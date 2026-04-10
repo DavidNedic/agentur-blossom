@@ -24,7 +24,7 @@ export function CTASection() {
             <li>• 100% besplatno i neobavezujuće</li>
           </ul>
           <a
-            href="mailto:info@webstudio.rs"
+            href="mailto:info@radenon.com"
             className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold mt-8 hover:opacity-90 transition-opacity"
           >
             Zakažite konsultaciju <ArrowRight className="w-4 h-4" />
@@ -44,8 +44,8 @@ export function CTASection() {
               <Mail className="w-5 h-5 text-primary" />
               <div>
                 <p className="text-xs text-muted-foreground">E-Mail</p>
-                <a href="mailto:info@webstudio.rs" className="text-foreground hover:text-primary transition-colors">
-                  info@webstudio.rs
+                <a href="mailto:info@radenon.com" className="text-foreground hover:text-primary transition-colors">
+                  info@radenon.com
                 </a>
               </div>
             </div>
@@ -62,8 +62,8 @@ export function CTASection() {
               <MapPin className="w-5 h-5 text-primary" />
               <div>
                 <p className="text-xs text-muted-foreground">Web</p>
-                <a href="https://webstudio.rs" className="text-foreground hover:text-primary transition-colors">
-                  webstudio.rs
+                <a href="https://radenon.com" className="text-foreground hover:text-primary transition-colors">
+                  radenon.com
                 </a>
               </div>
             </div>
