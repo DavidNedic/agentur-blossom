@@ -11,6 +11,7 @@ import { ComparisonSection } from "@/components/ComparisonSection";
 import { FAQSection } from "@/components/FAQSection";
 import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
+import { ScrollCrossfade } from "@/components/ScrollCrossfade";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -27,20 +28,32 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  return (
-    <div className="relative min-h-screen bg-background text-foreground">
+  const layers = [
+    <div key="hero" className="min-h-screen bg-background text-foreground">
       <NetworkBackground />
-      <Navigation />
       <HeroSection />
+    </div>,
+    <div key="stats-services" className="min-h-screen bg-background text-foreground">
       <StatsSection />
       <ServicesSection />
+    </div>,
+    <div key="portfolio" className="min-h-screen bg-background text-foreground">
       <PortfolioSection />
+    </div>,
+    <div key="kontakt" className="min-h-screen bg-background text-foreground">
+      <CTASection />
+    </div>,
+  ];
+
+  return (
+    <div className="relative bg-background text-foreground">
+      <Navigation />
+      <ScrollCrossfade layers={layers} />
+      {/* Normal scrolling sections after crossfade */}
       <FunnelSection />
       <ProblemsSection />
-      
       <ComparisonSection />
       <FAQSection />
-      <CTASection />
       <Footer />
     </div>
   );
