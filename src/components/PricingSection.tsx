@@ -45,34 +45,6 @@ const packages = [
       "Mesečni izveštaji i analitika",
     ],
   },
-  {
-    number: "04",
-    title: "SEO + Social Media Content",
-    subtitle: "Kompletno digitalno prisustvo",
-    price: "499 EUR",
-    priceNote: "+ 199 EUR / mesečno",
-    features: [
-      "Sve iz paketa 03",
-      "Strategija društvenih mreža",
-      "16 objava mesečno (Insta+FB)",
-      "Kreiranje grafika i tekstova",
-      "Mesečni SM izveštaji i analiza",
-    ],
-  },
-  {
-    number: "05",
-    title: "Kompletni Digitalni Paket",
-    subtitle: "Maksimalan rast — SEO, Social & Ads",
-    price: "699 EUR",
-    priceNote: "+ 349 EUR / mesečno",
-    features: [
-      "Sve iz paketa 04",
-      "Meta Ads kampanje (FB+Insta)",
-      "Google SEA oglašavanje",
-      "Upravljanje budžetom oglasa",
-      "Nedeljni izveštaji i optimizacija",
-    ],
-  },
 ];
 
 export function PricingSection() {
