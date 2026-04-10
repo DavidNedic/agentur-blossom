@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Navigation } from "@/components/Navigation";
 import { NetworkBackground } from "@/components/NetworkBackground";
-import { HeroSection } from "@/components/HeroSection";
+import { ScrollHero } from "@/components/ScrollHero";
 import { StatsSection } from "@/components/StatsSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { FunnelSection } from "@/components/FunnelSection";
@@ -31,7 +31,7 @@ function Index() {
     <div className="relative min-h-screen bg-background text-foreground">
       <NetworkBackground />
       <Navigation />
-      <HeroSection />
+      <ScrollHero />
       <StatsSection />
       <ServicesSection />
       <PortfolioSection />
