@@ -21,7 +21,7 @@ export function HeroSection() {
           </h1>
           <p className="text-muted-foreground text-lg mt-6 max-w-lg">
             Profesionalna izrada web sajtova, SEO optimizacija i digitalni
-            marketing — sve iz jednog mesta. Bez skrivenih troškova.
+            marketing — sve iz jednog mesta. <span className="text-primary font-semibold">Već od 199 EUR.</span> Bez skrivenih troškova.
           </p>
           <div className="flex flex-wrap gap-4 mt-8">
             <a
