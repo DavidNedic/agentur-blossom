@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/radenon-logo.png";
+import logo from "@/assets/radenon-logo-digital.png";
 
 const navLinks = [
   { label: "Usluge", href: "#usluge" },
@@ -15,8 +15,7 @@ export function Navigation() {
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <a href="#" className="flex items-center gap-3">
-          <img src={logo} alt="Radenon" className="h-10 w-auto" />
-          <span className="text-primary font-bold text-lg tracking-wide">DIGITAL</span>
+          <img src={logo} alt="Radenon Digital" className="h-14 w-auto" />
         </a>
 
         {/* Desktop */}
