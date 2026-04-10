@@ -21,24 +21,28 @@ const projects: Project[] = [
     description: "E-commerce platforma za muzičke producente sa prodajom sample paketa i digitalnih proizvoda.",
     tags: ["E-Commerce", "Web dizajn", "Shopify"],
     image: portfolioUnearthed,
+    url: "unearthed-samples.com",
   },
   {
     title: "CrowdPlay",
     description: "SaaS platforma za interaktivne igre na Twitch i YouTube strimovima sa chat integracijama.",
     tags: ["SaaS", "Streaming", "Web aplikacija"],
     image: portfolioCrowdplay,
+    url: "crowdplay.eu",
   },
   {
     title: "Sarastra Marketing",
     description: "Web sajt za marketing agenciju sa fokusom na društvene mreže, SEO i digitalno oglašavanje.",
     tags: ["Marketing", "Brending", "Web dizajn"],
     image: portfolioSara,
+    url: "sarastra-marketing.com",
   },
   {
     title: "Treba.mi",
     description: "Online marketplace za pronalaženje i angažovanje majstora i zanatlija u vašem kraju.",
     tags: ["Marketplace", "Platforma", "Web aplikacija"],
     image: portfolioTrebami,
+    url: "treba.mi",
   },
 ];
 
@@ -96,7 +100,7 @@ export function PortfolioSection() {
               <div className="ml-4 flex-1 max-w-md">
                 <div className="bg-muted/50 rounded-md h-5 px-3 flex items-center">
                   <span className="text-muted-foreground text-xs truncate">
-                    {project.url && project.url !== "#" ? project.url : "www.primer.rs"}
+                    {project.url || "www.primer.rs"}
                   </span>
                 </div>
               </div>
