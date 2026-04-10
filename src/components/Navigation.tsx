@@ -13,9 +13,9 @@ export function Navigation() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <a href="#" className="flex items-center">
-          <img src={logo} alt="Radenon Digital" className="h-10" />
+          <img src={logo} alt="Radenon Digital" className="h-14 w-auto" />
         </a>
 
         {/* Desktop */}

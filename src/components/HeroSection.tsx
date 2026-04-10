@@ -4,7 +4,7 @@ import heroImage from "@/assets/hero-image.jpg";
 
 export function HeroSection() {
   return (
-    <section className="pt-28 pb-20 md:pt-36 md:pb-28">
+    <section className="pt-32 pb-20 md:pt-40 md:pb-28">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
