@@ -197,13 +197,6 @@ export function PortfolioSection() {
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-10">
-          <Button variant="outline" size="lg" className="border-primary/30 text-primary hover:bg-primary/10">
-            <ExternalLink className="w-4 h-4 mr-2" />
-            Pogledaj sve projekte
-          </Button>
-        </div>
       </div>
     </section>
   );
