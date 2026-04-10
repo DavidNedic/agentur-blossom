@@ -16,11 +16,11 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Web Studio – Vaš Pouzdan Digitalni Partner" },
+      { title: "Radenon Digital – Vaš Pouzdan Digitalni Partner" },
       {
         name: "description",
         content:
-          "Profesionalna izrada sajtova, SEO optimizacija i digitalni marketing. 5+ paketa, 100% podrška.",
+          "Profesionalna izrada sajtova, SEO optimizacija i digitalni marketing. Radenon Digital — sve iz jednog mesta.",
       },
     ],
   }),

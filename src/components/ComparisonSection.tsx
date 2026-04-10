@@ -42,7 +42,7 @@ export function ComparisonSection() {
               <tr className="border-b border-border">
                 <th className="text-left py-4 px-4 text-muted-foreground font-medium">Kriterijum</th>
                 <th className="text-left py-4 px-4 text-muted-foreground font-medium">Tržišni standard</th>
-                <th className="text-left py-4 px-4 text-primary font-bold">Web Studio</th>
+                <th className="text-left py-4 px-4 text-primary font-bold">Radenon Digital</th>
               </tr>
             </thead>
             <tbody>

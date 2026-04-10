@@ -48,7 +48,7 @@ export function HeroSection() {
           <div className="rounded-2xl overflow-hidden border border-border">
             <img
               src={heroImage}
-              alt="Web Studio digitalni marketing"
+              alt="Radenon Digital Marketing"
               className="w-full h-auto"
             />
           </div>
