@@ -15,26 +15,26 @@ export function HeroSection() {
             Full-Service Digitalna Agencija
           </span>
           <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mt-4">
-            Činimo tvoj
+            Dein professioneller
             <br />
-            <span className="text-primary">brend vidljivim.</span>
+            <span className="text-primary">Webauftritt ab 199 €</span>
           </h1>
           <p className="text-muted-foreground text-lg mt-6 max-w-lg">
-            Profesionalna izrada web sajtova, SEO optimizacija i digitalni
-            marketing — sve iz jednog mesta. <span className="text-primary font-semibold">Već od 199 EUR.</span> Bez skrivenih troškova.
+            Webdesign, SEO & digitales Marketing — alles aus einer Hand.
+            Ohne versteckte Kosten. Ergebnisse, die du sehen kannst.
           </p>
           <div className="flex flex-wrap gap-4 mt-8">
             <a
               href="#kontakt"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-7 py-3.5 rounded-lg font-bold text-lg hover:opacity-90 transition-opacity"
             >
-              Zakažite konsultaciju <ArrowRight className="w-4 h-4" />
+              Jetzt Beratung buchen <ArrowRight className="w-5 h-5" />
             </a>
             <a
               href="#paketi"
-              className="inline-flex items-center gap-2 border border-border text-foreground px-6 py-3 rounded-lg font-semibold hover:bg-secondary transition-colors"
+              className="inline-flex items-center gap-2 border border-border text-foreground px-6 py-3.5 rounded-lg font-semibold hover:bg-secondary transition-colors"
             >
-              Naši paketi
+              Pakete ansehen
             </a>
           </div>
         </motion.div>
