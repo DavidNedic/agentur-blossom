@@ -6,7 +6,7 @@ const packages = [
     number: "01",
     title: "Izrada Veb Sajta",
     subtitle: "Profesionalan sajt, brza isporuka",
-    price: "490 EUR",
+    price: "199 EUR",
     priceNote: "jednokratno plaćanje",
     features: [
       "Moderan responzivan dizajn",
@@ -20,8 +20,8 @@ const packages = [
     number: "02",
     title: "Izrada + Održavanje",
     subtitle: "Sajt koji uvek radi besprekorno",
-    price: "490 EUR",
-    priceNote: "+ 90 EUR / mesečno",
+    price: "199 EUR",
+    priceNote: "+ 49 EUR / mesečno",
     features: [
       "Sve iz paketa 01",
       "Mesečno tehničko održavanje",
@@ -34,8 +34,8 @@ const packages = [
     number: "03",
     title: "Izrada + Održavanje + SEO",
     subtitle: "Budite na prvoj strani Googlea",
-    price: "690 EUR",
-    priceNote: "+ 220 EUR / mesečno",
+    price: "349 EUR",
+    priceNote: "+ 99 EUR / mesečno",
     popular: true,
     features: [
       "Sve iz paketa 02",
@@ -49,8 +49,8 @@ const packages = [
     number: "04",
     title: "SEO + Social Media Content",
     subtitle: "Kompletno digitalno prisustvo",
-    price: "890 EUR",
-    priceNote: "+ 380 EUR / mesečno",
+    price: "499 EUR",
+    priceNote: "+ 199 EUR / mesečno",
     features: [
       "Sve iz paketa 03",
       "Strategija društvenih mreža",
@@ -63,8 +63,8 @@ const packages = [
     number: "05",
     title: "Kompletni Digitalni Paket",
     subtitle: "Maksimalan rast — SEO, Social & Ads",
-    price: "990 EUR",
-    priceNote: "+ 550 EUR / mesečno",
+    price: "699 EUR",
+    priceNote: "+ 349 EUR / mesečno",
     features: [
       "Sve iz paketa 04",
       "Meta Ads kampanje (FB+Insta)",
