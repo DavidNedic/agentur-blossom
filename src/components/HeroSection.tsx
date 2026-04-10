@@ -1,41 +1,62 @@
-import { Package, Clock, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import heroImage from "@/assets/hero-image.jpg";
 
 export function HeroSection() {
   return (
-    <section className="max-w-6xl mx-auto px-6 py-20 md:py-28">
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10">
-        <div>
-          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-            Vaš Pouzdan<br />
-            <span className="text-primary underline decoration-primary/40 underline-offset-8">Digitalni Partner</span>
+    <section className="pt-28 pb-20 md:pt-36 md:pb-28">
+      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <span className="text-primary text-sm font-semibold uppercase tracking-widest">
+            Full-Service Digitalna Agencija
+          </span>
+          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mt-4">
+            Činimo tvoj
+            <br />
+            <span className="text-primary">brend vidljivim.</span>
           </h1>
-          <p className="text-muted-foreground mt-6 max-w-lg text-lg">
-            Sve cene važe za period od 6 meseci • Bez skrivenih troškova • Individualni paketi dostupni
+          <p className="text-muted-foreground text-lg mt-6 max-w-lg">
+            Profesionalna izrada web sajtova, SEO optimizacija i digitalni
+            marketing — sve iz jednog mesta. Bez skrivenih troškova.
           </p>
-        </div>
-        <div className="flex gap-10 md:gap-14">
-          <div className="text-center">
-            <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-secondary mb-2 mx-auto">
-              <Package className="w-6 h-6 text-primary" />
-            </div>
-            <span className="text-3xl font-extrabold text-foreground">5+</span>
-            <p className="text-sm text-muted-foreground">Paketa</p>
+          <div className="flex flex-wrap gap-4 mt-8">
+            <a
+              href="#kontakt"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+            >
+              Zakažite konsultaciju <ArrowRight className="w-4 h-4" />
+            </a>
+            <a
+              href="#paketi"
+              className="inline-flex items-center gap-2 border border-border text-foreground px-6 py-3 rounded-lg font-semibold hover:bg-secondary transition-colors"
+            >
+              Naši paketi
+            </a>
           </div>
-          <div className="text-center">
-            <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-secondary mb-2 mx-auto">
-              <Clock className="w-6 h-6 text-primary" />
-            </div>
-            <span className="text-3xl font-extrabold text-foreground">6</span>
-            <p className="text-sm text-muted-foreground">Meseci</p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="relative"
+        >
+          <div className="rounded-2xl overflow-hidden border border-border">
+            <img
+              src={heroImage}
+              alt="Web Studio digitalni marketing"
+              className="w-full h-auto"
+            />
           </div>
-          <div className="text-center">
-            <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-secondary mb-2 mx-auto">
-              <ShieldCheck className="w-6 h-6 text-primary" />
-            </div>
-            <span className="text-3xl font-extrabold text-foreground">100%</span>
-            <p className="text-sm text-muted-foreground">Podrška</p>
+          <div className="absolute -bottom-4 -left-4 bg-card border border-border rounded-xl px-5 py-3">
+            <span className="text-3xl font-extrabold text-primary">100%</span>
+            <p className="text-xs text-muted-foreground">Podrška</p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
