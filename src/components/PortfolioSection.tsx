@@ -2,6 +2,10 @@ import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import portfolioUnearthed from "@/assets/portfolio-unearthed.png";
+import portfolioCrowdplay from "@/assets/portfolio-crowdplay.png";
+import portfolioSara from "@/assets/portfolio-sara.png";
+import portfolioTrebami from "@/assets/portfolio-trebami.png";
 
 interface Project {
   title: string;
@@ -13,25 +17,28 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "Primer projekta 1",
-    description: "Moderan e-commerce dizajn sa responzivnim rasporedom i optimizovanim korisničkim iskustvom.",
-    tags: ["Web dizajn", "E-Commerce", "SEO"],
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=700&fit=crop",
-    url: "#",
+    title: "Unearthed Samples",
+    description: "E-commerce platforma za muzičke producente sa prodajom sample paketa i digitalnih proizvoda.",
+    tags: ["E-Commerce", "Web dizajn", "Shopify"],
+    image: portfolioUnearthed,
   },
   {
-    title: "Primer projekta 2",
-    description: "Korporativna web stranica sa snažnim brendingom i funnel-om za generisanje kontakata.",
-    tags: ["Korporativno", "Brending", "Oglasi"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=700&fit=crop",
-    url: "#",
+    title: "CrowdPlay",
+    description: "SaaS platforma za interaktivne igre na Twitch i YouTube strimovima sa chat integracijama.",
+    tags: ["SaaS", "Streaming", "Web aplikacija"],
+    image: portfolioCrowdplay,
   },
   {
-    title: "Primer projekta 3",
-    description: "Landing stranica za kampanju na društvenim mrežama sa visokom stopom konverzije.",
-    tags: ["Landing stranica", "Društvene mreže", "Konverzija"],
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&h=700&fit=crop",
-    url: "#",
+    title: "Sarastra Marketing",
+    description: "Web sajt za marketing agenciju sa fokusom na društvene mreže, SEO i digitalno oglašavanje.",
+    tags: ["Marketing", "Brending", "Web dizajn"],
+    image: portfolioSara,
+  },
+  {
+    title: "Treba.mi",
+    description: "Online marketplace za pronalaženje i angažovanje majstora i zanatlija u vašem kraju.",
+    tags: ["Marketplace", "Platforma", "Web aplikacija"],
+    image: portfolioTrebami,
   },
 ];
 
