@@ -100,7 +100,7 @@ export function PortfolioSection() {
               <div className="ml-4 flex-1 max-w-md">
                 <div className="bg-muted/50 rounded-md h-5 px-3 flex items-center">
                   <span className="text-muted-foreground text-xs truncate">
-                    {project.url && project.url !== "#" ? project.url : "www.primer.rs"}
+                    {project.url || "www.primer.rs"}
                   </span>
                 </div>
               </div>
