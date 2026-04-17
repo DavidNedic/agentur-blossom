@@ -264,56 +264,89 @@ export function HeroSection() {
       <ParticleCanvas />
 
       <div className="relative z-10 max-w-3xl mx-auto px-6 text-center py-32">
-        <motion.span
-          className="text-primary text-sm font-semibold uppercase tracking-widest"
+        <motion.div
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          Full-Service Digitalna Agencija
-        </motion.span>
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+          </span>
+          <span className="text-primary text-xs font-semibold uppercase tracking-[0.2em]">
+            Full-Service Digitalna Agencija
+          </span>
+        </motion.div>
 
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mt-6">
-          <AnimatedWords text="Tvoj profesionalni" />
-          <br />
+          <span className="block">
+            <motion.span
+              className="inline-block mr-[0.3em] text-foreground font-extrabold"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              Tvoj
+            </motion.span>
+            <motion.span
+              className="inline-block text-foreground/70 font-light"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.45 }}
+            >
+              profesionalni
+            </motion.span>
+          </span>
           <motion.span
-            className="text-primary inline-block"
+            className="block mt-2 font-black bg-gradient-to-r from-primary to-[#7fff00] bg-clip-text text-transparent"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
             style={{
-              textShadow: "0 0 30px rgba(181, 240, 0, 0.3), 0 0 60px rgba(181, 240, 0, 0.15)",
+              filter: "drop-shadow(0 0 30px rgba(181, 240, 0, 0.25))",
             }}
           >
             sajt od 199 €
           </motion.span>
         </h1>
 
-        <motion.p
-          className="text-muted-foreground text-lg md:text-xl mt-6 max-w-xl mx-auto"
+        <motion.div
+          className="w-[60px] h-[2px] bg-primary/60 mx-auto mt-8"
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.5, delay: 0.85 }}
+        />
+
+        <motion.div
+          className="mt-6 max-w-xl mx-auto space-y-1"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.9 }}
+          transition={{ duration: 0.5, delay: 0.95 }}
         >
-          Web dizajn, SEO i digitalni marketing — sve iz jednog mesta.
-          Bez skrivenih troškova. Rezultati koje možeš da vidiš.
-        </motion.p>
+          <p className="text-muted-foreground text-lg md:text-xl">
+            Web dizajn · SEO · Digitalni marketing
+          </p>
+          <p className="text-foreground font-semibold text-lg md:text-xl">
+            Bez skrivenih troškova. Rezultati koje vidiš.
+          </p>
+        </motion.div>
 
         <motion.div
           className="flex flex-wrap justify-center gap-4 mt-8"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1.0 }}
+          transition={{ duration: 0.5, delay: 1.05 }}
         >
           <a
             href="#kontakt"
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-7 py-3.5 rounded-lg font-bold text-lg hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-7 py-3.5 rounded-lg font-bold text-lg hover:scale-105 transition-transform"
           >
             Zakaži konsultaciju <ArrowRight className="w-5 h-5" />
           </a>
           <a
             href="#paketi"
-            className="inline-flex items-center gap-2 border border-border text-foreground px-6 py-3.5 rounded-lg font-semibold hover:bg-secondary transition-colors"
+            className="inline-flex items-center gap-2 border border-foreground/30 text-foreground px-6 py-3.5 rounded-lg font-semibold hover:border-primary hover:text-primary transition-colors"
           >
             Pogledaj pakete
           </a>
@@ -321,6 +354,19 @@ export function HeroSection() {
 
         <StatsBar />
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 2.5, delay: 1.5, repeat: Infinity }}
+      >
+        <span className="text-muted-foreground text-[10px] font-semibold uppercase tracking-[0.3em]">
+          Scroll
+        </span>
+        <div className="w-px h-10 bg-gradient-to-b from-primary/60 to-transparent" />
+      </motion.div>
     </section>
   );
 }
