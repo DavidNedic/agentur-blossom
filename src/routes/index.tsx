@@ -35,6 +35,7 @@ function Index() {
       <HeroSection />
       <StatsSection />
       <ServicesSection />
+      <WhyUsSection />
       <PortfolioSection />
       <FunnelSection />
       <ProblemsSection />
