@@ -1,11 +1,14 @@
 import { Globe, Search, Share2, Megaphone, Code, BarChart3 } from "lucide-react";
 import { motion } from "framer-motion";
 
+import { Globe, Search, Megaphone, BarChart3, Code, MessageCircle } from "lucide-react";
+import { motion } from "framer-motion";
+
 const services = [
   {
     icon: Globe,
-    title: "Izrada Web Sajtova",
-    description: "Profesionalan, responzivan dizajn prilagođen vašem biznisu sa SSL i SEO osnovama.",
+    title: "Web Dizajn",
+    description: "Profesionalan, responzivan dizajn prilagođen vašem biznisu sa SSL-om i SEO osnovama.",
   },
   {
     icon: Search,
@@ -13,24 +16,24 @@ const services = [
     description: "On-page SEO, istraživanje ključnih reči i mesečni izveštaji za bolji rang na Google-u.",
   },
   {
-    icon: Share2,
-    title: "Social Media",
-    description: "Kreiranje sadržaja za Instagram i Facebook — 12 objava mesečno sa analitikom.",
-  },
-  {
     icon: Megaphone,
-    title: "Meta & TikTok Ads",
-    description: "Performance kampanje zasnovane na podacima sa upravljanjem budžetom i nedeljnim izveštajima.",
-  },
-  {
-    icon: Code,
-    title: "Održavanje Sajta",
-    description: "Mesečno ažuriranje sadržaja, tehnička podrška, backup i bezbednost.",
+    title: "Digitalni Marketing",
+    description: "Strateški pristup koji povezuje sajt, sadržaj i oglase u jedan sistem koji donosi upite.",
   },
   {
     icon: BarChart3,
-    title: "Google Ads (SEA)",
-    description: "Google oglašavanje sa landing stranicama optimizovanim za konverziju.",
+    title: "Google Ads",
+    description: "Performance kampanje sa landing stranicama optimizovanim za konverziju i jasnim ROI.",
+  },
+  {
+    icon: Code,
+    title: "Održavanje sajta",
+    description: "Mesečno ažuriranje sadržaja, tehnička podrška, backup i bezbednost — sve uključeno.",
+  },
+  {
+    icon: MessageCircle,
+    title: "Konsultacije",
+    description: "Besplatna analiza tvoje digitalne situacije i konkretna strategija za sledećih 90 dana.",
   },
 ];
 
