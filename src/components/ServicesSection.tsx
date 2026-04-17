@@ -1,6 +1,3 @@
-import { Globe, Search, Share2, Megaphone, Code, BarChart3 } from "lucide-react";
-import { motion } from "framer-motion";
-
 import { Globe, Search, Megaphone, BarChart3, Code, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
