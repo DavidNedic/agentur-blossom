@@ -10,6 +10,7 @@ import { PortfolioSection } from "@/components/PortfolioSection";
 import { ComparisonSection } from "@/components/ComparisonSection";
 import { FAQSection } from "@/components/FAQSection";
 import { CTASection } from "@/components/CTASection";
+import { WhyUsSection } from "@/components/WhyUsSection";
 import { Footer } from "@/components/Footer";
 
 export const Route = createFileRoute("/")({
@@ -34,6 +35,7 @@ function Index() {
       <HeroSection />
       <StatsSection />
       <ServicesSection />
+      <WhyUsSection />
       <PortfolioSection />
       <FunnelSection />
       <ProblemsSection />
