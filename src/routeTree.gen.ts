@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as KonsultacijaRouteImport } from './routes/konsultacija'
 import { Route as IndexRouteImport } from './routes/index'
 
+const KonsultacijaRoute = KonsultacijaRouteImport.update({
+  id: '/konsultacija',
+  path: '/konsultacija',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +25,39 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/konsultacija': typeof KonsultacijaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/konsultacija': typeof KonsultacijaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/konsultacija': typeof KonsultacijaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/konsultacija'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/konsultacija'
+  id: '__root__' | '/' | '/konsultacija'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  KonsultacijaRoute: typeof KonsultacijaRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/konsultacija': {
+      id: '/konsultacija'
+      path: '/konsultacija'
+      fullPath: '/konsultacija'
+      preLoaderRoute: typeof KonsultacijaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +70,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  KonsultacijaRoute: KonsultacijaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
