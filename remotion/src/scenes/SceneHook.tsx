@@ -80,7 +80,7 @@ export const SceneHook: React.FC = () => {
             opacity: line2,
           }}
         >
-          Za 14 dana.
+          Za 48h.
         </div>
       </div>
       <div style={{ overflow: "hidden" }}>
