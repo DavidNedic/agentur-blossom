@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import portfolioUnearthed from "@/assets/portfolio-unearthed.png";
 import portfolioCrowdplay from "@/assets/portfolio-crowdplay.png";
 import portfolioSara from "@/assets/portfolio-sara.png";
@@ -71,11 +70,21 @@ export function PortfolioSection() {
     exit: (d: number) => ({ x: d > 0 ? -600 : 600, opacity: 0, scale: 0.95 }),
   };
 
+  // Touch swipe support for mobile
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => setTouchStart(e.touches[0].clientX);
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart === null) return;
+    const diff = touchStart - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+    setTouchStart(null);
+  };
+
   return (
-    <section id="portfolio" className="py-24 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="portfolio" className="py-20 md:py-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           <span className="text-primary text-sm font-semibold uppercase tracking-widest">
             Portfolio
           </span>
@@ -87,8 +96,129 @@ export function PortfolioSection() {
           </p>
         </div>
 
-        {/* Carousel */}
-        <div className="relative">
+        {/* ====== MOBILE LAYOUT (stacked card) ====== */}
+        <div className="md:hidden relative">
+          <div
+            className="relative"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            {/* Browser mockup */}
+            <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border bg-card shadow-xl shadow-primary/5">
+              <div className="absolute top-0 inset-x-0 h-8 bg-secondary/80 backdrop-blur-sm border-b border-border flex items-center px-3 z-10">
+                <div className="flex gap-1">
+                  <div className="w-2 h-2 rounded-full bg-destructive/60" />
+                  <div className="w-2 h-2 rounded-full bg-chart-4/60" />
+                  <div className="w-2 h-2 rounded-full bg-primary/60" />
+                </div>
+                <div className="ml-3 flex-1">
+                  <div className="bg-muted/50 rounded h-4 px-2 flex items-center">
+                    <span className="text-muted-foreground text-[10px] truncate">
+                      {project.url || "www.primer.rs"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <AnimatePresence mode="wait" custom={direction}>
+                <motion.div
+                  key={current}
+                  custom={direction}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  className="absolute inset-0 pt-8"
+                >
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover object-top"
+                    loading="lazy"
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Info card below image */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={current}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3, delay: 0.15 }}
+                className="mt-4 rounded-xl border border-border bg-card/60 backdrop-blur p-5"
+              >
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-primary/15 text-primary border border-primary/20"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <h3 className="text-lg font-bold text-foreground">
+                  {project.title}
+                </h3>
+                <p className="text-muted-foreground text-sm mt-1.5 leading-relaxed">
+                  {project.description}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Mobile controls: counter + arrows */}
+          <div className="flex items-center justify-between mt-5">
+            <button
+              onClick={() => navigate(-1)}
+              className="w-11 h-11 rounded-full bg-card border border-border flex items-center justify-center text-foreground active:scale-95 active:border-primary/50 transition-all"
+              aria-label="Prethodni projekat"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-semibold text-foreground tabular-nums">
+                {String(current + 1).padStart(2, "0")}
+              </span>
+              <div className="flex gap-1.5">
+                {projects.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setDirection(i > current ? 1 : -1);
+                      setCurrent(i);
+                    }}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === current
+                        ? "w-6 bg-primary"
+                        : "w-1.5 bg-muted-foreground/30"
+                    }`}
+                    aria-label={`Projekat ${i + 1}`}
+                  />
+                ))}
+              </div>
+              <span className="text-sm font-semibold text-muted-foreground tabular-nums">
+                {String(projects.length).padStart(2, "0")}
+              </span>
+            </div>
+
+            <button
+              onClick={() => navigate(1)}
+              className="w-11 h-11 rounded-full bg-card border border-border flex items-center justify-center text-foreground active:scale-95 active:border-primary/50 transition-all"
+              aria-label="Sledeći projekat"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* ====== DESKTOP LAYOUT (original browser hero) ====== */}
+        <div className="hidden md:block relative">
           <div className="relative aspect-[16/9] max-w-5xl mx-auto rounded-2xl overflow-hidden border border-border bg-card">
             {/* Browser Chrome */}
             <div className="absolute top-0 inset-x-0 h-10 bg-secondary/80 backdrop-blur-sm border-b border-border flex items-center px-4 z-10">
@@ -106,7 +236,6 @@ export function PortfolioSection() {
               </div>
             </div>
 
-            {/* Screenshot */}
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={current}
@@ -127,11 +256,9 @@ export function PortfolioSection() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Gradient overlay */}
             <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-background/90 to-transparent z-10" />
 
-            {/* Project info overlay */}
-            <div className="absolute bottom-0 inset-x-0 p-6 md:p-8 z-20">
+            <div className="absolute bottom-0 inset-x-0 p-8 z-20">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={current}
@@ -150,7 +277,7 @@ export function PortfolioSection() {
                       </span>
                     ))}
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-foreground">
+                  <h3 className="text-2xl font-bold text-foreground">
                     {project.title}
                   </h3>
                   <p className="text-muted-foreground text-sm mt-1 max-w-lg">
@@ -161,23 +288,21 @@ export function PortfolioSection() {
             </div>
           </div>
 
-          {/* Navigation arrows */}
           <button
             onClick={() => navigate(-1)}
-            className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-card/80 backdrop-blur border border-border flex items-center justify-center text-foreground hover:border-primary/50 hover:text-primary transition-colors z-30"
+            className="absolute -left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-card/80 backdrop-blur border border-border flex items-center justify-center text-foreground hover:border-primary/50 hover:text-primary transition-colors z-30"
             aria-label="Prethodni projekat"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={() => navigate(1)}
-            className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-card/80 backdrop-blur border border-border flex items-center justify-center text-foreground hover:border-primary/50 hover:text-primary transition-colors z-30"
+            className="absolute -right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-card/80 backdrop-blur border border-border flex items-center justify-center text-foreground hover:border-primary/50 hover:text-primary transition-colors z-30"
             aria-label="Sledeći projekat"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* Dots */}
           <div className="flex justify-center gap-2 mt-6">
             {projects.map((_, i) => (
               <button
@@ -196,7 +321,6 @@ export function PortfolioSection() {
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );
