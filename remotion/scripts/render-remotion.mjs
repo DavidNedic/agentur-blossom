@@ -28,7 +28,7 @@ await renderMedia({
   composition,
   serveUrl: bundled,
   codec: "h264",
-  outputLocation: "/mnt/documents/radenon-digital-ad.mp4",
+  outputLocation: "/mnt/documents/radenon-digital-ad-v2.mp4",
   puppeteerInstance: browser,
   muted: true,
   concurrency: 1,
