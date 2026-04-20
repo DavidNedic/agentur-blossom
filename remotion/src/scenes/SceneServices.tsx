@@ -66,7 +66,7 @@ export const SceneServices: React.FC = () => {
                 transform: `translateY(${y}px)`,
               }}
             >
-              <div style={{ fontSize: 64, marginBottom: 16 }}>{s.icon}</div>
+              <div style={{ fontSize: 72, marginBottom: 12, color: COLORS.accent, lineHeight: 1, fontWeight: 700 }}>{s.icon}</div>
               <div
                 style={{
                   fontSize: 38,
