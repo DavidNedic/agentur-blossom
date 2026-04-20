@@ -64,7 +64,6 @@ export const SceneServices: React.FC = () => {
                 padding: "36px 30px",
                 opacity: inP,
                 transform: `translateY(${y}px)`,
-                backdropFilter: "blur(8px)",
               }}
             >
               <div style={{ fontSize: 64, marginBottom: 16 }}>{s.icon}</div>
