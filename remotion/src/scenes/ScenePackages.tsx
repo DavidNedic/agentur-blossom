@@ -2,8 +2,8 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } fr
 import { COLORS, jakarta } from "../components/theme";
 
 const packages = [
-  { name: "Starter", price: "199", feat: "Landing page", days: "14 dana" },
-  { name: "Pro", price: "399", feat: "Višestranični sajt", days: "21 dan", highlight: true },
+  { name: "Starter", price: "199", feat: "Landing page", days: "48h" },
+  { name: "Pro", price: "399", feat: "Višestranični sajt", days: "7 dana", highlight: true },
   { name: "Premium", price: "699", feat: "E-commerce", days: "30 dana" },
 ];
 
