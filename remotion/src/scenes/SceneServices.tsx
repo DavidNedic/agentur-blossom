@@ -2,9 +2,9 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } fr
 import { COLORS, jakarta } from "../components/theme";
 
 const services = [
-  { icon: "🌐", title: "Web Dizajn", desc: "Moderni, brzi sajtovi" },
-  { icon: "📈", title: "SEO", desc: "Prva strana Google-a" },
-  { icon: "🚀", title: "Marketing", desc: "Više klijenata mesečno" },
+  { icon: "◐", title: "Web Dizajn", desc: "Moderni, brzi sajtovi" },
+  { icon: "↗", title: "SEO", desc: "Prva strana Google-a" },
+  { icon: "✦", title: "Marketing", desc: "Više klijenata mesečno" },
   { icon: "⚡", title: "Održavanje", desc: "Uvek online, uvek brzo" },
 ];
 
