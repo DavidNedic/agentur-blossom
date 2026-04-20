@@ -5,7 +5,7 @@ const services = [
   { icon: "◐", title: "Web Dizajn", desc: "Moderni, brzi sajtovi" },
   { icon: "↗", title: "SEO", desc: "Prva strana Google-a" },
   { icon: "✦", title: "Marketing", desc: "Više klijenata mesečno" },
-  { icon: "⚡", title: "Održavanje", desc: "Uvek online, uvek brzo" },
+  { icon: "▣", title: "Aplikacije", desc: "Lojalnost i narudžbine" },
 ];
 
 export const SceneServices: React.FC = () => {

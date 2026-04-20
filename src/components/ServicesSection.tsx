@@ -1,4 +1,4 @@
-import { Globe, Search, Megaphone, BarChart3, Code, MessageCircle } from "lucide-react";
+import { Globe, Search, Megaphone, BarChart3, Smartphone, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 const services = [
@@ -23,9 +23,9 @@ const services = [
     description: "Performance kampanje sa landing stranicama optimizovanim za konverziju i jasnim ROI.",
   },
   {
-    icon: Code,
-    title: "Održavanje sajta",
-    description: "Mesečno ažuriranje sadržaja, tehnička podrška, backup i bezbednost — sve uključeno.",
+    icon: Smartphone,
+    title: "Mobilne Aplikacije",
+    description: "Custom iOS i Android aplikacije za lojalnost, narudžbine i bolju komunikaciju sa klijentima.",
   },
   {
     icon: MessageCircle,
