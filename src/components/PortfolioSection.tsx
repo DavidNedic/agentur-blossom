@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import portfolioUnearthed from "@/assets/portfolio-unearthed.png";
 import portfolioCrowdplay from "@/assets/portfolio-crowdplay.png";
 import portfolioSara from "@/assets/portfolio-sara.png";
