@@ -12,7 +12,7 @@ export const SceneServices: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const titleIn = spring({ frame, fps, config: { damping: 20, stiffness: 160 } });
+  const titleIn = spring({ frame, fps, config: { damping: 18, stiffness: 180 } });
 
   return (
     <AbsoluteFill
@@ -43,30 +43,49 @@ export const SceneServices: React.FC = () => {
           lineHeight: 1.05,
           opacity: titleIn,
           transform: `translateY(${interpolate(titleIn, [0, 1], [30, 0])}px)`,
-          marginBottom: 70,
+          marginBottom: 60,
         }}
       >
         Tvoj digitalni partner.
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
         {services.map((s, i) => {
-          const delay = 22 + i * 14;
-          const inP = spring({ frame: frame - delay, fps, config: { damping: 14, stiffness: 160 } });
-          const y = interpolate(inP, [0, 1], [60, 0]);
+          const delay = 14 + i * 8;
+          const inP = spring({ frame: frame - delay, fps, config: { damping: 12, stiffness: 180 } });
+          const y = interpolate(inP, [0, 1], [80, 0]);
+          const rot = interpolate(inP, [0, 1], [-8, 0]);
+          const iconSpin = interpolate(
+            spring({ frame: frame - delay - 4, fps, config: { damping: 18, stiffness: 120 } }),
+            [0, 1],
+            [180, 0]
+          );
           return (
             <div
               key={i}
               style={{
-                background: "rgba(17,24,39,0.85)",
-                border: "1px solid rgba(180,240,50,0.2)",
+                background: "linear-gradient(135deg, rgba(17,24,39,0.95), rgba(17,24,39,0.6))",
+                border: "1px solid rgba(180,240,50,0.3)",
                 borderRadius: 24,
-                padding: "36px 30px",
+                padding: "32px 28px",
                 opacity: inP,
-                transform: `translateY(${y}px)`,
+                transform: `translateY(${y}px) rotate(${rot}deg)`,
+                boxShadow: `0 20px 50px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)`,
               }}
             >
-              <div style={{ fontSize: 72, marginBottom: 12, color: COLORS.accent, lineHeight: 1, fontWeight: 700 }}>{s.icon}</div>
+              <div
+                style={{
+                  fontSize: 72,
+                  marginBottom: 12,
+                  color: COLORS.accent,
+                  lineHeight: 1,
+                  fontWeight: 700,
+                  transform: `rotate(${iconSpin}deg)`,
+                  textShadow: `0 0 30px ${COLORS.accent}66`,
+                }}
+              >
+                {s.icon}
+              </div>
               <div
                 style={{
                   fontSize: 38,
