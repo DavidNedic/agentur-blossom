@@ -105,13 +105,13 @@ export const SceneCountdown: React.FC = () => {
             opacity: zeroBurst,
             transform: `translateY(${interpolate(zeroBurst, [0, 1], [40, 0])}px) rotate(-2deg)`,
             background: COLORS.accent,
-            color2: "#000",
+            color: "#0a0d12",
             padding: "14px 32px",
             borderRadius: 20,
             letterSpacing: -1,
           }}
         >
-          <span style={{ color: "#0a0d12" }}>GOTOVO. ✅</span>
+          GOTOVO. ✅
         </div>
       )}
     </AbsoluteFill>
