@@ -3,7 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const faqs = [
   {
     q: "Koliko traje izrada web sajta?",
-    a: "Standardna izrada sajta traje do 14 dana. Za kompleksnije projekte sa više stranica i funkcionalnosti, potrebno je 3-4 nedelje.",
+    a: "Standardna izrada sajta traje samo 48h. Za kompleksnije projekte sa više stranica i funkcionalnosti, potrebno je 1-3 nedelje.",
   },
   {
     q: "Šta je uključeno u mesečno održavanje?",
