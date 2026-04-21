@@ -1,7 +1,7 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
 import { COLORS, jakarta } from "../../components/theme";
 
-// Scene 5: Browser mockup zooms in showing finished site, with checkmarks popping
+// Scene 5: Browser mockup zooms in showing finished site, with checkmark pills popping
 export const SceneDelivery: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -30,7 +30,7 @@ export const SceneDelivery: React.FC = () => {
     >
       <div
         style={{
-          fontSize: 32,
+          fontSize: 34,
           color: COLORS.accent,
           letterSpacing: 5,
           fontWeight: 800,
@@ -38,11 +38,11 @@ export const SceneDelivery: React.FC = () => {
           marginBottom: 18,
         }}
       >
-        ZA 48 SATI 🚀
+        ZA 48 SATI
       </div>
       <div
         style={{
-          fontSize: 76,
+          fontSize: 80,
           fontWeight: 800,
           color: "#fff",
           letterSpacing: -2,
@@ -55,7 +55,6 @@ export const SceneDelivery: React.FC = () => {
         Sajt je live.
       </div>
 
-      {/* Browser mockup */}
       <div
         style={{
           width: 820,
@@ -68,7 +67,6 @@ export const SceneDelivery: React.FC = () => {
           opacity: browserIn,
         }}
       >
-        {/* Browser bar */}
         <div
           style={{
             display: "flex",
@@ -94,10 +92,9 @@ export const SceneDelivery: React.FC = () => {
               fontWeight: 600,
             }}
           >
-            🔒 tvojadomena.rs
+            tvojadomena.rs
           </div>
         </div>
-        {/* Hero area */}
         <div style={{ padding: "40px 36px 60px" }}>
           <div
             style={{
@@ -153,22 +150,22 @@ export const SceneDelivery: React.FC = () => {
         </div>
       </div>
 
-      {/* Checkmark pills floating around */}
       {checks.map((c, i) => {
         const p = spring({ frame: frame - c.d, fps, config: { damping: 10, stiffness: 220 } });
-        const positions = [
+        const positions: Array<React.CSSProperties & { rot: number }> = [
           { top: 200, left: 40, rot: -8 },
           { top: 280, right: 30, rot: 6 },
           { bottom: 240, left: 30, rot: 5 },
           { bottom: 180, right: 50, rot: -7 },
         ];
         const pos = positions[i];
+        const { rot, ...stylePos } = pos;
         return (
           <div
             key={i}
             style={{
               position: "absolute",
-              ...pos,
+              ...stylePos,
               background: "rgba(180,240,50,0.18)",
               border: `2px solid ${COLORS.accent}`,
               padding: "12px 22px",
@@ -177,14 +174,14 @@ export const SceneDelivery: React.FC = () => {
               fontWeight: 800,
               color: COLORS.accent,
               opacity: p,
-              transform: `scale(${interpolate(p, [0, 1], [0.4, 1])}) rotate(${pos.rot}deg)`,
+              transform: `scale(${interpolate(p, [0, 1], [0.4, 1])}) rotate(${rot}deg)`,
               display: "flex",
               alignItems: "center",
-              gap: 8,
+              gap: 10,
               boxShadow: "0 10px 30px rgba(180,240,50,0.3)",
             }}
           >
-            ✅ {c.t}
+            <span style={{ fontSize: 28 }}>✓</span> {c.t}
           </div>
         );
       })}

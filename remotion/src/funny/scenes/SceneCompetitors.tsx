@@ -1,7 +1,7 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
 import { COLORS, jakarta } from "../../components/theme";
 
-// Scene 2: "Druge agencije" — comically slow agency labels with snail emoji
+// Scene 2: "Druge agencije" — comically slow agency labels
 export const SceneCompetitors: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -9,9 +9,9 @@ export const SceneCompetitors: React.FC = () => {
   const titleIn = spring({ frame, fps, config: { damping: 14, stiffness: 200 } });
 
   const agencies = [
-    { name: "Agencija A", time: "3 meseca", emoji: "🐌" },
-    { name: "Agencija B", time: "6 nedelja", emoji: "🦥" },
-    { name: "Agencija C", time: "8 nedelja", emoji: "💸" },
+    { name: "Agencija A", time: "3 meseca", icon: "ZZZ" },
+    { name: "Agencija B", time: "6 nedelja", icon: "..." },
+    { name: "Agencija C", time: "+ skriveni troškovi", icon: "$$$" },
   ];
 
   return (
@@ -38,13 +38,14 @@ export const SceneCompetitors: React.FC = () => {
       </div>
       <div
         style={{
-          fontSize: 36,
+          fontSize: 34,
           color: COLORS.muted,
           marginBottom: 50,
           opacity: titleIn,
+          fontStyle: "italic",
         }}
       >
-        (čekaj... još malo... 🥱)
+        (čekaj... još malo... još par nedelja...)
       </div>
 
       {agencies.map((a, i) => {
@@ -52,7 +53,6 @@ export const SceneCompetitors: React.FC = () => {
         const p = spring({ frame: frame - delay, fps, config: { damping: 12, stiffness: 180 } });
         const x = interpolate(p, [0, 1], [-200, 0]);
         const tilt = i % 2 === 0 ? -1.2 : 1.2;
-        // The "time" jiggles like a meme
         const jiggle = Math.sin((frame - delay) * 0.3) * 2;
         return (
           <div
@@ -71,12 +71,24 @@ export const SceneCompetitors: React.FC = () => {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-              <span style={{ fontSize: 60 }}>{a.emoji}</span>
-              <span style={{ fontSize: 46, fontWeight: 700, color: "#fff" }}>{a.name}</span>
+              <span
+                style={{
+                  fontSize: 32,
+                  fontWeight: 800,
+                  color: COLORS.muted,
+                  background: "rgba(255,255,255,0.06)",
+                  padding: "8px 14px",
+                  borderRadius: 12,
+                  letterSpacing: 2,
+                }}
+              >
+                {a.icon}
+              </span>
+              <span style={{ fontSize: 44, fontWeight: 700, color: "#fff" }}>{a.name}</span>
             </div>
             <span
               style={{
-                fontSize: 50,
+                fontSize: 42,
                 fontWeight: 800,
                 color: "#ff5070",
                 transform: `rotate(${jiggle}deg)`,

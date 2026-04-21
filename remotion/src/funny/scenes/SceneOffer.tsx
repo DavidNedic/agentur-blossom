@@ -80,10 +80,9 @@ export const SceneOffer: React.FC = () => {
           marginBottom: 50,
         }}
       >
-        Bez avansa. Plaćaš tek kad je sajt live. 🤝
+        Bez avansa. Plaćaš tek kad je sajt live.
       </div>
 
-      {/* CTA button */}
       <div style={{ position: "relative", display: "inline-flex" }}>
         <div
           style={{

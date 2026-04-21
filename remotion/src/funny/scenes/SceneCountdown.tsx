@@ -1,26 +1,25 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
 import { COLORS, jakarta } from "../../components/theme";
 
-// Scene 4: 48-HOUR COUNTDOWN — giant ticking number 48 → 24 → 0
+// Scene 4: 48 → 0 countdown
 export const SceneCountdown: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const titleIn = spring({ frame, fps, config: { damping: 14 } });
 
-  // Ticking countdown 48 → 0 over the scene
-  const t = interpolate(frame, [10, 95], [48, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const t = interpolate(frame, [10, 95], [48, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
   const displayHours = Math.max(0, Math.round(t));
-
-  // Each tick: a little punch when displayHours changes
-  const lastTickFrame = Math.max(0, frame - (frame % 2));
   const tickPulse = 1 + (frame % 2 === 0 ? 0.04 : 0);
 
-  // Color shift — green when high, red as it nears 0... wait actually we want celebratory.
-  // Let's stay green/lime, but pulse harder near zero.
   const isZero = displayHours === 0;
   const zeroFrame = isZero ? frame - 95 : 0;
-  const zeroBurst = isZero ? spring({ frame: zeroFrame, fps, config: { damping: 6, stiffness: 200 } }) : 0;
+  const zeroBurst = isZero
+    ? spring({ frame: zeroFrame, fps, config: { damping: 6, stiffness: 200 } })
+    : 0;
 
   return (
     <AbsoluteFill
@@ -33,7 +32,7 @@ export const SceneCountdown: React.FC = () => {
     >
       <div
         style={{
-          fontSize: 36,
+          fontSize: 38,
           color: COLORS.accent,
           letterSpacing: 6,
           fontWeight: 800,
@@ -41,7 +40,7 @@ export const SceneCountdown: React.FC = () => {
           marginBottom: 20,
         }}
       >
-        ODBROJAVANJE ⏱️
+        ODBROJAVANJE
       </div>
       <div
         style={{
@@ -57,7 +56,6 @@ export const SceneCountdown: React.FC = () => {
         Tvoj sajt za:
       </div>
 
-      {/* The big number */}
       <div
         style={{
           display: "flex",
@@ -94,14 +92,12 @@ export const SceneCountdown: React.FC = () => {
         </div>
       </div>
 
-      {/* Bottom punchline appears at 0 */}
       {isZero && (
         <div
           style={{
             marginTop: 30,
             fontSize: 64,
             fontWeight: 800,
-            color: "#fff",
             opacity: zeroBurst,
             transform: `translateY(${interpolate(zeroBurst, [0, 1], [40, 0])}px) rotate(-2deg)`,
             background: COLORS.accent,
@@ -111,7 +107,7 @@ export const SceneCountdown: React.FC = () => {
             letterSpacing: -1,
           }}
         >
-          GOTOVO. ✅
+          GOTOVO.
         </div>
       )}
     </AbsoluteFill>

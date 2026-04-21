@@ -1,7 +1,7 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
 import { COLORS, jakarta } from "../../components/theme";
 
-// Scene 3: BOOM moment — comic book "BOOM!" with starburst and zoom
+// Scene 3: BOOM
 export const SceneBoom: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -12,14 +12,8 @@ export const SceneBoom: React.FC = () => {
   const finalScale = scale - interpolate(settle, [0, 1], [0, 0.05]);
 
   const rot = interpolate(punch, [0, 1], [-25, -8]);
-
-  // Radial sun rays rotate slowly
   const rayRot = (frame * 0.6) % 360;
-
-  // Flash on entry
   const flash = frame < 5 ? 1 - frame / 5 : 0;
-
-  // Subtitle pop
   const sub = spring({ frame: frame - 20, fps, config: { damping: 12, stiffness: 200 } });
 
   return (
@@ -30,7 +24,6 @@ export const SceneBoom: React.FC = () => {
         alignItems: "center",
       }}
     >
-      {/* White flash */}
       <div
         style={{
           position: "absolute",
@@ -39,7 +32,6 @@ export const SceneBoom: React.FC = () => {
           opacity: flash * 0.7,
         }}
       />
-      {/* Sun rays */}
       <svg
         width={1400}
         height={1400}
@@ -71,7 +63,6 @@ export const SceneBoom: React.FC = () => {
         })}
       </svg>
 
-      {/* BOOM text */}
       <div
         style={{
           fontSize: 320,
@@ -87,7 +78,6 @@ export const SceneBoom: React.FC = () => {
         BUM!
       </div>
 
-      {/* Subtitle */}
       <div
         style={{
           marginTop: 30,
