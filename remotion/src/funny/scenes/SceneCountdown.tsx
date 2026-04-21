@@ -40,7 +40,7 @@ export const SceneCountdown: React.FC = () => {
           marginBottom: 20,
         }}
       >
-        ODBROJAVANJE
+        START ZA
       </div>
       <div
         style={{
@@ -53,7 +53,7 @@ export const SceneCountdown: React.FC = () => {
           textAlign: "center",
         }}
       >
-        Tvoj sajt za:
+        Tvoj sajt — već od:
       </div>
 
       <div
