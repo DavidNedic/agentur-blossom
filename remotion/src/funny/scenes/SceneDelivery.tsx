@@ -38,7 +38,7 @@ export const SceneDelivery: React.FC = () => {
           marginBottom: 18,
         }}
       >
-        ZA 48 SATI
+        VEĆ OD 48 SATI
       </div>
       <div
         style={{

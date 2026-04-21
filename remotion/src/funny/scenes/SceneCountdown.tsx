@@ -8,18 +8,12 @@ export const SceneCountdown: React.FC = () => {
 
   const titleIn = spring({ frame, fps, config: { damping: 14 } });
 
-  const t = interpolate(frame, [10, 95], [48, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const displayHours = Math.max(0, Math.round(t));
-  const tickPulse = 1 + (frame % 2 === 0 ? 0.04 : 0);
+  // Static "48h" — emphasizes the starting delivery time, not a countdown
+  const displayHours = 48;
+  const tickPulse = 1 + Math.sin(frame * 0.15) * 0.02;
 
-  const isZero = displayHours === 0;
-  const zeroFrame = isZero ? frame - 95 : 0;
-  const zeroBurst = isZero
-    ? spring({ frame: zeroFrame, fps, config: { damping: 6, stiffness: 200 } })
-    : 0;
+  const isZero = false;
+  const zeroBurst = 0;
 
   return (
     <AbsoluteFill
@@ -40,7 +34,7 @@ export const SceneCountdown: React.FC = () => {
           marginBottom: 20,
         }}
       >
-        ODBROJAVANJE
+        START ZA
       </div>
       <div
         style={{
@@ -53,7 +47,7 @@ export const SceneCountdown: React.FC = () => {
           textAlign: "center",
         }}
       >
-        Tvoj sajt za:
+        Tvoj sajt — već od:
       </div>
 
       <div

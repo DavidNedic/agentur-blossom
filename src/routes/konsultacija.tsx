@@ -24,13 +24,13 @@ export const Route = createFileRoute("/konsultacija")({
       {
         name: "description",
         content:
-          "Popuni formu i dobij besplatnu konsultaciju u roku od 24h. Sajt za 14 dana, od 199€. Bez rizika.",
+          "Popuni formu i dobij besplatnu konsultaciju u roku od 24h. Sajt već od 48h, od 199€. Bez rizika.",
       },
       { property: "og:title", content: "Besplatna konsultacija — Radenon Digital" },
       {
         property: "og:description",
         content:
-          "Sajt za 14 dana. Od 199€. Bez skrivenih troškova. Plaćanje tek nakon isporuke.",
+          "Sajt već od 48h. Od 199€. Bez skrivenih troškova. Plaćanje tek nakon isporuke.",
       },
       { name: "robots", content: "noindex, follow" },
     ],
@@ -143,7 +143,7 @@ function HeroLeft() {
       </div>
 
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] mt-6">
-        Tvoj sajt za <span className="text-primary">14 dana</span>.
+        Tvoj sajt već od <span className="text-primary">48h</span>.
         <br />
         Od <span className="text-primary">199 €</span>. Bez rizika.
       </h1>
@@ -550,7 +550,7 @@ const miniPackages = [
     name: "Starter",
     price: "od 199 €",
     desc: "Landing page",
-    duration: "14 dana",
+    duration: "od 48h",
     interes: "info" as const,
   },
   {

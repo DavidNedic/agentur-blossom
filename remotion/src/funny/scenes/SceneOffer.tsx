@@ -53,7 +53,7 @@ export const SceneOffer: React.FC = () => {
           marginBottom: 8,
         }}
       >
-        Sajt za 48h.
+        Sajt već od 48h.
       </div>
       <div
         style={{
@@ -111,7 +111,7 @@ export const SceneOffer: React.FC = () => {
             boxShadow: `0 30px 80px rgba(180,240,50,0.6), 0 0 60px rgba(180,240,50,0.4)`,
           }}
         >
-          Hoću za 48h
+          Hoću svoj sajt
           <span style={{ transform: `translateX(${arrow}px)`, fontSize: 44 }}>→</span>
         </div>
       </div>

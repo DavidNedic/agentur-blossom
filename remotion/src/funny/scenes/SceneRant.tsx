@@ -9,7 +9,7 @@ export const SceneRant: React.FC = () => {
   const lines = [
     { t: "Moj sajt iz 2014.", c: "#fff", tag: "RIP" },
     { t: "Konkurencija pumpa.", c: "#fff", tag: "↑↑↑" },
-    { t: "A ti čekaš mesecima?!", c: "#ff5070", tag: "?!" },
+    { t: "A ti čekaš 3 meseca?!", c: "#ff5070", tag: "?!" },
   ];
 
   const shakeX = Math.sin(frame * 0.7) * 3 + Math.sin(frame * 1.3) * 2;
