@@ -5,6 +5,9 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+const compId = process.argv[2] || "main";
+const outName = process.argv[3] || "radenon-digital-ad-v2.mp4";
+
 const bundled = await bundle({
   entryPoint: path.resolve(__dirname, "../src/index.ts"),
   webpackOverride: (config) => config,
@@ -20,7 +23,7 @@ const browser = await openBrowser("chrome", {
 
 const composition = await selectComposition({
   serveUrl: bundled,
-  id: "main",
+  id: compId,
   puppeteerInstance: browser,
 });
 
@@ -28,7 +31,7 @@ await renderMedia({
   composition,
   serveUrl: bundled,
   codec: "h264",
-  outputLocation: "/mnt/documents/radenon-digital-ad-v2.mp4",
+  outputLocation: `/mnt/documents/${outName}`,
   puppeteerInstance: browser,
   muted: true,
   concurrency: 1,
