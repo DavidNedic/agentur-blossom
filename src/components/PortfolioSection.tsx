@@ -6,7 +6,7 @@ import portfolioCrowdplay from "@/assets/portfolio-crowdplay.png";
 import portfolioSara from "@/assets/portfolio-sara.png";
 import portfolioTrebami from "@/assets/portfolio-trebami.png";
 import portfolioNeural from "@/assets/portfolio-neural.png";
-import portfolioFakeescape from "@/assets/portfolio-fakeescape.png";
+import portfolioTippr from "@/assets/portfolio-tippr.png";
 
 interface Project {
   title: string;
