@@ -5,6 +5,8 @@ import portfolioUnearthed from "@/assets/portfolio-unearthed.png";
 import portfolioCrowdplay from "@/assets/portfolio-crowdplay.png";
 import portfolioSara from "@/assets/portfolio-sara.png";
 import portfolioTrebami from "@/assets/portfolio-trebami.png";
+import portfolioNeural from "@/assets/portfolio-neural.png";
+import portfolioFakeescape from "@/assets/portfolio-fakeescape.png";
 
 interface Project {
   title: string;
@@ -42,6 +44,20 @@ const projects: Project[] = [
     tags: ["Marketplace", "Platforma", "Web aplikacija"],
     image: portfolioTrebami,
     url: "treba.mi",
+  },
+  {
+    title: "Neural.live",
+    description: "Interaktivna AI web aplikacija koja meri tvoju koncentraciju preko kamere u realnom vremenu — gejmifikovani test fokusa.",
+    tags: ["AI", "Web aplikacija", "Interaktivni eksperiment"],
+    image: portfolioNeural,
+    url: "neural.live",
+  },
+  {
+    title: "The Fake Escape",
+    description: "iOS-style aplikacija za simulaciju lažnog poziva ili poruke — diskretan izlaz iz neugodnih situacija jednim klikom.",
+    tags: ["iOS aplikacija", "Mobilni dizajn", "Lifestyle"],
+    image: portfolioFakeescape,
+    url: "thefakeescape.app",
   },
 ];
 
