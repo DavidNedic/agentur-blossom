@@ -7,6 +7,7 @@ import portfolioSara from "@/assets/portfolio-sara.png";
 import portfolioTrebami from "@/assets/portfolio-trebami.png";
 import portfolioNeural from "@/assets/portfolio-neural.png";
 import portfolioFakeescape from "@/assets/portfolio-fakeescape.png";
+import portfolioTippr from "@/assets/portfolio-tippr.png";
 
 interface Project {
   title: string;
@@ -58,6 +59,13 @@ const projects: Project[] = [
     tags: ["iOS aplikacija", "Mobilni dizajn", "Lifestyle"],
     image: portfolioFakeescape,
     url: "thefakeescape.app",
+  },
+  {
+    title: "Tippr",
+    description: "Društvena platforma za fudbalske navijače — live tipovanje rezultata bez novca, samo prijateljska rivalstva i bragging rights.",
+    tags: ["Sport", "Web aplikacija", "Live"],
+    image: portfolioTippr,
+    url: "tippr.app",
   },
 ];
 
