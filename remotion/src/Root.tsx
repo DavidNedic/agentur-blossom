@@ -2,6 +2,7 @@ import { Composition } from "remotion";
 import { MainVideo } from "./MainVideo";
 import { FunnyVideo } from "./funny/FunnyVideo";
 import { BrainrotVideo } from "./funny/BrainrotVideo";
+import { AIRoastVideo } from "./funny/AIRoastVideo";
 
 export const RemotionRoot: React.FC = () => {
   return (
