@@ -2,6 +2,7 @@ import { Composition } from "remotion";
 import { MainVideo } from "./MainVideo";
 import { FunnyVideo } from "./funny/FunnyVideo";
 import { BrainrotVideo } from "./funny/BrainrotVideo";
+import { AIRoastVideo } from "./funny/AIRoastVideo";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -26,6 +27,14 @@ export const RemotionRoot: React.FC = () => {
         id="brainrot"
         component={BrainrotVideo}
         durationInFrames={450}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="airoast"
+        component={AIRoastVideo}
+        durationInFrames={590}
         fps={30}
         width={1080}
         height={1920}
