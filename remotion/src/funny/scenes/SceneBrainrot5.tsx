@@ -15,9 +15,7 @@ export const SceneBrainrot5: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ fontFamily: jakarta.fontFamily, justifyContent: "center", padding: "60px 50px" }}>
-      <Audio src={staticFile("audio/pop.wav")} volume={0.8} startFrom={0} />
-      <Audio src={staticFile("audio/pop.wav")} volume={0.8} startFrom={0} trimBefore={0} />
-
+      <Audio src={staticFile("audio/pop.wav")} volume={0.8} />
       <div
         style={{
           fontSize: 70,
