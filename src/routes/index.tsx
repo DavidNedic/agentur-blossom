@@ -38,8 +38,8 @@ function Index() {
       <ServicesSection />
       <WhyUsSection />
       <PortfolioSection />
+      <ShopSystemsSection />
       <FunnelSection />
-      <ProblemsSection />
       
       <ComparisonSection />
       <FAQSection />
