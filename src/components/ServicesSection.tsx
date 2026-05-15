@@ -1,4 +1,4 @@
-import { Globe, Search, Megaphone, BarChart3, Smartphone, MessageCircle } from "lucide-react";
+import { Globe, Search, Megaphone, BarChart3, Smartphone, MessageCircle, ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
 
 const services = [
@@ -6,6 +6,11 @@ const services = [
     icon: Globe,
     title: "Web Dizajn",
     description: "Profesionalan, responzivan dizajn prilagođen vašem biznisu sa SSL-om i SEO osnovama.",
+  },
+  {
+    icon: ShoppingCart,
+    title: "E-Commerce & Shop-Systeme",
+    description: "Kompletne online prodavnice — od plaćanja i korpe do oglašavanja i analitike. Spremno za prodaju od prvog dana.",
   },
   {
     icon: Search,
