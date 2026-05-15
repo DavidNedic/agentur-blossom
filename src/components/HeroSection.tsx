@@ -325,7 +325,7 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.95 }}
         >
           <p className="text-muted-foreground text-lg md:text-xl">
-            Web dizajn · SEO · Digitalni marketing
+            Web dizajn · E-Commerce · SEO · Digitalni marketing
           </p>
           <p className="text-foreground font-semibold text-lg md:text-xl">
             Bez skrivenih troškova. Rezultati koje vidiš.
