@@ -68,6 +68,13 @@ const projects: Project[] = [
     image: portfolioTippr,
     url: "tippr.app",
   },
+  {
+    title: "Adriaticum Rentals",
+    description: "Elegantna web platforma za iznajmljivanje opreme za događaje — vođeni upitnik u nekoliko koraka, katalog i direktna rezervacija.",
+    tags: ["Web sajt", "Booking", "Web dizajn"],
+    image: portfolioAdriaticum,
+    url: "adriaticum.rentals",
+  },
 ];
 
 export function PortfolioSection() {
