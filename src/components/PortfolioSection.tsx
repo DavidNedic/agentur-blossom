@@ -8,6 +8,7 @@ import portfolioTrebami from "@/assets/portfolio-trebami.png";
 import portfolioNeural from "@/assets/portfolio-neural.png";
 import portfolioFakeescape from "@/assets/portfolio-fakeescape.png";
 import portfolioTippr from "@/assets/portfolio-tippr.png";
+import portfolioAdriaticum from "@/assets/portfolio-adriaticum.png";
 
 interface Project {
   title: string;
