@@ -8,6 +8,7 @@ import portfolioTrebami from "@/assets/portfolio-trebami.png";
 import portfolioNeural from "@/assets/portfolio-neural.png";
 import portfolioFakeescape from "@/assets/portfolio-fakeescape.png";
 import portfolioTippr from "@/assets/portfolio-tippr.png";
+import portfolioAdriaticum from "@/assets/portfolio-adriaticum.png";
 
 interface Project {
   title: string;
@@ -66,6 +67,13 @@ const projects: Project[] = [
     tags: ["Web aplikacija", "Real-time", "Custom razvoj"],
     image: portfolioTippr,
     url: "tippr.app",
+  },
+  {
+    title: "Adriaticum Rentals",
+    description: "Elegantna web platforma za iznajmljivanje opreme za događaje — vođeni upitnik u nekoliko koraka, katalog i direktna rezervacija.",
+    tags: ["Web sajt", "Booking", "Web dizajn"],
+    image: portfolioAdriaticum,
+    url: "adriaticum.rentals",
   },
 ];
 
