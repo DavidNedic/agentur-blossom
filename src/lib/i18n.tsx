@@ -50,6 +50,7 @@ const dict = {
     mockup: {
       category: { sr: "Nova kolekcija", en: "New collection" },
       product: { sr: "Studio slušalice", en: "Studio headphones" },
+      description: { sr: ["Precizan zvuk. Celodnevna udobnost.", "Bežično slušanje do 40 sati."], en: ["Precise sound. All-day comfort.", "Up to 40 hours of wireless listening."] },
       add: { sr: "Dodaj u korpu", en: "Add to cart" },
       orders: {
         sr: ["Nova porudžbina #1042 · 4.890 RSD", "Nova porudžbina #1043 · 7.240 RSD", "Nova porudžbina #1044 · 3.690 RSD"],

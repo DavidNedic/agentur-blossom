@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLang, IMAGES } from "@/lib/i18n";
 import { gsap, MOTION_OK } from "@/lib/motion";
 import { Action } from "./ui";
+import headphones from "@/assets/hero-headphones.jpg";
 
 export function Hero() {
   const { t, lang } = useLang();
@@ -45,16 +46,16 @@ export function Hero() {
         <div className="relative border border-hairline bg-card shadow-[0_24px_80px_oklch(0.16_0.006_250/0.12)]">
           <div className="flex h-10 items-center gap-3 border-b border-hairline px-4"><span className="browser-dots h-3"/><span className="mx-auto font-mono text-[10px] text-muted-foreground">shop.radenon.rs/product</span></div>
           <div className="grid min-h-[430px] grid-cols-2 gap-5 p-5 md:min-h-[500px] md:p-8">
-            <div className="relative overflow-hidden bg-muted"><div className="hero-wire absolute inset-0 z-10 bg-muted p-5"><span className="block h-full bg-secondary" /></div><img src={IMAGES.unearthed} alt="" className="product-reveal h-full w-full object-cover object-center" /></div>
+            <div className="relative overflow-hidden bg-muted"><div className="hero-wire absolute inset-0 z-10 bg-muted p-5"><span className="block h-full bg-secondary" /></div><img src={headphones} alt={t.hero.mockup.product} width={1200} height={1200} className="product-reveal h-full w-full object-cover object-center" /></div>
             <div className="flex min-w-0 flex-col py-3">
               <span className="build-part meta text-muted-foreground">{t.hero.mockup.category}</span>
               <h2 className="build-part mt-4 text-2xl font-semibold md:text-4xl">{t.hero.mockup.product}</h2>
               <p className="build-part mt-4 font-mono text-lg">4.890 RSD</p>
-              <div className="build-part mt-6 space-y-2"><span className="block h-2 w-full bg-secondary"/><span className="block h-2 w-3/4 bg-secondary"/></div>
+              <div className="build-part mt-6 space-y-1 text-sm leading-relaxed text-muted-foreground"><p>{t.hero.mockup.description[0]}</p><p>{t.hero.mockup.description[1]}</p></div>
               <button type="button" className="build-part mt-auto min-h-12 bg-foreground px-3 font-semibold text-background transition-transform active:scale-[.98]">{t.hero.mockup.add}</button>
             </div>
           </div>
-          <div key={`${lang}-${order}`} className="absolute right-3 bottom-3 left-3 animate-[slide-in-right_.45s_cubic-bezier(.16,1,.3,1)] border border-hairline bg-card px-4 py-3 shadow-lg md:right-5 md:bottom-5 md:left-auto md:w-72"><div className="flex items-center gap-2"><span className="h-2 w-2 shrink-0 rounded-full bg-primary"/><span className="font-mono text-[11px]">{t.hero.mockup.orders[order]}</span></div></div>
+          <div key={`${lang}-${order}`} className="absolute -right-2 top-full z-20 mt-3 w-[calc(100%+1rem)] animate-[slide-in-right_.45s_cubic-bezier(.16,1,.3,1)] border border-hairline bg-card px-4 py-3 shadow-lg sm:right-0 sm:w-72 md:-right-6"><div className="flex items-center gap-2"><span className="h-2 w-2 shrink-0 rounded-full bg-primary"/><span className="font-mono text-[11px]">{t.hero.mockup.orders[order]}</span></div></div>
         </div>
       </div>
     </div>
