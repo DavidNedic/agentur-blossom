@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useLang, IMAGES } from "@/lib/i18n";
+import { useLang } from "@/lib/i18n";
 import { gsap, MOTION_OK } from "@/lib/motion";
 import { Action } from "./ui";
 import headphones from "@/assets/hero-headphones.jpg";
