@@ -44,23 +44,6 @@ const dict = {
     meta: { sr: ["01 / E-commerce agencija", "[ Live za 14 dana ]", "Zrenjanin / Beograd"], en: ["01 / E-commerce agency", "[ Live in 14 days ]", "Zrenjanin / Belgrade"] },
     sub: { sr: "Shop, plaćanje, dostava i oglasi. Jedan tim, jedan rok, jedna cena.", en: "Store, payments, shipping and ads. One team, one deadline, one price." },
     scroll: { sr: "Skroluj", en: "Scroll" },
-    title: { sr: "Online prodavnice koje prodaju.", en: "Online stores that sell." },
-    eyebrow: { sr: "E-commerce partner za rast", en: "E-commerce growth partner" },
-    secondaryCta: { sr: "Pogledaj radove", en: "View our work" },
-    mockup: {
-      category: { sr: "Nova kolekcija", en: "New collection" },
-      product: { sr: "Studio slušalice", en: "Studio headphones" },
-      description: { sr: ["Precizan zvuk. Celodnevna udobnost.", "Bežično slušanje do 40 sati."], en: ["Precise sound. All-day comfort.", "Up to 40 hours of wireless listening."] },
-      add: { sr: "Dodaj u korpu", en: "Add to cart" },
-      orders: {
-        sr: ["Nova porudžbina #1042 · 4.890 RSD", "Nova porudžbina #1043 · 7.240 RSD", "Nova porudžbina #1044 · 3.690 RSD"],
-        en: ["New order #1042 · 4,890 RSD", "New order #1043 · 7,240 RSD", "New order #1044 · 3,690 RSD"],
-      },
-    },
-    metrics: {
-      sr: ["14 dana do lansiranja", "Stripe · PayPal · pouzeće", "Mobilni checkout", "Oglasi i praćenje"],
-      en: ["14 days to launch", "Stripe · PayPal · cash on delivery", "Mobile checkout", "Ads and tracking"],
-    },
   },
   marquee: { sr: ["E-commerce", "Web dizajn", "SEO", "Google Ads", "Meta Ads", "Aplikacije"], en: ["E-commerce", "Web design", "SEO", "Google Ads", "Meta Ads", "Apps"] },
   manifesto: {
@@ -101,17 +84,6 @@ const dict = {
       ],
     },
     deliverables: { sr: "Isporučujemo", en: "Deliverables" },
-    receipt: {
-      title: { sr: "Obračun vašeg sistema prodaje", en: "Your sales system receipt" },
-      note: { sr: "Svaka stavka ima jasan rezultat. Ništa nije tu samo da izgleda lepo.", en: "Every line has a clear outcome. Nothing is there just to look good." },
-      included: { sr: "uključeno", en: "included" },
-      total: { sr: "Ukupno", en: "Total" },
-      paid: { sr: "Spremno za prodaju", en: "Ready to sell" },
-      side: {
-        sr: ["Shop koji kupcu uklanja prepreke.", "Dizajn vodi do odluke, ne do konfuzije.", "Pretraga počinje pre nego što je sajt live.", "Kampanje mere prihod, ne samo klikove.", "Svaki kanal radi kao deo istog sistema.", "Aplikacija ostaje povezana sa prodajom.", "Odluke donosimo na osnovu podataka."],
-        en: ["A store that removes buying friction.", "Design guides decisions instead of creating confusion.", "Search work starts before the site goes live.", "Campaigns measure revenue, not just clicks.", "Every channel works as one system.", "The app stays connected to sales.", "Decisions are based on data."],
-      },
-    },
   },
   caps: {
     label: { sr: "05 / E-commerce", en: "05 / E-commerce" },
@@ -128,24 +100,6 @@ const dict = {
         { k: "Smart cart", t: "Abandoned carts come back.", d: "Automatic reminders, discounts and up-sell logic that lift average order value.", tags: ["Recovery e-mail", "Discounts", "Up-sell", "Coupons"] },
         { k: "Shipping", t: "Courier, tracking, stock.", d: "Courier integrations, automatic shipment tracking and inventory management.", tags: ["Couriers", "Tracking", "Inventory", "Notifications"] },
         { k: "Ads and analytics", t: "Know what sells.", d: "Meta Pixel, Google Ads conversions and analytics, so you know where to spend next.", tags: ["Meta Pixel", "Google Ads", "GA4", "Reports"] },
-      ],
-    },
-    orderTitle: { sr: "Život jedne porudžbine.", en: "The life of an order." },
-    orderIntro: { sr: "Od prvog proizvoda u korpi do prihoda u izveštaju. Jedan tok, bez slepih tačaka.", en: "From the first product in cart to revenue in the report. One flow, no blind spots." },
-    orderSteps: {
-      sr: [
-        { t: "Korpa", d: "Kupac dodaje proizvod. Popust i up-sell podižu vrednost porudžbine." },
-        { t: "Plaćanje", d: "Stripe, PayPal, kartica ili pouzeće. Kupac bira bez zastoja." },
-        { t: "Povratak", d: "Automatski e-mail vraća napuštenu korpu i završava kupovinu." },
-        { t: "Dostava", d: "Generiše se nalepnica, kurir dobija podatke, kupac dobija praćenje." },
-        { t: "Analitika", d: "Prihod i izvor prodaje ulaze u izveštaj za sledeću odluku." },
-      ],
-      en: [
-        { t: "Cart", d: "The customer adds a product. Discounts and up-sells lift order value." },
-        { t: "Checkout", d: "Stripe, PayPal, card or cash on delivery. No unnecessary friction." },
-        { t: "Recovery", d: "An automated email recovers the cart and completes the purchase." },
-        { t: "Shipping", d: "A label is generated, courier data is sent and tracking begins." },
-        { t: "Analytics", d: "Revenue and attribution enter the report for the next decision." },
       ],
     },
   },
@@ -167,10 +121,6 @@ const dict = {
         { d: "Day 11 – 13", t: "Testing", x: "Orders, payments and notifications checked before launch." },
         { d: "Day 14", t: "Launch and marketing", x: "The store is live. We start ads and track results." },
       ],
-    },
-    calendarTasks: {
-      sr: ["Ciljevi", "Proizvodi", "Struktura", "Wireframe", "Dizajn", "Mobilni", "Korpa", "Plaćanje", "Dostava", "Praćenje", "Sadržaj", "Test", "Priprema", "LIVE"],
-      en: ["Goals", "Products", "Structure", "Wireframe", "Design", "Mobile", "Cart", "Payment", "Shipping", "Tracking", "Content", "Testing", "Launch prep", "LIVE"],
     },
   },
   proof: {
@@ -230,7 +180,6 @@ const dict = {
       ],
     },
     shop: { sr: "Online prodavnica? Ponuda po meri nakon konsultacije.", en: "Online store? Custom quote after a consultation." },
-    popular: { sr: "Najpopularnije", en: "Most popular" },
   },
   faq: {
     label: { sr: "09 / FAQ", en: "09 / FAQ" },
@@ -262,10 +211,6 @@ const dict = {
     namePh: { sr: "Tvoje ime", en: "Your name" },
     msgPh: { sr: "Šta prodaješ i gde želiš da budeš za 90 dana?", en: "What do you sell and where do you want to be in 90 days?" },
     send: { sr: "Pošalji preko WhatsApp-a", en: "Send via WhatsApp" },
-    orderTitle: { sr: "Vaša porudžbina: novi sajt", en: "Your order: a new website" },
-    sendInquiry: { sr: "Pošalji upit", en: "Send enquiry" },
-    successTitle: { sr: "Upit je potvrđen", en: "Enquiry confirmed" },
-    successText: { sr: "WhatsApp je otvoren sa pripremljenom porukom. Javljamo se u roku od 24 sata.", en: "WhatsApp opened with your prepared message. We will reply within 24 hours." },
     clock: { sr: "Zrenjanin / Beograd", en: "Zrenjanin / Belgrade" },
     rights: { sr: "Deo Radenon Group. Sva prava zadržana.", en: "Part of Radenon Group. All rights reserved." },
   },

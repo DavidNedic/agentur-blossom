@@ -31,7 +31,7 @@ export function SmoothScroll() {
 
     let raf: ((t: number) => void) | null = null;
     if (window.matchMedia(MOTION_OK).matches) {
-      const lenis = new Lenis({ lerp: 0.075 });
+      const lenis = new Lenis({ lerp: 0.1 });
       lenisRef = lenis;
       lenis.on("scroll", ScrollTrigger.update);
       raf = (t: number) => lenis.raf(t * 1000);
