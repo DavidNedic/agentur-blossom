@@ -3,10 +3,6 @@ import unearthed from "@/assets/portfolio-unearthed.png";
 import adriaticum from "@/assets/portfolio-adriaticum.png";
 import crowdplay from "@/assets/portfolio-crowdplay.png";
 import sara from "@/assets/portfolio-sara.png";
-import tippr from "@/assets/portfolio-tippr.png";
-import trebami from "@/assets/portfolio-trebami.png";
-import neural from "@/assets/portfolio-neural.png";
-import fakeescape from "@/assets/portfolio-fakeescape.png";
 
 export type Lang = "sr" | "en";
 
@@ -34,18 +30,6 @@ const projects = [
   { name: "Sarastra", url: "sarastra-marketing.com", image: sara, year: "2024", stack: "Web · SEO · Brending",
     type: { sr: "Poslovni sajt", en: "Business site" },
     desc: { sr: "Poslovni sajt optimizovan za SEO, koji predstavlja brend jasno i brzo.", en: "Business site optimised for SEO that presents the brand clearly and fast." } },
-  { name: "Tippr", url: "tippr.app", image: tippr, year: "2025", stack: "Product · UI/UX · Development",
-    type: { sr: "Web aplikacija", en: "Web application" },
-    desc: { sr: "Digitalni proizvod sa jasnim korisničkim tokom i interfejsom građenim za brzinu.", en: "A digital product with a clear user journey and an interface built for speed." } },
-  { name: "Treba.mi", url: "treba.mi", image: trebami, year: "2025", stack: "Marketplace · Web · SEO",
-    type: { sr: "Marketplace", en: "Marketplace" },
-    desc: { sr: "Platforma koja brzo povezuje ponudu i potražnju kroz jednostavnu pretragu.", en: "A platform that quickly connects supply and demand through simple search." } },
-  { name: "Neural.live", url: "neural.live", image: neural, year: "2025", stack: "AI · Product · Web",
-    type: { sr: "AI platforma", en: "AI platform" },
-    desc: { sr: "Produkcijska platforma za AI tokove sa fokusom na jasnoću i kontrolu.", en: "A production platform for AI workflows focused on clarity and control." } },
-  { name: "The Fake Escape", url: "thefakeescape.com", image: fakeescape, year: "2024", stack: "Experience · Booking · Web",
-    type: { sr: "Interaktivni sajt", en: "Interactive site" },
-    desc: { sr: "Interaktivno digitalno iskustvo koje vodi korisnika od priče do rezervacije.", en: "An interactive digital experience that takes visitors from story to booking." } },
 ];
 
 const dict = {
@@ -88,7 +72,7 @@ const dict = {
   work: {
     label: { sr: "03 / Izabrani radovi", en: "03 / Selected work" },
     title: { sr: "Radovi", en: "Work" },
-    count: { sr: "8 projekata", en: "8 projects" },
+    count: { sr: "4 projekta", en: "4 projects" },
     projects,
   },
   services: {
