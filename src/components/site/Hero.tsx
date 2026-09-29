@@ -4,8 +4,7 @@ import { gsap, MOTION_OK } from "@/lib/motion";
 import { Roll } from "./ui";
 
 const floats = [
-  { src: IMAGES.unearthed, cls: "left-[4%] top-[24%] w-[42vw] md:top-[57%] md:w-[25vw]", shift: -24 },
-  { src: IMAGES.adriaticum, cls: "right-[4%] top-[19%] w-[38vw] md:top-[45%] md:right-[6%] md:w-[22vw]", shift: 32 },
+  { src: IMAGES.adriaticum, cls: "right-10 top-32 hidden w-[min(20vw,320px)] md:block", shift: 24 },
 ];
 
 export function Hero() {
@@ -13,7 +12,8 @@ export function Hero() {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const root = ref.current!;
+    const root = ref.current;
+    if (!root) return;
     const mm = gsap.matchMedia();
     const q = gsap.utils.selector(root);
     mm.add(MOTION_OK, () => {
@@ -44,7 +44,7 @@ export function Hero() {
           <span className="meta hidden text-muted-foreground md:col-span-4 md:block md:text-right">{t.hero.meta[2]}</span>
         </div>
 
-        <h1 className="relative z-10 mt-auto pb-6 font-expanded text-[clamp(2.5rem,min(10.5vw,15svh),15rem)] md:text-[clamp(2.5rem,min(8.6vw,15svh),15rem)] uppercase md:pb-10">
+        <h1 className="relative z-10 mt-auto pb-6 font-expanded text-[clamp(2.5rem,min(10.5vw,15svh),15rem)] md:text-[clamp(2.5rem,min(8.1vw,15svh),14rem)] uppercase md:pb-10">
           {t.hero.lines.map((line, i) => (
             <span key={i} className="hl line-mask">
               <span className="hl-in block md:whitespace-nowrap">
