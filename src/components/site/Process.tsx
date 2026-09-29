@@ -23,15 +23,15 @@ export function Process() {
       );
       gsap.utils.toArray<HTMLElement>(".pr-step", ref.current).forEach((step) => {
         gsap.set(step, { opacity: 0.3 });
-        const dot = step.querySelector(".pr-dot");
         gsap.to(step, {
           opacity: 1,
           duration: 0.4,
+           ease: "power2.out",
           scrollTrigger: {
             trigger: step,
             start: "top 60%",
-            toggleActions: "play none none reverse",
-            onToggle: (s) => dot?.classList.toggle("bg-primary", s.isActive || s.progress > 0),
+             once: true,
+             onEnter: () => step.querySelector(".pr-dot")?.classList.add("bg-primary"),
           },
         });
       });
@@ -53,8 +53,8 @@ export function Process() {
         </div>
         <ol ref={listRef} className="relative col-span-12 mt-16 pl-10 md:col-span-6 md:col-start-7 md:mt-0 md:pl-16">
           <svg aria-hidden className="absolute top-2 bottom-2 left-[5px] h-[calc(100%-1rem)] w-[2px] overflow-visible" preserveAspectRatio="none" viewBox="0 0 2 100">
-            <line x1="1" y1="0" x2="1" y2="100" stroke="var(--hairline)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
-            <line className="pr-path" x1="1" y1="0" x2="1" y2="100" pathLength={1} stroke="var(--primary)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+            <line x1="1" y1="0" x2="1" y2="100" stroke="var(--hairline)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+            <line className="pr-path" x1="1" y1="0" x2="1" y2="100" pathLength={1} stroke="var(--primary)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
           </svg>
           {t.process.steps.map((s, i) => (
             <li key={i} className="pr-step relative pb-20 last:pb-0">

@@ -3,9 +3,6 @@ import { useLang } from "@/lib/i18n";
 import { gsap, MOTION_OK } from "@/lib/motion";
 import { SectionHead } from "./ui";
 
-const TOP = 96;
-const STEP = 28;
-
 export function Capabilities() {
   const { t } = useLang();
   const ref = useRef<HTMLElement>(null);
