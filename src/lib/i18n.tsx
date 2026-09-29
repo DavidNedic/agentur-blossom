@@ -2,11 +2,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import unearthed from "@/assets/portfolio-unearthed.png";
 import adriaticum from "@/assets/portfolio-adriaticum.png";
 import crowdplay from "@/assets/portfolio-crowdplay.png";
-import tippr from "@/assets/portfolio-tippr.png";
-import trebami from "@/assets/portfolio-trebami.png";
-import neural from "@/assets/portfolio-neural.png";
 import sara from "@/assets/portfolio-sara.png";
-import fakeescape from "@/assets/portfolio-fakeescape.png";
 
 export type Lang = "sr" | "en";
 
@@ -17,7 +13,7 @@ export const CONTACT = {
   email: "davidnedic@web.de",
 };
 
-export const IMAGES = { unearthed, adriaticum, crowdplay, tippr, trebami, neural, sara, fakeescape };
+export const IMAGES = { unearthed, adriaticum, crowdplay, sara };
 
 type Bi<T> = { sr: T; en: T };
 
@@ -31,21 +27,9 @@ const projects = [
   { name: "CrowdPlay", url: "crowdplay.eu", image: crowdplay, year: "2025", stack: "React · Node · Integracije",
     type: { sr: "Web aplikacija", en: "Web application" },
     desc: { sr: "Kompletna web aplikacija sa integracijama, skalabilna i građena po meri klijenta.", en: "Full web application with integrations, scalable and built to the client's spec." } },
-  { name: "Tippr", url: "tippr.app", image: tippr, year: "2026", stack: "React · Realtime · Supabase",
-    type: { sr: "Real-time aplikacija", en: "Real-time app" },
-    desc: { sr: "Dinamična aplikacija sa real-time funkcijama koja angažuje zajednicu.", en: "Dynamic app with real-time features that keeps a community engaged." } },
-  { name: "Treba.mi", url: "treba.mi", image: trebami, year: "2025", stack: "React · Platforma · Auth",
-    type: { sr: "Platforma", en: "Platform" },
-    desc: { sr: "Platforma koja povezuje korisnike kroz jasan interfejs i pouzdan sistem.", en: "Platform connecting people through a clear interface and a reliable system." } },
-  { name: "Neural.live", url: "neural.live", image: neural, year: "2025", stack: "React · WebGL · API",
-    type: { sr: "Interaktivna aplikacija", en: "Interactive app" },
-    desc: { sr: "Interaktivna web aplikacija sa naprednom tehnologijom i čistim iskustvom.", en: "Interactive web app with advanced tech and a clean experience." } },
   { name: "Sarastra", url: "sarastra-marketing.com", image: sara, year: "2024", stack: "Web · SEO · Brending",
     type: { sr: "Poslovni sajt", en: "Business site" },
     desc: { sr: "Poslovni sajt optimizovan za SEO, koji predstavlja brend jasno i brzo.", en: "Business site optimised for SEO that presents the brand clearly and fast." } },
-  { name: "The Fake Escape", url: "thefakeescape.app", image: fakeescape, year: "2025", stack: "iOS · UI/UX · Swift",
-    type: { sr: "Mobilna aplikacija", en: "Mobile app" },
-    desc: { sr: "Mobilna aplikacija sa modernim UI/UX dizajnom. Jednostavna, brza, intuitivna.", en: "Mobile app with modern UI/UX. Simple, fast, intuitive." } },
 ];
 
 const dict = {
@@ -72,7 +56,7 @@ const dict = {
   work: {
     label: { sr: "03 / Izabrani radovi", en: "03 / Selected work" },
     title: { sr: "Radovi", en: "Work" },
-    count: { sr: "8 projekata", en: "8 projects" },
+    count: { sr: "4 projekta", en: "4 projects" },
     projects,
   },
   services: {

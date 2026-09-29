@@ -42,9 +42,9 @@ export function Work() {
         );
         gsap.fromTo(
           img,
-          { xPercent: -8 },
+          { scale: 1.06 },
           {
-            xPercent: 8,
+            scale: 1,
             ease: "none",
             scrollTrigger: { trigger: card, containerAnimation: tween, start: "left right", end: "right left", scrub: true },
           },
@@ -57,8 +57,8 @@ export function Work() {
       gsap.utils.toArray<HTMLElement>(".wk-card", track).forEach((card) => {
         gsap.fromTo(
           card.querySelector(".wk-img"),
-          { yPercent: -8 },
-          { yPercent: 8, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true } },
+          { scale: 1.06 },
+          { scale: 1, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true } },
         );
       });
     });
@@ -82,14 +82,14 @@ export function Work() {
             <span className="text-primary">.</span>
           </h2>
           {projects.map((p, i) => (
-            <article key={p.name} className="wk-card w-full [.is-h_&]:w-[56vw]">
-              <div className="wk-frame relative aspect-[16/10] overflow-hidden border border-hairline bg-card [.is-h_&]:aspect-auto [.is-h_&]:h-[52vh]">
+            <article key={p.name} className="wk-card w-full [.is-h_&]:w-[min(56vw,92vh)]">
+              <div className="wk-frame relative aspect-video overflow-hidden border border-hairline bg-card [.is-h_&]:w-[min(56vw,92vh)]">
                 <img
                   src={p.image}
                   alt={p.name}
                   loading="lazy"
                   decoding="async"
-                  className="wk-img absolute inset-y-0 -left-[10%] h-full w-[120%] max-w-none object-cover object-top will-change-transform"
+                  className="wk-img absolute inset-0 h-full w-full object-cover object-top will-change-transform"
                 />
               </div>
               <div className="grid grid-cols-12 gap-x-4 border-b border-hairline pt-5 pb-5">
