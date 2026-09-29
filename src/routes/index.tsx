@@ -42,8 +42,8 @@ function Index() {
         <Nav />
         <main>
           <Hero />
-          <Work />
           <Services />
+          <Work />
           <Capabilities />
           <Process />
           <Proof />
