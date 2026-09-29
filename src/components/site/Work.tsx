@@ -42,9 +42,9 @@ export function Work() {
         );
         gsap.fromTo(
           img,
-          { scale: 1.06 },
+          { yPercent: -4 },
           {
-            scale: 1,
+            yPercent: 4,
             ease: "none",
             scrollTrigger: { trigger: card, containerAnimation: tween, start: "left right", end: "right left", scrub: true },
           },
@@ -57,8 +57,8 @@ export function Work() {
       gsap.utils.toArray<HTMLElement>(".wk-card", track).forEach((card) => {
         gsap.fromTo(
           card.querySelector(".wk-img"),
-          { scale: 1.06 },
-          { scale: 1, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true } },
+          { yPercent: -4 },
+          { yPercent: 4, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true } },
         );
       });
     });
@@ -89,7 +89,7 @@ export function Work() {
                   alt={p.name}
                   loading="lazy"
                   decoding="async"
-                  className="wk-img absolute inset-0 h-full w-full object-cover object-top will-change-transform"
+                  className="wk-img absolute inset-0 h-full w-full object-contain object-center will-change-transform"
                 />
               </div>
               <div className="grid grid-cols-12 gap-x-4 border-b border-hairline pt-5 pb-5">
