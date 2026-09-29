@@ -7,7 +7,7 @@ const floats = [
   { src: IMAGES.unearthed, cls: "left-[4%] top-[20%] w-[44vw] md:top-[58%] md:w-[26vw]", depth: 70, rot: -4 },
   { src: IMAGES.adriaticum, cls: "right-[4%] top-[16%] w-[38vw] md:top-[46%] md:right-[6%] md:w-[22vw]", depth: 110, rot: 3 },
   { src: IMAGES.crowdplay, cls: "left-[34%] top-[30%] w-[34vw] md:top-[72%] md:left-[38%] md:w-[20vw]", depth: 150, rot: 2 },
-  { src: IMAGES.tippr, cls: "right-[28%] top-[82%] hidden md:block md:w-[16vw]", depth: 190, rot: -3 },
+  { src: IMAGES.sara, cls: "right-[28%] top-[82%] hidden md:block md:w-[16vw]", depth: 190, rot: -3 },
 ];
 
 export function Hero() {
@@ -103,7 +103,7 @@ export function Hero() {
             src={f.src}
             alt=""
             fetchPriority={i === 0 ? "high" : "auto"}
-            className={`float absolute aspect-[16/10] border border-hairline object-cover object-top will-change-transform ${f.cls}`}
+            className={`float absolute aspect-video border border-hairline object-cover object-top will-change-transform ${f.cls}`}
           />
         ))}
       </div>

@@ -34,7 +34,7 @@ export const Route = createRootRoute({
       { title: "Radenon Digital" },
       { name: "description", content: "Radenon Digital: online prodavnice, web dizajn, SEO i oglasi." },
       { name: "author", content: "Radenon Digital" },
-      { name: "theme-color", content: "#0A0B0D" },
+      { name: "theme-color", content: "#1B2233" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
