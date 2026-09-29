@@ -1,12 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LangProvider } from "@/lib/i18n";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
-import { Preloader } from "@/components/site/Preloader";
-import { GridLines } from "@/components/site/ui";
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
-import { Marquee } from "@/components/site/Marquee";
-import { Manifesto } from "@/components/site/Manifesto";
 import { Work } from "@/components/site/Work";
 import { Services } from "@/components/site/Services";
 import { Capabilities } from "@/components/site/Capabilities";
@@ -42,14 +38,10 @@ function Index() {
   return (
     <LangProvider>
       <SmoothScroll />
-      <Preloader />
-      <GridLines />
       <div className="relative min-h-screen text-foreground">
         <Nav />
         <main>
           <Hero />
-          <Marquee />
-          <Manifesto />
           <Work />
           <Services />
           <Capabilities />
