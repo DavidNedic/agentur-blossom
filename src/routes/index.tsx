@@ -1,50 +1,65 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Navigation } from "@/components/Navigation";
-import { NetworkBackground } from "@/components/NetworkBackground";
-import { HeroSection } from "@/components/HeroSection";
-import { StatsSection } from "@/components/StatsSection";
-import { ServicesSection } from "@/components/ServicesSection";
-import { FunnelSection } from "@/components/FunnelSection";
-import { ProblemsSection } from "@/components/ProblemsSection";
-import { PortfolioSection } from "@/components/PortfolioSection";
-import { ComparisonSection } from "@/components/ComparisonSection";
-import { FAQSection } from "@/components/FAQSection";
-import { CTASection } from "@/components/CTASection";
-import { ShopSystemsSection } from "@/components/ShopSystemsSection";
-import { WhyUsSection } from "@/components/WhyUsSection";
-import { Footer } from "@/components/Footer";
+import { LangProvider } from "@/lib/i18n";
+import { SmoothScroll } from "@/components/site/SmoothScroll";
+import { Preloader } from "@/components/site/Preloader";
+import { GridLines } from "@/components/site/ui";
+import { Nav } from "@/components/site/Nav";
+import { Hero } from "@/components/site/Hero";
+import { Marquee } from "@/components/site/Marquee";
+import { Manifesto } from "@/components/site/Manifesto";
+import { Work } from "@/components/site/Work";
+import { Services } from "@/components/site/Services";
+import { Capabilities } from "@/components/site/Capabilities";
+import { Process } from "@/components/site/Process";
+import { Proof } from "@/components/site/Proof";
+import { Packages } from "@/components/site/Packages";
+import { Faq } from "@/components/site/Faq";
+import { Contact } from "@/components/site/Contact";
+
+const TITLE = "Radenon Digital | Online prodavnice koje prodaju";
+const DESC =
+  "E-commerce agencija iz Srbije. Online prodavnica sa plaćanjem, dostavom i oglasima, live za 14 dana. Web dizajn, SEO, Google Ads i aplikacije. Od 199 €.";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Radenon Digital – Vaš Pouzdan Digitalni Partner" },
-      {
-        name: "description",
-        content:
-          "Profesionalna izrada sajtova, SEO optimizacija i digitalni marketing. Radenon Digital — sve iz jednog mesta.",
-      },
+      { title: TITLE },
+      { name: "description", content: DESC },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESC },
+      { property: "og:type", content: "website" },
+      { property: "og:locale", content: "sr_RS" },
+      { property: "og:locale:alternate", content: "en_US" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: TITLE },
+      { name: "twitter:description", content: DESC },
     ],
   }),
 });
 
 function Index() {
   return (
-    <div className="relative min-h-screen bg-background text-foreground">
-      <NetworkBackground />
-      <Navigation />
-      <HeroSection />
-      <StatsSection />
-      <ServicesSection />
-      <WhyUsSection />
-      <PortfolioSection />
-      <ShopSystemsSection />
-      <FunnelSection />
-      
-      <ComparisonSection />
-      <FAQSection />
-      <CTASection />
-      <Footer />
-    </div>
+    <LangProvider>
+      <SmoothScroll />
+      <Preloader />
+      <GridLines />
+      <div className="relative min-h-screen text-foreground">
+        <Nav />
+        <main>
+          <Hero />
+          <Marquee />
+          <Manifesto />
+          <Work />
+          <Services />
+          <Capabilities />
+          <Process />
+          <Proof />
+          <Packages />
+          <Faq />
+          <Contact />
+        </main>
+      </div>
+    </LangProvider>
   );
 }
