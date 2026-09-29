@@ -25,14 +25,14 @@ export function Contact() {
     const mm = gsap.matchMedia();
     mm.add(MOTION_OK, () => {
       gsap.fromTo(
-        ref.current!.querySelector(".ct-big"),
-        { scale: 0.55, yPercent: 30 },
+        ref.current!.querySelectorAll(".ct-line"),
+        { yPercent: 110 },
         {
-          scale: 1,
           yPercent: 0,
-          ease: "none",
-          transformOrigin: "left bottom",
-          scrollTrigger: { trigger: ref.current, start: "top bottom", end: "top 20%", scrub: true },
+          duration: 0.6,
+          stagger: 0.06,
+          ease: "power2.out",
+          scrollTrigger: { trigger: ref.current, start: "top 72%", once: true },
         },
       );
     });
@@ -54,9 +54,9 @@ export function Contact() {
     <section id="kontakt" ref={ref} className="relative z-10 flex min-h-[100svh] flex-col overflow-hidden border-t border-hairline bg-background">
       <div className="container-grid flex flex-1 flex-col pt-10">
         <span className="meta">{t.contact.label}</span>
-        <h2 className="ct-big mt-10 font-expanded text-[clamp(3.25rem,14.5vw,18rem)] uppercase will-change-transform">
-          <span className="block">{t.contact.big[0]}</span>
-          <span className="block text-primary">{t.contact.big[1]}</span>
+        <h2 className="ct-big mt-10 font-expanded text-[clamp(3.25rem,14.5vw,18rem)] uppercase">
+          <span className="line-mask"><span className="ct-line block">{t.contact.big[0]}</span></span>
+          <span className="line-mask"><span className="ct-line block text-primary">{t.contact.big[1]}</span></span>
         </h2>
 
         <div className="mt-16 grid grid-cols-12 gap-x-4 border-t border-hairline pt-10 md:gap-x-8">

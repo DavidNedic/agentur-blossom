@@ -1,38 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 import { useLang } from "@/lib/i18n";
-import { gsap, ScrollTrigger, MOTION_OK } from "@/lib/motion";
+import { gsap, MOTION_OK } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export function Services() {
   const { t } = useLang();
   const ref = useRef<HTMLElement>(null);
-  const [active, setActive] = useState(0);
   const [open, setOpen] = useState<number | null>(0);
   const items = t.services.items;
 
   useEffect(() => {
     const root = ref.current!;
-    const rows = gsap.utils.toArray<HTMLElement>(".sv-row", root);
-    const triggers = rows.map((row, i) =>
-      ScrollTrigger.create({
-        trigger: row,
-        start: "top 55%",
-        end: "bottom 55%",
-        onToggle: (self) => self.isActive && setActive(i),
-      }),
-    );
     const mm = gsap.matchMedia();
     mm.add(MOTION_OK, () => {
       gsap.utils.toArray<HTMLElement>(".sv-line", root).forEach((line) => {
         gsap.fromTo(
           line,
           { scaleX: 0 },
-          { scaleX: 1, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: line, start: "top 90%", once: true } },
+          { scaleX: 1, duration: 0.6, ease: "power2.out", scrollTrigger: { trigger: line, start: "top 90%", once: true } },
         );
       });
     });
     return () => {
-      triggers.forEach((s) => s.kill());
       mm.revert();
     };
   }, []);
@@ -45,12 +34,6 @@ export function Services() {
             <span className="meta">{t.services.label}</span>
             <h2 className="mt-6 font-expanded text-[clamp(3rem,7vw,7.5rem)] uppercase">{t.services.title}</h2>
             <p className="mt-6 max-w-sm text-muted-foreground">{t.services.intro}</p>
-            <div className="mt-10 hidden items-baseline gap-3 md:flex" aria-hidden>
-              <span className="font-expanded text-[clamp(6rem,14vw,14rem)] tabular-nums text-primary">
-                {String(active + 1).padStart(2, "0")}
-              </span>
-              <span className="meta text-muted-foreground">/ 0{items.length}</span>
-            </div>
           </div>
         </div>
 
@@ -66,7 +49,7 @@ export function Services() {
                   onClick={() => setOpen(isOpen ? null : i)}
                   className="group grid w-full grid-cols-12 items-baseline gap-x-4 py-6 text-left md:py-8"
                 >
-                  <span className={cn("meta col-span-2 transition-colors", active === i ? "text-primary" : "text-muted-foreground")}>
+                   <span className="meta col-span-2 text-muted-foreground">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="col-span-9 font-semi-expanded text-2xl font-bold uppercase leading-tight tracking-tight md:text-4xl">

@@ -16,8 +16,8 @@ export function Proof() {
         el.textContent = "0";
         gsap.to(o, {
           v: end,
-          duration: 1.6,
-          ease: "power3.out",
+          duration: 0.8,
+          ease: "power2.out",
           scrollTrigger: { trigger: el, start: "top 85%", once: true },
           onUpdate: () => (el.textContent = String(Math.round(o.v))),
         });

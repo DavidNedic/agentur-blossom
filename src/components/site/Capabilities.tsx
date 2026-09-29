@@ -13,14 +13,11 @@ export function Capabilities() {
   useEffect(() => {
     const mm = gsap.matchMedia();
     mm.add(MOTION_OK, () => {
-      const cards = gsap.utils.toArray<HTMLElement>(".cap-card", ref.current);
-      cards.forEach((card, i) => {
-        const next = cards[i + 1];
-        if (!next) return;
-        const st = { trigger: next, start: "top bottom", end: `top ${TOP + (i + 1) * STEP}px`, scrub: true };
-        gsap.to(card.querySelector(".cap-body"), { scale: 0.92, ease: "none", scrollTrigger: st });
-        gsap.to(card.querySelector(".cap-shade"), { opacity: 0.6, ease: "none", scrollTrigger: { ...st } });
-      });
+      gsap.fromTo(
+        gsap.utils.toArray<HTMLElement>(".cap-card", ref.current),
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: "power2.out", scrollTrigger: { trigger: ref.current, start: "top 72%", once: true } },
+      );
     });
     return () => mm.revert();
   }, []);
@@ -30,11 +27,11 @@ export function Capabilities() {
       <div className="container-grid">
         <SectionHead label={t.caps.label} right="Stripe / PayPal / COD" />
         <h2 className="max-w-5xl pt-10 pb-16 font-expanded text-[clamp(2.5rem,6.5vw,7rem)] uppercase">{t.caps.title}</h2>
-        <div className="flex flex-col gap-6">
+        <div className="grid gap-px bg-hairline md:grid-cols-2">
           {t.caps.items.map((c, i) => (
-            <div key={i} className="cap-card sticky" style={{ top: TOP + i * STEP }}>
-              <div className="cap-body relative origin-top overflow-hidden border border-hairline bg-card">
-                <div className="grid min-h-[60vh] grid-cols-12 gap-x-4 p-6 md:min-h-[64vh] md:p-10">
+            <div key={i} className="cap-card bg-background">
+              <div className="relative h-full overflow-hidden bg-card">
+                <div className="grid min-h-[440px] grid-cols-12 gap-x-4 p-6 md:p-10">
                   <div className="col-span-12 flex items-start justify-between md:col-span-3 md:flex-col">
                     <span className="meta text-primary">0{i + 1} / 04</span>
                     <span className="font-expanded text-[clamp(5rem,12vw,12rem)] leading-none text-outline">0{i + 1}</span>
@@ -56,7 +53,6 @@ export function Capabilities() {
                     </ul>
                   </div>
                 </div>
-                <div className="cap-shade pointer-events-none absolute inset-0 bg-background opacity-0" />
               </div>
             </div>
           ))}

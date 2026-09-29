@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-/** Button/link with text roll + background wipe. */
+/** Button/link with a restrained color change and directional arrow. */
 export function Roll({
   href,
   children,
@@ -22,11 +22,8 @@ export function Roll({
   const cls = cn("roll", variant === "solid" && "roll-solid", variant === "ink" && "roll-ink", className);
   const inner = (
     <>
-      <span className="roll-label">
-        <span>{children}</span>
-        <span aria-hidden>{children}</span>
-      </span>
-      <Arrow />
+      <span>{children}</span>
+      <Arrow className="roll-arrow" />
     </>
   );
   if (href)

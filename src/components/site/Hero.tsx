@@ -1,13 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useLang, IMAGES } from "@/lib/i18n";
-import { gsap, MOTION_OK, onReady } from "@/lib/motion";
+import { gsap, MOTION_OK } from "@/lib/motion";
 import { Roll } from "./ui";
 
 const floats = [
-  { src: IMAGES.unearthed, cls: "left-[4%] top-[20%] w-[44vw] md:top-[58%] md:w-[26vw]", depth: 70, rot: -4 },
-  { src: IMAGES.adriaticum, cls: "right-[4%] top-[16%] w-[38vw] md:top-[46%] md:right-[6%] md:w-[22vw]", depth: 110, rot: 3 },
-  { src: IMAGES.crowdplay, cls: "left-[34%] top-[30%] w-[34vw] md:top-[72%] md:left-[38%] md:w-[20vw]", depth: 150, rot: 2 },
-  { src: IMAGES.sara, cls: "right-[28%] top-[82%] hidden md:block md:w-[16vw]", depth: 190, rot: -3 },
+  { src: IMAGES.unearthed, cls: "left-[4%] top-[24%] w-[42vw] md:top-[57%] md:w-[25vw]", shift: -24 },
+  { src: IMAGES.adriaticum, cls: "right-[4%] top-[19%] w-[38vw] md:top-[45%] md:right-[6%] md:w-[22vw]", shift: 32 },
 ];
 
 export function Hero() {
@@ -18,46 +16,23 @@ export function Hero() {
     const root = ref.current!;
     const mm = gsap.matchMedia();
     const q = gsap.utils.selector(root);
-    let off = () => {};
-
     mm.add(MOTION_OK, () => {
       gsap.set(q(".hl-in"), { yPercent: 115 });
       gsap.set(q(".hero-fade"), { opacity: 0 });
-      off = onReady(() => {
-        gsap
-          .timeline()
-          .to(q(".hl-in"), { yPercent: 0, duration: 1.1, ease: "expo.out", stagger: 0.08 })
-          .to(q(".hero-fade"), { opacity: 1, duration: 0.6, stagger: 0.06 }, "-=0.7");
-      });
-    });
-
-    mm.add(`${MOTION_OK} and (min-width: 768px)`, () => {
-      const tl = gsap.timeline({
-        scrollTrigger: { trigger: root, start: "top top", end: "+=110%", scrub: 0.6, pin: true },
-      });
-      q(".hl").forEach((el, i) => {
-        tl.to(el, { yPercent: -60 - i * 45, scale: 0.82, transformOrigin: "left bottom", ease: "none" }, 0);
-      });
-      q(".float").forEach((el, i) => {
-        const f = floats[i];
-        tl.fromTo(el, { y: "70vh", rotate: f.rot }, { y: `-${f.depth}vh`, rotate: -f.rot / 2, ease: "none" }, 0);
-      });
-    });
-
-    mm.add(`${MOTION_OK} and (max-width: 767px)`, () => {
+      gsap
+        .timeline()
+        .to(q(".hl-in"), { yPercent: 0, duration: 0.6, ease: "power2.out", stagger: 0.06 })
+        .to(q(".hero-fade"), { opacity: 1, duration: 0.45, ease: "power2.out", stagger: 0.04 }, "-=0.35");
       q(".float").forEach((el, i) => {
         gsap.fromTo(
           el,
-          { y: 40 + i * 30, rotate: floats[i].rot },
-          { y: -80 - i * 60, ease: "none", scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: true } },
+          { y: 0 },
+          { y: floats[i]?.shift ?? 0, ease: "none", scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: true } },
         );
       });
     });
 
-    return () => {
-      off();
-      mm.revert();
-    };
+    return () => mm.revert();
   }, []);
 
   return (
@@ -103,7 +78,7 @@ export function Hero() {
             src={f.src}
             alt=""
             fetchPriority={i === 0 ? "high" : "auto"}
-            className={`float absolute aspect-video border border-hairline object-cover object-top will-change-transform ${f.cls}`}
+            className={`float absolute aspect-video border border-hairline object-contain object-center will-change-transform ${f.cls}`}
           />
         ))}
       </div>

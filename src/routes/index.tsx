@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LangProvider } from "@/lib/i18n";
-import { SmoothScroll } from "@/components/site/SmoothScroll";
-import { Preloader } from "@/components/site/Preloader";
 import { GridLines } from "@/components/site/ui";
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
@@ -41,8 +39,6 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <LangProvider>
-      <SmoothScroll />
-      <Preloader />
       <GridLines />
       <div className="relative min-h-screen text-foreground">
         <Nav />
