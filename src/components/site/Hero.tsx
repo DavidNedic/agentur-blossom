@@ -4,9 +4,9 @@ import { gsap, MOTION_OK, onReady } from "@/lib/motion";
 import { Roll } from "./ui";
 
 const floats = [
-  { src: IMAGES.unearthed, cls: "left-[4%] top-[58%] w-[46vw] md:w-[26vw]", depth: 70, rot: -4 },
-  { src: IMAGES.adriaticum, cls: "right-[6%] top-[46%] w-[40vw] md:w-[22vw]", depth: 110, rot: 3 },
-  { src: IMAGES.crowdplay, cls: "left-[38%] top-[72%] w-[42vw] md:w-[20vw]", depth: 150, rot: 2 },
+  { src: IMAGES.unearthed, cls: "left-[4%] top-[20%] w-[44vw] md:top-[58%] md:w-[26vw]", depth: 70, rot: -4 },
+  { src: IMAGES.adriaticum, cls: "right-[4%] top-[16%] w-[38vw] md:top-[46%] md:right-[6%] md:w-[22vw]", depth: 110, rot: 3 },
+  { src: IMAGES.crowdplay, cls: "left-[34%] top-[30%] w-[34vw] md:top-[72%] md:left-[38%] md:w-[20vw]", depth: 150, rot: 2 },
   { src: IMAGES.tippr, cls: "right-[28%] top-[82%] hidden md:block md:w-[16vw]", depth: 190, rot: -3 },
 ];
 
@@ -69,10 +69,18 @@ export function Hero() {
           <span className="meta hidden text-muted-foreground md:col-span-4 md:block md:text-right">{t.hero.meta[2]}</span>
         </div>
 
-        <h1 className="relative z-10 mt-auto pb-6 font-expanded text-[clamp(2.75rem,11.5vw,15rem)] uppercase md:pb-10">
+        <h1 className="relative z-10 mt-auto pb-6 font-expanded text-[clamp(2.5rem,min(10.5vw,15svh),15rem)] md:text-[clamp(2.5rem,min(8.6vw,15svh),15rem)] uppercase md:pb-10">
           {t.hero.lines.map((line, i) => (
             <span key={i} className="hl line-mask">
-              <span className={`hl-in block ${i === 3 ? "text-primary" : ""}`}>{line}</span>
+              <span className="hl-in block md:whitespace-nowrap">
+                {i === t.hero.lines.length - 1 ? (
+                  <>
+                    {line.split(" ").slice(0, -1).join(" ")} <span className="text-primary">{line.split(" ").slice(-1)}</span>
+                  </>
+                ) : (
+                  line
+                )}
+              </span>
             </span>
           ))}
         </h1>
