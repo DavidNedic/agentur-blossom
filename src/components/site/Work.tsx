@@ -1,115 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLang } from "@/lib/i18n";
 import { gsap, ScrollTrigger, DESKTOP_MOTION, MOBILE_MOTION } from "@/lib/motion";
 import { SectionHead } from "./ui";
 
 export function Work() {
-  const { t } = useLang();
-  const pinRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const mm = gsap.matchMedia();
-    const track = trackRef.current!;
-
-    mm.add(DESKTOP_MOTION, () => {
-      track.classList.add("is-h");
-      ScrollTrigger.refresh();
-      const dist = () => track.scrollWidth - window.innerWidth + 80;
-      const tween = gsap.to(track, {
-        x: () => -dist(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: pinRef.current,
-          pin: true,
-          scrub: 0.8,
-          start: "top top",
-          end: () => `+=${dist()}`,
-          invalidateOnRefresh: true,
-        },
-      });
-      gsap.utils.toArray<HTMLElement>(".wk-card", track).forEach((card) => {
-        const frame = card.querySelector(".wk-frame");
-        const img = card.querySelector(".wk-img");
-        gsap.fromTo(
-          frame,
-          { clipPath: "inset(14% 10% 14% 10%)" },
-          {
-            clipPath: "inset(0% 0% 0% 0%)",
-            ease: "none",
-            scrollTrigger: { trigger: card, containerAnimation: tween, start: "left 95%", end: "left 35%", scrub: true },
-          },
-        );
-        gsap.fromTo(
-          img,
-          { yPercent: -4 },
-          {
-            yPercent: 4,
-            ease: "none",
-            scrollTrigger: { trigger: card, containerAnimation: tween, start: "left right", end: "right left", scrub: true },
-          },
-        );
-      });
-      return () => track.classList.remove("is-h");
-    });
-
-    mm.add(MOBILE_MOTION, () => {
-      gsap.utils.toArray<HTMLElement>(".wk-card", track).forEach((card) => {
-        gsap.fromTo(
-          card.querySelector(".wk-img"),
-          { yPercent: -4 },
-          { yPercent: 4, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true } },
-        );
-      });
-    });
-
-    return () => mm.revert();
-  }, []);
-
-  const projects = t.work.projects;
-  return (
-    <section id="radovi" className="relative z-10">
-      <div ref={pinRef} className="overflow-hidden py-16 lg:flex lg:h-[100svh] lg:flex-col lg:py-0 lg:pt-20">
-        <div className="container-grid">
-          <SectionHead label={t.work.label} right={t.work.count} />
-        </div>
-        <div
-          ref={trackRef}
-          className="container-grid flex flex-col gap-20 pt-10 will-change-transform [&.is-h]:my-auto [&.is-h]:w-max [&.is-h]:max-w-none [&.is-h]:flex-row [&.is-h]:items-end [&.is-h]:gap-[5vw] [&.is-h]:pt-0"
-        >
-          <h2 className="font-expanded text-[clamp(4rem,16vw,18rem)] uppercase [.is-h_&]:self-center [.is-h_&]:pr-[4vw]">
-            {t.work.title}
-            <span className="text-primary">.</span>
-          </h2>
-          {projects.map((p, i) => (
-            <article key={p.name} className="wk-card w-full [.is-h_&]:w-[min(56vw,92vh)]">
-              <div className="wk-frame relative aspect-video overflow-hidden border border-hairline bg-card [.is-h_&]:w-[min(56vw,92vh)]">
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  loading="lazy"
-                  decoding="async"
-                  className="wk-img absolute inset-0 h-full w-full object-contain object-center will-change-transform"
-                />
-              </div>
-              <div className="grid grid-cols-12 gap-x-4 border-b border-hairline pt-5 pb-5">
-                <span className="meta col-span-2 text-primary">{String(i + 1).padStart(2, "0")}</span>
-                <span className="meta col-span-3 text-muted-foreground">{p.year}</span>
-                <span className="meta col-span-7 text-right text-muted-foreground">{p.type}</span>
-              </div>
-              <h3 className="mt-4 font-expanded text-[clamp(2.25rem,5vw,5.5rem)] uppercase">{p.name}</h3>
-              <div className="mt-4 grid gap-3 md:grid-cols-2 md:gap-8">
-                <p className="max-w-md text-muted-foreground">{p.desc}</p>
-                <p className="meta text-muted-foreground md:text-right">
-                  {p.stack}
-                  <br />
-                  {p.url}
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  const { t } = useLang(); const ref = useRef<HTMLElement>(null); const [active,setActive]=useState(0); const imageRef=useRef<HTMLImageElement>(null);
+  useEffect(()=>{const mm=gsap.matchMedia(); mm.add(DESKTOP_MOTION,()=>{const root=ref.current;if(!root)return;const rows=gsap.utils.toArray<HTMLElement>(".case-row",root);const triggers=rows.map((row,i)=>ScrollTrigger.create({trigger:row,start:"top 52%",end:"bottom 52%",onToggle:(s)=>{if(s.isActive)setActive(i)}}));return()=>triggers.forEach(x=>x.kill())});mm.add(MOBILE_MOTION,()=>{const cards=gsap.utils.toArray<HTMLElement>(".case-mobile",ref.current);cards.forEach(card=>gsap.fromTo(card,{clipPath:"inset(0 0 20% 0)"},{clipPath:"inset(0 0 0% 0)",duration:.65,ease:"power3.out",scrollTrigger:{trigger:card,start:"top 85%",once:true}}))});return()=>mm.revert()},[]);
+  useEffect(()=>{const img=imageRef.current;if(!img)return;const mm=gsap.matchMedia();mm.add(DESKTOP_MOTION,()=>{gsap.fromTo(img,{clipPath:"inset(0 0 100% 0)",y:0},{clipPath:"inset(0 0 0% 0)",duration:.55,ease:"power3.out"});gsap.fromTo(img,{y:0},{y:()=>Math.min(0,360-img.scrollHeight),ease:"none",scrollTrigger:{trigger:ref.current,start:"top top",end:"bottom bottom",scrub:true}})});return()=>mm.revert()},[active]);
+  const projects=t.work.projects;
+  return <section id="radovi" ref={ref} className="dark-band relative z-10 py-28 md:py-40"><div className="container-grid"><SectionHead label={t.work.label} right={t.work.count}/><div className="mt-14 hidden grid-cols-12 gap-8 lg:grid"><ol className="col-span-5">{projects.map((p,i)=><li key={p.name} className="case-row min-h-[34vh] border-t border-hairline py-8" onMouseEnter={()=>setActive(i)}><button type="button" onClick={()=>setActive(i)} className="grid w-full grid-cols-[auto_1fr] gap-5 text-left"><span className="mt-2 h-2 w-2 rounded-full bg-primary transition-opacity" style={{opacity:active===i?1:0}}/><span><span className="font-mono text-xs text-muted-foreground">{String(i+1).padStart(2,"0")} · {p.year} · {p.type}</span><strong className="mt-3 block text-4xl font-medium">{p.name}</strong><small className="mt-4 block max-w-sm text-base text-muted-foreground">{p.desc}</small></span></button></li>)}</ol><div className="col-span-7"><div className="sticky top-24 overflow-hidden border border-hairline"><div className="flex h-10 items-center border-b border-hairline px-4"><span className="browser-dots h-3"/><span className="mx-auto font-mono text-[10px] text-muted-foreground">{projects[active]?.url}</span></div><div className="relative aspect-[16/10] overflow-hidden bg-card"><img key={projects[active]?.name} ref={imageRef} src={projects[active]?.image} alt={projects[active]?.name} className="absolute top-0 left-0 h-auto w-full object-contain object-top"/></div></div></div></div>
+  <div className="mt-12 space-y-16 lg:hidden">{projects.map((p,i)=><article key={p.name} className="case-mobile"><div className="mb-4 flex items-center gap-3 font-mono text-xs"><span className="h-2 w-2 rounded-full bg-primary"/>{String(i+1).padStart(2,"0")} · {p.year}</div><div className="overflow-hidden border border-hairline"><img src={p.image} alt={p.name} loading="lazy" className="h-auto w-full object-contain object-top"/></div><h3 className="mt-5 text-3xl font-medium">{p.name}</h3><p className="mt-2 text-muted-foreground">{p.desc}</p></article>)}</div></div></section>;
 }

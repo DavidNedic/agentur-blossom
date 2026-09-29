@@ -1,67 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLang } from "@/lib/i18n";
-import { gsap, MOTION_OK } from "@/lib/motion";
+import { gsap, DESKTOP_MOTION, MOBILE_MOTION } from "@/lib/motion";
 import { SectionHead } from "./ui";
 
-const TOP = 96;
-const STEP = 28;
+function Visual({step}:{step:number}) { return <div className="relative min-h-[360px] overflow-hidden bg-card p-6 md:min-h-[480px] md:p-10">
+  <div className="order-layer absolute inset-6 border border-hairline bg-background p-6 md:inset-10"><div className="font-mono text-xs text-muted-foreground">ORDER #1042</div>{step===0&&<><div className="mt-12 grid grid-cols-[80px_1fr_auto] items-center gap-4"><div className="aspect-square bg-secondary"/><div><b>Studio 01</b><small className="block text-muted-foreground">1 × proizvod</small></div><span className="font-mono">4.890</span></div><div className="mt-10 h-12 bg-foreground"/></>}{step===1&&<><h3 className="mt-10 text-2xl font-medium">Checkout</h3><div className="mt-8 grid gap-3">{["Stripe","PayPal","Pouzeće"].map((x,i)=><div key={x} className={`border p-4 font-mono text-sm ${i===2?"border-foreground bg-foreground text-background":"border-hairline"}`}>{x}</div>)}</div></>}{step===2&&<div className="mt-12 border border-hairline bg-background p-6 shadow-lg"><span className="font-mono text-xs text-muted-foreground">AUTO E-MAIL</span><h3 className="mt-5 text-2xl font-medium">Zaboravili ste nešto?</h3><div className="mt-8 h-11 bg-foreground"/></div>}{step===3&&<><h3 className="mt-10 text-2xl font-medium">Pošiljka spremna</h3><p className="mt-2 text-muted-foreground">D Express · BG 1042</p><svg className="barcode mt-12 h-28 w-full" viewBox="0 0 320 100">{Array.from({length:28}).map((_,i)=><line key={i} x1={8+i*11} y1="5" x2={8+i*11} y2={i%3===0?"95":"75"} strokeWidth={i%4===0?5:2}/>)}</svg></>}{step===4&&<><div className="mt-5 flex items-end justify-between"><span className="text-muted-foreground">Prihod</span><strong className="font-mono text-3xl">284.920 RSD</strong></div><svg className="mt-12 h-44 w-full" viewBox="0 0 400 150" fill="none"><path d="M0 135 C55 130 65 100 110 105 S175 76 215 82 S285 46 320 55 S365 20 400 12" stroke="currentColor" strokeWidth="3"/><circle cx="400" cy="12" r="6" fill="var(--primary)"/></svg><span className="font-mono text-sm text-primary">+28.4%</span></>}</div></div> }
 
-export function Capabilities() {
-  const { t } = useLang();
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const mm = gsap.matchMedia();
-    mm.add(MOTION_OK, () => {
-      const cards = gsap.utils.toArray<HTMLElement>(".cap-card", ref.current);
-      cards.forEach((card, i) => {
-        const next = cards[i + 1];
-        if (!next) return;
-        const st = { trigger: next, start: "top bottom", end: `top ${TOP + (i + 1) * STEP}px`, scrub: true };
-        gsap.to(card.querySelector(".cap-body"), { scale: 0.92, ease: "none", scrollTrigger: st });
-        gsap.to(card.querySelector(".cap-shade"), { opacity: 0.6, ease: "none", scrollTrigger: { ...st } });
-      });
-    });
-    return () => mm.revert();
-  }, []);
-
-  return (
-    <section ref={ref} className="relative z-10 pb-24 md:pb-40">
-      <div className="container-grid">
-        <SectionHead label={t.caps.label} right="Stripe / PayPal / COD" />
-        <h2 className="max-w-5xl pt-10 pb-16 font-expanded text-[clamp(2.5rem,6.5vw,7rem)] uppercase">{t.caps.title}</h2>
-        <div className="flex flex-col gap-6">
-          {t.caps.items.map((c, i) => (
-            <div key={i} className="cap-card sticky" style={{ top: TOP + i * STEP }}>
-              <div className="cap-body relative origin-top overflow-hidden border border-hairline bg-card">
-                <div className="grid min-h-[60vh] grid-cols-12 gap-x-4 p-6 md:min-h-[64vh] md:p-10">
-                  <div className="col-span-12 flex items-start justify-between md:col-span-3 md:flex-col">
-                    <span className="meta text-primary">0{i + 1} / 04</span>
-                    <span className="font-expanded text-[clamp(5rem,12vw,12rem)] leading-none text-outline">0{i + 1}</span>
-                  </div>
-                  <div className="col-span-12 mt-8 flex flex-col justify-between md:col-span-8 md:col-start-5 md:mt-0">
-                    <div>
-                      <span className="meta text-muted-foreground">{c.k}</span>
-                      <h3 className="mt-4 font-semi-expanded text-[clamp(2rem,4.5vw,4.5rem)] font-extrabold uppercase leading-[0.95] tracking-tight">
-                        {c.t}
-                      </h3>
-                      <p className="mt-6 max-w-xl text-muted-foreground md:text-lg">{c.d}</p>
-                    </div>
-                    <ul className="mt-10 grid grid-cols-2 border-t border-hairline md:grid-cols-4">
-                      {c.tags.map((tag) => (
-                        <li key={tag} className="meta border-b border-hairline py-3 pr-4">
-                          [ {tag} ]
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                <div className="cap-shade pointer-events-none absolute inset-0 bg-background opacity-0" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+export function Capabilities(){const {t}=useLang();const ref=useRef<HTMLElement>(null);const [active,setActive]=useState(0);useEffect(()=>{const mm=gsap.matchMedia();mm.add(DESKTOP_MOTION,()=>{const root=ref.current;if(!root)return;const tl=gsap.timeline({scrollTrigger:{trigger:root,start:"top top",end:"+=3500",pin:true,scrub:.45}});for(let i=1;i<5;i++)tl.call(()=>setActive(i),[],i-.3).call(()=>setActive(i-1),[],i-.7);});mm.add(MOBILE_MOTION,()=>{gsap.utils.toArray<HTMLElement>(".order-step",ref.current).forEach(el=>gsap.fromTo(el,{clipPath:"inset(0 0 18% 0)"},{clipPath:"inset(0 0 0% 0)",duration:.65,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 82%",once:true}}))});return()=>mm.revert()},[]);return <section ref={ref} className="relative z-10 py-24 md:min-h-screen md:py-28"><div className="container-grid"><SectionHead label={t.caps.label}/><div className="mt-12 grid grid-cols-12 gap-8"><div className="col-span-12 md:col-span-4"><h2 className="max-w-lg text-[clamp(2.5rem,5vw,5rem)] font-semibold leading-[1.02]">{t.caps.orderTitle}</h2><p className="mt-6 max-w-sm text-muted-foreground">{t.caps.orderIntro}</p><ol className="mt-12 hidden md:block">{t.caps.orderSteps.map((s,i)=><li key={s.t} className={`grid grid-cols-[40px_1fr] border-t border-hairline py-4 transition-colors ${active===i?"text-foreground":"text-muted-foreground"}`}><span className="font-mono text-xs">0{i+1}</span><span>{s.t}</span></li>)}</ol></div><div className="col-span-12 md:col-span-7 md:col-start-6"><div className="hidden md:block"><Visual step={active}/><div className="mt-5 h-px bg-hairline"><div className="h-px bg-foreground transition-[width] duration-500" style={{width:`${(active+1)*20}%`}}/></div><p className="mt-5 max-w-xl text-muted-foreground">{t.caps.orderSteps[active]?.d}</p></div><div className="space-y-10 md:hidden">{t.caps.orderSteps.map((s,i)=><article key={s.t} className="order-step"><span className="font-mono text-xs text-muted-foreground">0{i+1}</span><h3 className="mt-2 text-2xl font-medium">{s.t}</h3><p className="mt-2 text-muted-foreground">{s.d}</p><div className="mt-5"><Visual step={i}/></div></article>)}</div></div></div></div></section>}
