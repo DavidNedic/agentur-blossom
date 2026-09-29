@@ -60,19 +60,19 @@
   --background: oklch(0.17 0.03 250);
   --foreground: oklch(0.94 0.01 250);
   --card: oklch(0.2 0.03 250);
-  --card-foreground: oklch(0.936 0.007 85);
+  --card-foreground: oklch(0.94 0.01 250);
   --popover: oklch(0.2 0.03 250);
-  --popover-foreground: oklch(0.936 0.007 85);
+  --popover-foreground: oklch(0.94 0.01 250);
   /* lime from the logo */
   --primary: oklch(0.85 0.25 125);
   --primary-foreground: oklch(0.17 0.03 250);
   --secondary: oklch(0.25 0.03 250);
-  --secondary-foreground: oklch(0.936 0.007 85);
+  --secondary-foreground: oklch(0.94 0.01 250);
   --muted: oklch(0.3 0.02 250);
   /* >= #B8B8B8 on black */
   --muted-foreground: oklch(0.8 0.02 250);
   --accent: oklch(0.25 0.03 250);
-  --accent-foreground: oklch(0.936 0.007 85);
+  --accent-foreground: oklch(0.94 0.01 250);
   --highlight: oklch(0.85 0.25 125);
   --highlight-foreground: oklch(0.17 0.03 250);
   --destructive: oklch(0.62 0.2 27);
