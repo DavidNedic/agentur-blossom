@@ -1,14 +1,92 @@
 import { useEffect, useRef, useState } from "react";
 import { useLang } from "@/lib/i18n";
 import { gsap, MOTION_OK } from "@/lib/motion";
-import { SectionHead } from "./ui";
+import { cn } from "@/lib/utils";
 
 export function Services() {
-  const { t } = useLang(); const ref = useRef<HTMLElement>(null); const [active, setActive] = useState(0);
-  useEffect(() => { const mm = gsap.matchMedia(); mm.add(MOTION_OK, () => { const root = ref.current; if (!root) return; const rows = gsap.utils.toArray<HTMLElement>(".receipt-line", root); rows.forEach((row, i) => gsap.fromTo(row,{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"none",scrollTrigger:{trigger:row,start:"top 85%",end:"top 58%",scrub:true,onEnter:()=>setActive(i),onEnterBack:()=>setActive(i)}})); gsap.fromTo(root.querySelector(".paid-stamp"),{opacity:0,rotate:-16,scale:.8},{opacity:1,rotate:-7,scale:1,duration:.55,ease:"power3.out",scrollTrigger:{trigger:".paid-stamp",start:"top 82%",once:true}}); }); return () => mm.revert(); }, []);
-  return <section id="usluge" ref={ref} className="relative z-10 py-28 md:py-40"><div className="container-grid"><SectionHead label={t.services.label} right={t.services.title}/><div className="mt-12 grid grid-cols-12 gap-8 md:mt-20">
-    <aside className="col-span-12 md:col-span-3"><div className="md:sticky md:top-28"><p className="text-2xl font-medium leading-tight">{t.services.receipt.note}</p><p className="mt-8 text-muted-foreground">{t.services.receipt.side[active]}</p></div></aside>
-    <div className="receipt col-span-12 px-5 py-8 md:col-span-6 md:col-start-4 md:px-10"><div className="border-b border-dashed border-hairline pb-7 text-center"><div className="font-semibold">Radenon Digital</div><div className="mt-2 font-mono text-xs text-muted-foreground">{t.services.receipt.title}</div></div><ol className="py-4">{t.services.items.map((s,i)=><li key={s.t} className="receipt-line grid grid-cols-[auto_1fr_auto] gap-3 border-b border-dashed border-hairline py-5 font-mono text-xs"><span>{String(i+1).padStart(2,"0")}</span><span><strong className="font-medium">{s.t}</strong><small className="mt-1 block font-sans text-muted-foreground">{s.del[0]}</small></span><span className="self-start text-muted-foreground">{t.services.receipt.included}</span></li>)}</ol><div className="flex items-end justify-between border-t border-foreground pt-5 font-mono"><span>{t.services.receipt.total}</span><strong className="text-2xl">{t.packages.from} 199 €</strong></div><div className="paid-stamp mt-8 ml-auto w-fit border-2 border-primary px-4 py-2 font-mono text-xs font-semibold text-foreground">{t.services.receipt.paid}</div></div>
-    <aside className="col-span-12 md:col-span-3"><div className="md:sticky md:top-28"><span className="font-mono text-xs text-muted-foreground">{String(active+1).padStart(2,"0")} / {String(t.services.items.length).padStart(2,"0")}</span><h3 className="mt-4 text-3xl font-medium">{t.services.items[active]?.t}</h3><p className="mt-4 text-muted-foreground">{t.services.items[active]?.d}</p></div></aside>
-  </div></div></section>;
+  const { t } = useLang();
+  const ref = useRef<HTMLElement>(null);
+  const [open, setOpen] = useState<number | null>(0);
+  const items = t.services.items;
+
+  useEffect(() => {
+    const root = ref.current!;
+    const mm = gsap.matchMedia();
+    mm.add(MOTION_OK, () => {
+      gsap.utils.toArray<HTMLElement>(".sv-line", root).forEach((line) => {
+        gsap.fromTo(
+          line,
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.6, ease: "power2.out", scrollTrigger: { trigger: line, start: "top 90%", once: true } },
+        );
+      });
+    });
+    return () => {
+      mm.revert();
+    };
+  }, []);
+
+  return (
+    <section id="usluge" ref={ref} className="relative z-10 py-24 md:py-40">
+      <div className="container-grid grid grid-cols-12 gap-x-4 md:gap-x-8">
+        <div className="col-span-12 md:col-span-5">
+          <div className="md:sticky md:top-24">
+            <span className="meta">{t.services.label}</span>
+            <h2 className="mt-6 font-expanded text-[clamp(3rem,7vw,7.5rem)] uppercase">{t.services.title}</h2>
+            <p className="mt-6 max-w-sm text-muted-foreground">{t.services.intro}</p>
+          </div>
+        </div>
+
+        <ol className="col-span-12 mt-12 md:col-span-7 md:mt-0">
+          {items.map((s, i) => {
+            const isOpen = open === i;
+            return (
+              <li key={i} className="sv-row relative">
+                <span className="sv-line absolute inset-x-0 top-0 h-px origin-left bg-hairline" />
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="group grid w-full grid-cols-12 items-baseline gap-x-4 py-6 text-left md:py-8"
+                >
+                   <span className="meta col-span-2 text-muted-foreground">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="col-span-9 font-semi-expanded text-2xl font-bold uppercase leading-tight tracking-tight md:text-4xl">
+                    {s.t}
+                  </span>
+                  <span
+                    aria-hidden
+                    className={cn("col-span-1 justify-self-end font-mono text-xl transition-transform duration-300", isOpen && "rotate-45")}
+                  >
+                    +
+                  </span>
+                </button>
+                <div className={cn("grid transition-[grid-template-rows] duration-500 ease-out", isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
+                  <div className="overflow-hidden">
+                    <div className="grid grid-cols-12 gap-x-4 pb-8">
+                      <p className="col-span-12 text-muted-foreground md:col-span-6 md:col-start-3">{s.d}</p>
+                      <div className="col-span-12 mt-6 md:col-span-4 md:mt-0">
+                        <span className="meta text-muted-foreground">{t.services.deliverables}</span>
+                        <ul className="mt-3">
+                          {s.del.map((d) => (
+                            <li key={d} className="border-b border-hairline py-2 text-sm">
+                              {d}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+          <li className="relative">
+            <span className="sv-line absolute inset-x-0 top-0 h-px origin-left bg-hairline" />
+          </li>
+        </ol>
+      </div>
+    </section>
+  );
 }
