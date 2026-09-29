@@ -31,20 +31,18 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Lovable App" },
-      { name: "twitter:description", content: "Lovable Generated Project" },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8cd4555d-23cd-417a-9b11-1d6876693ea0/id-preview-95b5d9e1--b21227c2-c793-426a-aafc-6925f572987b.lovable.app-1775830843339.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8cd4555d-23cd-417a-9b11-1d6876693ea0/id-preview-95b5d9e1--b21227c2-c793-426a-aafc-6925f572987b.lovable.app-1775830843339.png" },
+      { title: "Radenon Digital" },
+      { name: "description", content: "Radenon Digital: online prodavnice, web dizajn, SEO i oglasi." },
+      { name: "author", content: "Radenon Digital" },
+      { name: "theme-color", content: "#0A0B0D" },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,
@@ -58,7 +56,7 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="sr">
       <head>
         <HeadContent />
       </head>
