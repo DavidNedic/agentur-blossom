@@ -54,7 +54,7 @@ export function Contact() {
     <section id="kontakt" ref={ref} className="relative z-10 flex min-h-[100svh] flex-col overflow-hidden border-t border-hairline bg-background">
       <div className="container-grid flex flex-1 flex-col pt-10">
         <span className="meta">{t.contact.label}</span>
-        <h2 className="ct-big mt-10 font-expanded text-[clamp(3.5rem,16vw,19rem)] uppercase will-change-transform">
+        <h2 className="ct-big mt-10 font-expanded text-[clamp(3.25rem,14.5vw,18rem)] uppercase will-change-transform">
           <span className="block">{t.contact.big[0]}</span>
           <span className="block text-primary">{t.contact.big[1]}</span>
         </h2>
