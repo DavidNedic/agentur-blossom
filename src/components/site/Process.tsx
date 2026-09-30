@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useLang } from "@/lib/i18n";
 import { gsap, MOTION_OK } from "@/lib/motion";
 import { Roll } from "./ui";
+import { MaskedTitle } from "./SiteMotion";
 
 export function Process() {
   const { t } = useLang();
@@ -11,7 +12,10 @@ export function Process() {
   useEffect(() => {
     const mm = gsap.matchMedia();
     mm.add(MOTION_OK, () => {
-      const path = ref.current!.querySelector(".pr-path");
+      const root = ref.current;
+      if (!root) return;
+      const path = root.querySelector(".pr-path");
+      const number = root.querySelector(".pr-current");
       gsap.fromTo(
         path,
         { strokeDasharray: 1, strokeDashoffset: 1 },
@@ -30,8 +34,9 @@ export function Process() {
           scrollTrigger: {
             trigger: step,
             start: "top 60%",
-             once: true,
              onEnter: () => step.querySelector(".pr-dot")?.classList.add("bg-primary"),
+              onEnterBack: () => step.querySelector(".pr-dot")?.classList.add("bg-primary"),
+              onToggle: (self) => { if (self.isActive && number) number.textContent = String(Number(step.dataset.index) + 1).padStart(2, "0"); },
           },
         });
       });
@@ -45,7 +50,8 @@ export function Process() {
         <div className="col-span-12 md:col-span-5">
           <div className="md:sticky md:top-24">
             <span className="meta">{t.process.label}</span>
-            <h2 className="mt-6 font-expanded text-[clamp(3rem,7.5vw,8rem)] uppercase">{t.process.title}</h2>
+            <h2 className="mt-6 font-expanded text-[clamp(3rem,7.5vw,8rem)] uppercase"><MaskedTitle>{t.process.title}</MaskedTitle></h2>
+            <span className="pr-current mt-10 hidden font-mono text-[clamp(5rem,10vw,10rem)] leading-none text-primary md:block">01</span>
             <div className="mt-10">
               <Roll href="#kontakt">{t.nav.cta}</Roll>
             </div>
@@ -57,7 +63,7 @@ export function Process() {
             <line className="pr-path" x1="1" y1="0" x2="1" y2="100" pathLength={1} stroke="var(--primary)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
           </svg>
           {t.process.steps.map((s, i) => (
-            <li key={i} className="pr-step relative pb-20 last:pb-0">
+            <li key={i} data-index={i} className="pr-step relative pb-20 last:pb-0">
               <span className="pr-dot absolute top-1.5 -left-10 h-3 w-3 border border-primary bg-background transition-colors md:-left-16" />
               <span className="meta text-primary">[ {s.d} ]</span>
               <h3 className="mt-3 font-semi-expanded text-3xl font-extrabold uppercase tracking-tight md:text-5xl">{s.t}</h3>

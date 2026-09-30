@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLang } from "@/lib/i18n";
 import { gsap, MOTION_OK } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { MaskedTitle } from "./SiteMotion";
 
 export function Services() {
   const { t } = useLang();
@@ -32,7 +33,7 @@ export function Services() {
         <div className="col-span-12 md:col-span-5">
           <div className="md:sticky md:top-24">
             <span className="meta">{t.services.label}</span>
-            <h2 className="mt-6 font-expanded text-[clamp(3rem,7vw,7.5rem)] uppercase">{t.services.title}</h2>
+            <h2 className="mt-6 font-expanded text-[clamp(3rem,7vw,7.5rem)] uppercase"><MaskedTitle>{t.services.title}</MaskedTitle></h2>
             <p className="mt-6 max-w-sm text-muted-foreground">{t.services.intro}</p>
           </div>
         </div>

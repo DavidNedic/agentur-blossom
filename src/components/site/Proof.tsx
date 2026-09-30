@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useLang } from "@/lib/i18n";
 import { gsap, MOTION_OK } from "@/lib/motion";
 import { SectionHead } from "./ui";
+import { MaskedTitle } from "./SiteMotion";
 
 export function Proof() {
   const { t } = useLang();
@@ -47,7 +48,7 @@ export function Proof() {
 
         <div className="mt-24 grid grid-cols-12 gap-x-4 border-t border-hairline pt-10 md:mt-32 md:gap-x-8">
           <div className="col-span-12 md:col-span-5">
-            <h2 className="font-expanded text-[clamp(2.25rem,5vw,5rem)] uppercase">{t.proof.funnelTitle}</h2>
+            <h2 className="font-expanded text-[clamp(2.25rem,5vw,5rem)] uppercase"><MaskedTitle>{t.proof.funnelTitle}</MaskedTitle></h2>
             <p className="mt-6 max-w-sm text-muted-foreground">{t.proof.funnelText}</p>
           </div>
           <div className="col-span-12 mt-10 grid md:col-span-7 md:mt-0 md:grid-cols-3">
@@ -70,7 +71,7 @@ export function Proof() {
         </div>
 
         <div className="mt-24 md:mt-32">
-          <h2 className="max-w-4xl font-expanded text-[clamp(2.25rem,5vw,5rem)] uppercase">{t.proof.compTitle}</h2>
+          <h2 className="max-w-4xl font-expanded text-[clamp(2.25rem,5vw,5rem)] uppercase"><MaskedTitle>{t.proof.compTitle}</MaskedTitle></h2>
           <div className="mt-10 overflow-x-auto">
             <table className="w-full min-w-[640px] border-collapse text-left">
               <thead>

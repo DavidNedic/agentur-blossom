@@ -59,7 +59,7 @@ export function SectionHead({ label, right, className }: { label: string; right?
 /** 12 column hairline grid behind the page. */
 export function GridLines() {
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
+    <div aria-hidden className="grid-lines pointer-events-none fixed inset-0 z-0">
       <div className="container-grid grid h-full grid-cols-4 md:grid-cols-12">
         {Array.from({ length: 12 }).map((_, i) => (
           <div key={i} className={cn("h-full border-l border-hairline", i >= 4 && "hidden md:block", i === 11 && "md:border-r")} />

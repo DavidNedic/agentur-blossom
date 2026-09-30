@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
+import { MaskedTitle } from "./SiteMotion";
 
 export function Faq() {
   const { t } = useLang();
@@ -10,7 +11,7 @@ export function Faq() {
       <div className="container-grid grid grid-cols-12 gap-x-4 md:gap-x-8">
         <div className="col-span-12 md:col-span-4">
           <span className="meta">{t.faq.label}</span>
-          <h2 className="mt-6 font-expanded text-[clamp(3rem,7vw,7.5rem)] uppercase">{t.faq.title}</h2>
+          <h2 className="mt-6 font-expanded text-[clamp(3rem,7vw,7.5rem)] uppercase"><MaskedTitle>{t.faq.title}</MaskedTitle></h2>
         </div>
         <ul className="col-span-12 mt-12 border-t border-hairline md:col-span-8 md:mt-0">
           {t.faq.items.map(([q, a], i) => {

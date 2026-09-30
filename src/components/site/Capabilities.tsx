@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useLang } from "@/lib/i18n";
 import { gsap, MOTION_OK } from "@/lib/motion";
 import { SectionHead } from "./ui";
+import { MaskedTitle } from "./SiteMotion";
 
 export function Capabilities() {
   const { t } = useLang();
@@ -23,7 +24,7 @@ export function Capabilities() {
     <section ref={ref} className="relative z-10 pb-24 md:pb-40">
       <div className="container-grid">
         <SectionHead label={t.caps.label} right="Stripe / PayPal / COD" />
-        <h2 className="max-w-5xl pt-10 pb-16 font-expanded text-[clamp(2.5rem,6.5vw,7rem)] uppercase">{t.caps.title}</h2>
+        <h2 className="max-w-5xl pt-10 pb-16 font-expanded text-[clamp(2.5rem,6.5vw,7rem)] uppercase"><MaskedTitle>{t.caps.title}</MaskedTitle></h2>
         <div className="grid gap-px bg-hairline md:grid-cols-2">
           {t.caps.items.map((c, i) => (
             <div key={i} className="cap-card bg-background">

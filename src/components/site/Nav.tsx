@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLang, type Lang } from "@/lib/i18n";
 import { Roll } from "./ui";
 import { cn } from "@/lib/utils";
@@ -37,10 +37,36 @@ export function LangSwitch({ className }: { className?: string }) {
 export function Nav() {
   const { t } = useLang();
   const [open, setOpen] = useState(false);
+  const [current, setCurrent] = useState(t.nav.links[0]?.[0] ?? "");
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      header.style.transform = y > lastY && y > 120 && !open ? "translateY(-100%)" : "translateY(0)";
+      lastY = y;
+    };
+    const sections = t.nav.links.map(([label, href]) => ({ label, node: document.querySelector(href) })).filter((x) => x.node);
+    const observer = new IntersectionObserver((entries) => {
+      const active = entries.find((entry) => entry.isIntersecting);
+      const item = sections.find((section) => section.node === active?.target);
+      if (item) setCurrent(item.label);
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    sections.forEach(({ node }) => node && observer.observe(node));
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [open, t.nav.links]);
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-hairline bg-background">
+    <header ref={headerRef} className="fixed inset-x-0 top-0 z-50 border-b border-hairline bg-background transition-transform duration-300 motion-reduce:transition-none">
       <div className="container-grid flex h-16 items-center justify-between">
         <Wordmark />
+        <span className="meta hidden text-primary xl:block">[ {current} ]</span>
         <nav className="hidden items-center gap-8 lg:flex">
           {t.nav.links.map(([l, h], i) => (
             <a key={h} href={h} className="meta link-draw py-1 text-foreground">

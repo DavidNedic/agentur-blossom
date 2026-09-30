@@ -13,6 +13,7 @@ import { Proof } from "@/components/site/Proof";
 import { Packages } from "@/components/site/Packages";
 import { Faq } from "@/components/site/Faq";
 import { Contact } from "@/components/site/Contact";
+import { SiteMotion } from "@/components/site/SiteMotion";
 
 const TITLE = "Radenon Digital | Online prodavnice koje prodaju";
 const DESC =
@@ -40,6 +41,7 @@ function Index() {
   return (
     <LangProvider>
       <GridLines />
+      <SiteMotion />
       <div className="relative min-h-screen text-foreground">
         <Nav />
         <main>
