@@ -162,8 +162,8 @@ const dict = {
         { tag: "BOFU", t: "Decision", s: "Booking and closing", i: ["Appointment booking", "Remarketing", "E-mail"] },
       ],
     },
-    compTitle: { sr: "Radenon protiv tipične agencije.", en: "Radenon vs a typical agency." },
-    compHead: { sr: ["Kriterijum", "Tipična agencija", "Radenon Digital"], en: ["Criteria", "Typical agency", "Radenon Digital"] },
+    compTitle: { sr: "Klik protiv tipične agencije.", en: "Klik vs a typical agency." },
+    compHead: { sr: ["Kriterijum", "Tipična agencija", "Klik Digital"], en: ["Criteria", "Typical agency", "Klik Digital"] },
     comp: {
       sr: [
         ["Kvalitet sadržaja", "Stock fotografije i generički dizajn", "Individualni dizajn prilagođen tvom brendu"],
@@ -231,7 +231,7 @@ const dict = {
     msgPh: { sr: "Šta prodaješ i gde želiš da budeš za 90 dana?", en: "What do you sell and where do you want to be in 90 days?" },
     send: { sr: "Pošalji preko WhatsApp-a", en: "Send via WhatsApp" },
     clock: { sr: "Zrenjanin / Beograd", en: "Zrenjanin / Belgrade" },
-    rights: { sr: "Deo Radenon Group. Sva prava zadržana.", en: "Part of Radenon Group. All rights reserved." },
+    rights: { sr: "Sva prava zadržana.", en: "All rights reserved." },
   },
 };
 

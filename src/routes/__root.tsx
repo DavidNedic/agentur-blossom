@@ -36,9 +36,9 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Radenon Digital" },
-      { name: "description", content: "Radenon Digital: online prodavnice, web dizajn, SEO i oglasi." },
-      { name: "author", content: "Radenon Digital" },
+      { title: "Klik Digital" },
+      { name: "description", content: "Klik Digital: online prodavnice, web dizajn, SEO i oglasi." },
+      { name: "author", content: "Klik Digital" },
       { name: "theme-color", content: "#17181C" },
     ],
     links: [

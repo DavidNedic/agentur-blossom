@@ -29,7 +29,7 @@ export function Manifesto() {
   return (
     <section ref={ref} className="relative z-10 py-24 md:py-40">
       <div className="container-grid">
-        <SectionHead label={t.manifesto.label} right="Radenon" />
+        <SectionHead label={t.manifesto.label} right="Klik" />
         <div className="grid grid-cols-12 pt-12 md:pt-20">
           <div className="col-span-12 overflow-hidden md:col-span-11 lg:col-span-10 lg:col-start-3">
             <p className="manifesto-copy text-[clamp(1.75rem,4.2vw,4.25rem)] font-semibold leading-[1.08] tracking-[-0.02em]">{t.manifesto.text}</p>

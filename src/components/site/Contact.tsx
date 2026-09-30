@@ -135,7 +135,7 @@ export function Contact() {
           {t.contact.clock} <Clock />
         </span>
         <span className="meta col-span-2 text-muted-foreground md:col-span-4">
-          © {new Date().getFullYear()} Radenon Digital. {t.contact.rights}
+          © 2026 Klik Digital. {t.contact.rights}
         </span>
         <LangSwitch className="col-span-2 md:col-span-2 md:justify-self-end" />
       </footer>
