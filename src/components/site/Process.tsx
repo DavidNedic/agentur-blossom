@@ -34,11 +34,9 @@ export function Process() {
           scrollTrigger: {
             trigger: step,
             start: "top 60%",
-             once: true,
              onEnter: () => step.querySelector(".pr-dot")?.classList.add("bg-primary"),
-              onToggle: (self) => {
-                if (self.isActive && number) number.textContent = String(Number(step.dataset.index) + 1).padStart(2, "0");
-              },
+              onEnterBack: () => step.querySelector(".pr-dot")?.classList.add("bg-primary"),
+              onToggle: (self) => { if (self.isActive && number) number.textContent = String(Number(step.dataset.index) + 1).padStart(2, "0"); },
           },
         });
       });

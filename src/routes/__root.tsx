@@ -1,6 +1,9 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import archivoLatin from "../assets/fonts/archivo-latin.woff2?url";
+import archivoLatinExt from "../assets/fonts/archivo-latin-ext.woff2?url";
+import jetbrainsLatin from "../assets/fonts/jetbrains-mono-latin.woff2?url";
 
 function NotFoundComponent() {
   return (
@@ -37,9 +40,9 @@ export const Route = createRootRoute({
       { name: "theme-color", content: "#0A0B0D" },
     ],
     links: [
-      { rel: "preload", href: "/src/assets/fonts/archivo-latin.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
-      { rel: "preload", href: "/src/assets/fonts/archivo-latin-ext.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
-      { rel: "preload", href: "/src/assets/fonts/jetbrains-mono-latin.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: archivoLatin, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: archivoLatinExt, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: jetbrainsLatin, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: appCss,

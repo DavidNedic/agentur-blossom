@@ -31,16 +31,17 @@ export function SiteMotion() {
 
       const velocityTargets = gsap.utils.toArray<HTMLElement>(".velocity-type");
       const setters = velocityTargets.map((el) => gsap.quickTo(el, "skewY", { duration: 0.35, ease: "power2.out" }));
+      const settle = gsap.delayedCall(0.12, () => setters.forEach((set) => set(0))).pause();
       const velocityTrigger = ScrollTrigger.create({
         start: 0,
         end: "max",
         onUpdate: (self) => {
           const skew = gsap.utils.clamp(-4, 4, self.getVelocity() / -500);
           setters.forEach((set) => set(skew));
-          gsap.delayedCall(0.12, () => setters.forEach((set) => set(0)));
+          settle.restart(true);
         },
       });
-      cleanups.push(() => velocityTrigger.kill());
+      cleanups.push(() => { velocityTrigger.kill(); settle.kill(); });
 
       const canSmooth = window.matchMedia("(pointer: fine)").matches && navigator.maxTouchPoints === 0;
       if (canSmooth) {
@@ -60,7 +61,12 @@ export function SiteMotion() {
       const refresh = () => ScrollTrigger.refresh();
       document.fonts.ready.then(refresh);
       window.addEventListener("load", refresh, { once: true });
-      cleanups.push(() => window.removeEventListener("load", refresh));
+      const pendingImages = Array.from(document.images).filter((image) => !image.complete);
+      pendingImages.forEach((image) => image.addEventListener("load", refresh, { once: true }));
+      cleanups.push(() => {
+        window.removeEventListener("load", refresh);
+        pendingImages.forEach((image) => image.removeEventListener("load", refresh));
+      });
     });
 
     return () => {

@@ -63,7 +63,7 @@ export function Work() {
         <div ref={trackRef} className="container-grid grid gap-y-20 pt-10 md:flex md:min-w-max md:flex-1 md:gap-8">
           {projects.map((p, i) => (
             <article key={p.name} className="wk-card group w-full md:grid md:w-[min(78vw,1120px)] md:shrink-0 md:grid-cols-12 md:gap-x-8">
-              <div className="wk-frame relative aspect-video overflow-hidden border border-hairline bg-card">
+              <div className="wk-frame relative aspect-video overflow-hidden border border-hairline bg-card md:col-span-8">
                 <picture className="wk-reveal absolute inset-0 block overflow-hidden">
                   <source srcSet={p.image.avif} type="image/avif" />
                   <img src={p.image.webp} alt={p.name} width={p.image.width} height={p.image.height} loading="lazy" decoding="async" className="wk-img h-full w-full object-contain object-center transition-transform duration-500 ease-out group-hover:translate-x-2 group-hover:scale-[1.02] motion-reduce:transition-none" />

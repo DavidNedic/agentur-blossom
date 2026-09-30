@@ -10,7 +10,7 @@ const floats = [
 export function Hero() {
   const { t } = useLang();
   const ref = useRef<HTMLElement>(null);
-  const [intro, setIntro] = useState(false);
+  const [intro, setIntro] = useState(true);
 
   useEffect(() => {
     const root = ref.current;
@@ -19,22 +19,21 @@ export function Hero() {
     const q = gsap.utils.selector(root);
     mm.add(MOTION_OK, () => {
       const firstVisit = sessionStorage.getItem("radenon-intro") !== "seen";
+      const timeline = gsap.timeline();
       if (firstVisit) {
         sessionStorage.setItem("radenon-intro", "seen");
-        setIntro(true);
         const counter = { value: 0 };
-        gsap.timeline({ onComplete: () => setIntro(false) })
-          .to(counter, { value: 100, duration: 0.55, ease: "power2.out", onUpdate: () => {
+        timeline
+          .to(counter, { value: 100, duration: 0.35, ease: "power2.out", onUpdate: () => {
             const el = root.querySelector(".intro-count");
             if (el) el.textContent = String(Math.round(counter.value)).padStart(3, "0");
           } })
-          .to(q(".intro-screen"), { yPercent: -100, duration: 0.45, ease: "power2.out" });
-      }
+          .to(q(".intro-screen"), { yPercent: -100, duration: 0.3, ease: "power2.out", onComplete: () => setIntro(false) }, 0.3);
+      } else setIntro(false);
       gsap.set(q(".hl-in"), { yPercent: 115 });
       gsap.set(q(".hero-fade"), { opacity: 0 });
-      gsap
-        .timeline()
-        .to(q(".hl-in"), { yPercent: 0, duration: 0.6, ease: "power2.out", stagger: 0.06 })
+      timeline
+        .to(q(".hl-in"), { yPercent: 0, duration: 0.5, ease: "power2.out", stagger: 0.04 }, firstVisit ? 0.38 : 0)
         .to(q(".hero-fade"), { opacity: 1, duration: 0.45, ease: "power2.out", stagger: 0.04 }, "-=0.35");
       q(".float").forEach((el, i) => {
         gsap.fromTo(
