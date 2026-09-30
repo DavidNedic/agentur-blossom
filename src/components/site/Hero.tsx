@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useLang } from "@/lib/i18n";
 import { gsap, MOTION_OK } from "@/lib/motion";
 import { Roll } from "./ui";
@@ -6,7 +6,6 @@ import { Roll } from "./ui";
 export function Hero() {
   const { t } = useLang();
   const ref = useRef<HTMLElement>(null);
-  const [intro, setIntro] = useState(true);
 
   useEffect(() => {
     const root = ref.current;
@@ -14,22 +13,11 @@ export function Hero() {
     const mm = gsap.matchMedia();
     const q = gsap.utils.selector(root);
     mm.add(MOTION_OK, () => {
-      const firstVisit = sessionStorage.getItem("radenon-intro") !== "seen";
       const timeline = gsap.timeline();
-      if (firstVisit) {
-        sessionStorage.setItem("radenon-intro", "seen");
-        const counter = { value: 0 };
-        timeline
-          .to(counter, { value: 100, duration: 0.35, ease: "power2.out", onUpdate: () => {
-            const el = root.querySelector(".intro-count");
-            if (el) el.textContent = String(Math.round(counter.value)).padStart(3, "0");
-          } })
-          .to(q(".intro-screen"), { yPercent: -100, duration: 0.3, ease: "power2.out", onComplete: () => setIntro(false) }, 0.3);
-      } else setIntro(false);
       gsap.set(q(".hl-in"), { yPercent: 115 });
       gsap.set(q(".hero-fade"), { opacity: 0 });
       timeline
-        .to(q(".hl-in"), { yPercent: 0, duration: 0.5, ease: "power2.out", stagger: 0.04 }, firstVisit ? 0.38 : 0)
+        .to(q(".hl-in"), { yPercent: 0, duration: 0.5, ease: "power2.out", stagger: 0.04 })
         .to(q(".hero-fade"), { opacity: 1, duration: 0.45, ease: "power2.out", stagger: 0.04 }, "-=0.35");
     });
 
@@ -38,7 +26,6 @@ export function Hero() {
 
   return (
     <section id="top" ref={ref} className="relative h-[100svh] min-h-[640px] overflow-hidden pt-16">
-      {intro && <div className="intro-screen fixed inset-0 z-[80] bg-background"><span className="intro-count meta absolute bottom-6 left-6 text-primary">000</span></div>}
       <div className="container-grid relative flex h-full flex-col">
         <div className="hero-fade grid grid-cols-2 gap-4 border-b border-hairline py-4 md:grid-cols-12">
           <span className="meta md:col-span-4">{t.hero.meta[0]}</span>

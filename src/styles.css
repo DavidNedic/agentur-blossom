@@ -277,9 +277,6 @@ section:has(.count) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro-screen {
-    display: none !important;
-  }
   *,
   *::before,
   *::after {
