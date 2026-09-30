@@ -50,9 +50,10 @@ const dict = {
   },
   hero: {
     lines: { sr: ["Od SaaS", "sistema do", "e-commerce", "prodaje."], en: ["From SaaS", "systems to", "e-commerce", "sales."] },
-    meta: { sr: ["01 / Digitalni partner", "Kaufmann für E-Commerce · DE / RS", "Zrenjanin / Beograd"], en: ["01 / Digital partner", "Kaufmann für E-Commerce · DE / RS", "Zrenjanin / Belgrade"] },
+    meta: { sr: ["01 / Digitalni partner", "Kvalitet po nemačkom standardu", "Zrenjanin / Beograd"], en: ["01 / Digital partner", "Kaufmann für E-Commerce · DE / RS", "Zrenjanin / Belgrade"] },
+
     sub: { sr: "Razvijamo softver, online prodavnice, sajtove i prodajne sisteme. Od prve specifikacije do merljivog rezultata.", en: "We build software, online stores, websites and sales systems. From the first specification to measurable results." },
-    trust: { sr: "Nemačka stručna kvalifikacija. Iskustvo na nemačkom i srpskom tržištu.", en: "German vocational qualification. Experience in the German and Serbian markets." },
+    trust: { sr: "Sertifikovani komercijalista za e-trgovinu (Nemačka, IHK). Iskustvo na nemačkom i srpskom tržištu.", en: "German vocational qualification. Experience in the German and Serbian markets." },
     scroll: { sr: "Skroluj", en: "Scroll" },
   },
   marquee: { sr: ["SaaS sistemi", "E-commerce", "Online prodaja", "Sajtovi", "SEO", "Automatizacija"], en: ["SaaS systems", "E-commerce", "Online sales", "Websites", "SEO", "Automation"] },
@@ -113,8 +114,9 @@ const dict = {
   standard: {
     label: { sr: "03 / Kvalifikacija", en: "03 / Qualification" },
     title: { sr: "Nemački standard. Za srpski biznis.", en: "German standard. For Serbian business." },
-    intro: { sr: "Osnivač David Nedić ima nemačku stručnu kvalifikaciju Kaufmann für E-Commerce. Školovao se i radio u Nemačkoj, a danas to iskustvo primenjuje za firme u Srbiji i Nemačkoj.", en: "Founder David Nedić holds the German vocational qualification Kaufmann für E-Commerce. He trained and worked in Germany and now applies that experience for businesses in Serbia and Germany." },
-    certificate: { sr: ["STRUČNA KVALIFIKACIJA", "Kaufmann für E-Commerce", "Nemačka", "DE / RS"], en: ["VOCATIONAL QUALIFICATION", "Kaufmann für E-Commerce", "Germany", "DE / RS"] },
+    intro: { sr: "Osnivač David Nedić je Komercijalista za elektronsku trgovinu (Kaufmann für E-Commerce, IHK). Državno priznato stručno zvanje stečeno u Nemačkoj kroz dualno obrazovanje. Danas to iskustvo primenjuje za firme u Srbiji i Nemačkoj, uz rad po nemačkim standardima kvaliteta: precizno, pouzdano i transparentno.", en: "Founder David Nedić holds the German vocational qualification Kaufmann für E-Commerce. He trained and worked in Germany and now applies that experience for businesses in Serbia and Germany." },
+    certificate: { sr: ["SERTIFIKOVANI KOMERCIJALISTA ZA E-TRGOVINU", "Kaufmann für E-Commerce (IHK)", "Nemačka", "DE / RS"], en: ["VOCATIONAL QUALIFICATION", "Kaufmann für E-Commerce", "Germany", "DE / RS"] },
+
     points: {
       sr: [["01", "Fiksni rokovi", "Dogovoreni datumi, jasne faze i odgovornost za isporuku."], ["02", "Jasni ugovori i cene", "Obim posla, cena i uslovi definišu se pre početka."], ["03", "Dokumentovani procesi", "Odluke, pristupi i sledeći koraci ostaju uredno zabeleženi."], ["04", "GDPR nivo rada sa podacima", "Pristupi, podaci kupaca i analitika tretiraju se pažljivo i kontrolisano."]],
       en: [["01", "Fixed deadlines", "Agreed dates, clear stages and accountability for delivery."], ["02", "Clear contracts and pricing", "Scope, price and terms are defined before work begins."], ["03", "Documented processes", "Decisions, access and next steps remain clearly recorded."], ["04", "GDPR-level data handling", "Access, customer data and analytics are handled carefully and with control."]],
