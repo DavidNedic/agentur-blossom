@@ -91,8 +91,8 @@
 
 :root {
   --radius: 0px;
-  /* near-black #0A0B0D */
-  --background: oklch(0.17 0.03 250);
+  /* navy #07111C */
+  --background: oklch(0.17 0.025 250);
   --foreground: oklch(0.94 0.01 250);
   --card: oklch(0.2 0.03 250);
   --card-foreground: oklch(0.94 0.01 250);
@@ -116,11 +116,11 @@
   --border: oklch(0.75 0.06 220 / 0.14);
   --input: oklch(1 0 0 / 0.16);
   --ring: oklch(0.85 0.25 125);
-  /* warm off-white #EDEBE6 */
-  --paper: oklch(0.21 0.035 250);
-  --ink: oklch(0.94 0.01 250);
-  --ink-muted: oklch(0.8 0.02 250);
-  --paper-hairline: oklch(0.75 0.06 220 / 0.18);
+  /* off-white #F2F2F4 */
+  --paper: oklch(0.96 0.004 270);
+  --ink: oklch(0.17 0.025 250);
+  --ink-muted: oklch(0.45 0.02 250);
+  --paper-hairline: oklch(0.17 0.025 250 / 0.16);
 }
 
 @layer base {
@@ -160,6 +160,10 @@ section:has(.count) {
   contain-intrinsic-size: auto 900px;
 }
 
+.grid-lines {
+  opacity: 0.42;
+}
+
 :focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 4px;
@@ -169,8 +173,8 @@ section:has(.count) {
 @utility font-expanded {
   font-stretch: 125%;
   font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 0.86;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
 }
 @utility font-semi-expanded {
   font-stretch: 112%;
@@ -273,9 +277,6 @@ section:has(.count) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro-screen {
-    display: none !important;
-  }
   *,
   *::before,
   *::after {

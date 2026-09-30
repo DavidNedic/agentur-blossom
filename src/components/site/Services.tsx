@@ -7,7 +7,7 @@ import { MaskedTitle } from "./SiteMotion";
 export function Services() {
   const { t } = useLang();
   const ref = useRef<HTMLElement>(null);
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(null);
   const items = t.services.items;
 
   useEffect(() => {
@@ -29,49 +29,51 @@ export function Services() {
 
   return (
     <section id="usluge" ref={ref} className="relative z-10 py-24 md:py-40">
-      <div className="container-grid grid grid-cols-12 gap-x-4 md:gap-x-8">
-        <div className="col-span-12 md:col-span-5">
-          <div className="md:sticky md:top-24">
+      <div className="container-grid">
+        <div className="grid grid-cols-12 gap-x-4 border-b border-hairline pb-16 md:gap-x-8">
+          <div className="col-span-12 md:col-span-7">
             <span className="meta">{t.services.label}</span>
-            <h2 className="mt-6 font-expanded text-[clamp(3rem,7vw,7.5rem)] uppercase"><MaskedTitle>{t.services.title}</MaskedTitle></h2>
-            <p className="mt-6 max-w-sm text-muted-foreground">{t.services.intro}</p>
+            <h2 className="mt-6 font-expanded text-[clamp(3rem,7vw,7rem)]"><MaskedTitle>{t.services.title}</MaskedTitle></h2>
           </div>
+          <p className="col-span-12 mt-8 max-w-md text-lg text-muted-foreground md:col-span-4 md:col-start-9 md:mt-0 md:self-end">{t.services.intro}</p>
         </div>
 
-        <ol className="col-span-12 mt-12 md:col-span-7 md:mt-0">
+        <ol>
           {items.map((s, i) => {
             const isOpen = open === i;
             return (
-              <li key={i} className="sv-row relative">
+              <li key={i} className="sv-row relative" onMouseEnter={() => setOpen(i)} onMouseLeave={() => setOpen(null)}>
                 <span className="sv-line absolute inset-x-0 top-0 h-px origin-left bg-hairline" />
                 <button
                   type="button"
                   aria-expanded={isOpen}
                   onClick={() => setOpen(isOpen ? null : i)}
-                  className="group grid w-full grid-cols-12 items-baseline gap-x-4 py-6 text-left md:py-8"
+                  onFocus={() => setOpen(i)}
+                  className="group grid w-full grid-cols-12 items-start gap-x-4 py-8 text-left md:gap-x-8 md:py-12"
                 >
-                   <span className="meta col-span-2 text-muted-foreground">
+                   <span className="meta col-span-2 pt-2 text-muted-foreground md:col-span-1">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="col-span-9 font-semi-expanded text-2xl font-bold uppercase leading-tight tracking-tight md:text-4xl">
+                  <span className="col-span-9 font-expanded text-[clamp(2rem,4.3vw,4.75rem)] leading-[0.96] md:col-span-6">
                     {s.t}
                   </span>
+                  <span className="col-span-12 mt-5 text-muted-foreground md:col-span-3 md:mt-0">{s.d}</span>
+                  <span className="meta col-span-10 col-start-3 mt-4 text-muted-foreground md:col-span-1 md:col-start-auto md:mt-1">{t.services.example}<br /><span className="text-foreground">{s.example}</span></span>
                   <span
                     aria-hidden
-                    className={cn("col-span-1 justify-self-end font-mono text-xl transition-transform duration-300", isOpen && "rotate-45")}
+                    className={cn("absolute right-0 top-8 justify-self-end font-mono text-xl transition-transform duration-300 md:static", isOpen && "rotate-45")}
                   >
                     +
                   </span>
                 </button>
                 <div className={cn("grid transition-[grid-template-rows] duration-500 ease-out", isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
                   <div className="overflow-hidden">
-                    <div className="grid grid-cols-12 gap-x-4 pb-8">
-                      <p className="col-span-12 text-muted-foreground md:col-span-6 md:col-start-3">{s.d}</p>
-                      <div className="col-span-12 mt-6 md:col-span-4 md:mt-0">
+                    <div className="grid grid-cols-12 gap-x-4 pb-10 md:gap-x-8">
+                      <div className="col-span-10 col-start-3 md:col-span-10 md:col-start-2">
                         <span className="meta text-muted-foreground">{t.services.deliverables}</span>
-                        <ul className="mt-3">
+                        <ul className="mt-4 grid md:grid-cols-4">
                           {s.del.map((d) => (
-                            <li key={d} className="border-b border-hairline py-2 text-sm">
+                            <li key={d} className="border-t border-hairline py-3 text-sm md:pr-6">
                               {d}
                             </li>
                           ))}
