@@ -126,6 +126,11 @@
     font-stretch: 100%;
     overflow-x: hidden;
   }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+  }
   ::selection {
     background: var(--primary);
     color: var(--primary-foreground);
