@@ -1,8 +1,12 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import unearthed from "@/assets/portfolio-unearthed.png";
-import adriaticum from "@/assets/portfolio-adriaticum.png";
-import crowdplay from "@/assets/portfolio-crowdplay.png";
-import sara from "@/assets/portfolio-sara.png";
+import unearthed from "@/assets/portfolio-unearthed.webp";
+import unearthedAvif from "@/assets/portfolio-unearthed.avif";
+import adriaticum from "@/assets/portfolio-adriaticum.webp";
+import adriaticumAvif from "@/assets/portfolio-adriaticum.avif";
+import crowdplay from "@/assets/portfolio-crowdplay.webp";
+import crowdplayAvif from "@/assets/portfolio-crowdplay.avif";
+import sara from "@/assets/portfolio-sara.webp";
+import saraAvif from "@/assets/portfolio-sara.avif";
 
 export type Lang = "sr" | "en";
 
@@ -13,21 +17,26 @@ export const CONTACT = {
   email: "davidnedic@web.de",
 };
 
-export const IMAGES = { unearthed, adriaticum, crowdplay, sara };
+export const IMAGES = {
+  unearthed: { webp: unearthed, avif: unearthedAvif, width: 1366, height: 768 },
+  adriaticum: { webp: adriaticum, avif: adriaticumAvif, width: 1600, height: 900 },
+  crowdplay: { webp: crowdplay, avif: crowdplayAvif, width: 1600, height: 769 },
+  sara: { webp: sara, avif: saraAvif, width: 1600, height: 733 },
+};
 
 type Bi<T> = { sr: T; en: T };
 
 const projects = [
-  { name: "Unearthed Samples", url: "unearthed-samples.com", image: unearthed, year: "2025", stack: "Shopify · Stripe · Meta Pixel",
+  { name: "Unearthed Samples", url: "unearthed-samples.com", image: IMAGES.unearthed, year: "2025", stack: "Shopify · Stripe · Meta Pixel",
     type: { sr: "Online prodavnica", en: "Online store" },
     desc: { sr: "Prodavnica sa integrisanim plaćanjem, brza na mobilnom i građena za konverziju.", en: "Store with integrated checkout, fast on mobile and built for conversion." } },
-  { name: "Adriaticum", url: "adriaticum.rentals", image: adriaticum, year: "2026", stack: "React · Booking · WhatsApp",
+  { name: "Adriaticum", url: "adriaticum.rentals", image: IMAGES.adriaticum, year: "2026", stack: "React · Booking · WhatsApp",
     type: { sr: "Booking platforma", en: "Booking platform" },
     desc: { sr: "Iznajmljivanje opreme za događaje. Vođeni upitnik u nekoliko koraka, katalog i direktna rezervacija.", en: "Event equipment rental. A guided multi-step request flow, catalogue and direct booking." } },
-  { name: "CrowdPlay", url: "crowdplay.eu", image: crowdplay, year: "2025", stack: "React · Node · Integracije",
+  { name: "CrowdPlay", url: "crowdplay.eu", image: IMAGES.crowdplay, year: "2025", stack: "React · Node · Integracije",
     type: { sr: "Web aplikacija", en: "Web application" },
     desc: { sr: "Kompletna web aplikacija sa integracijama, skalabilna i građena po meri klijenta.", en: "Full web application with integrations, scalable and built to the client's spec." } },
-  { name: "Sarastra", url: "sarastra-marketing.com", image: sara, year: "2024", stack: "Web · SEO · Brending",
+  { name: "Sarastra", url: "sarastra-marketing.com", image: IMAGES.sara, year: "2024", stack: "Web · SEO · Brending",
     type: { sr: "Poslovni sajt", en: "Business site" },
     desc: { sr: "Poslovni sajt optimizovan za SEO, koji predstavlja brend jasno i brzo.", en: "Business site optimised for SEO that presents the brand clearly and fast." } },
 ];

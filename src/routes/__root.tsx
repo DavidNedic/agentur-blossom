@@ -34,15 +34,12 @@ export const Route = createRootRoute({
       { title: "Radenon Digital" },
       { name: "description", content: "Radenon Digital: online prodavnice, web dizajn, SEO i oglasi." },
       { name: "author", content: "Radenon Digital" },
-      { name: "theme-color", content: "#1B2233" },
+      { name: "theme-color", content: "#0A0B0D" },
     ],
     links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500&display=swap",
-      },
+      { rel: "preload", href: "/src/assets/fonts/archivo-latin.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: "/src/assets/fonts/archivo-latin-ext.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: "/src/assets/fonts/jetbrains-mono-latin.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: appCss,
