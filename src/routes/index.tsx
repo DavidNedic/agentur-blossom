@@ -16,7 +16,7 @@ import { Faq } from "@/components/site/Faq";
 import { Contact } from "@/components/site/Contact";
 import { SiteMotion } from "@/components/site/SiteMotion";
 
-const TITLE = "Radenon Digital | SaaS, e-commerce i digitalna prodaja";
+const TITLE = "Klik Digital | SaaS, e-commerce i digitalna prodaja";
 const DESC =
   "Digitalni partner za SaaS sisteme, e-commerce izradu i prodaju, sajtove, SEO, automatizaciju i marketing u Srbiji i Nemačkoj. Sajtovi od 199 €.";
 
