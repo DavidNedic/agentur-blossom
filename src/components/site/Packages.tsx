@@ -1,5 +1,6 @@
 import { useLang } from "@/lib/i18n";
 import { Roll } from "./ui";
+import { MaskedTitle } from "./SiteMotion";
 
 export function Packages() {
   const { t } = useLang();
@@ -11,7 +12,7 @@ export function Packages() {
           <span className="meta text-ink-muted">EUR</span>
         </div>
         <div className="grid grid-cols-12 gap-x-4 pt-10 pb-16 md:gap-x-8">
-          <h2 className="col-span-12 font-expanded text-[clamp(2.75rem,7vw,8rem)] uppercase md:col-span-9">{t.packages.title}</h2>
+          <h2 className="col-span-12 font-expanded text-[clamp(2.75rem,7vw,8rem)] uppercase md:col-span-9"><MaskedTitle>{t.packages.title}</MaskedTitle></h2>
           <p className="col-span-12 mt-6 max-w-xs text-ink-muted md:col-span-3 md:mt-0 md:self-end">{t.packages.note}</p>
         </div>
         <div className="grid border-t border-paper-hairline md:grid-cols-3">

@@ -1,15 +1,16 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLang, IMAGES } from "@/lib/i18n";
 import { gsap, MOTION_OK } from "@/lib/motion";
 import { Roll } from "./ui";
 
 const floats = [
-  { src: IMAGES.adriaticum, cls: "right-10 top-32 hidden w-[min(20vw,320px)] md:block", shift: 24 },
+  { image: IMAGES.adriaticum, cls: "right-10 top-32 hidden w-[min(20vw,320px)] md:block", shift: 24 },
 ];
 
 export function Hero() {
   const { t } = useLang();
   const ref = useRef<HTMLElement>(null);
+  const [intro, setIntro] = useState(false);
 
   useEffect(() => {
     const root = ref.current;
@@ -17,6 +18,18 @@ export function Hero() {
     const mm = gsap.matchMedia();
     const q = gsap.utils.selector(root);
     mm.add(MOTION_OK, () => {
+      const firstVisit = sessionStorage.getItem("radenon-intro") !== "seen";
+      if (firstVisit) {
+        sessionStorage.setItem("radenon-intro", "seen");
+        setIntro(true);
+        const counter = { value: 0 };
+        gsap.timeline({ onComplete: () => setIntro(false) })
+          .to(counter, { value: 100, duration: 0.55, ease: "power2.out", onUpdate: () => {
+            const el = root.querySelector(".intro-count");
+            if (el) el.textContent = String(Math.round(counter.value)).padStart(3, "0");
+          } })
+          .to(q(".intro-screen"), { yPercent: -100, duration: 0.45, ease: "power2.out" });
+      }
       gsap.set(q(".hl-in"), { yPercent: 115 });
       gsap.set(q(".hero-fade"), { opacity: 0 });
       gsap
@@ -27,7 +40,7 @@ export function Hero() {
         gsap.fromTo(
           el,
           { y: 0 },
-          { y: floats[i]?.shift ?? 0, ease: "none", scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: true } },
+          { y: floats[i]?.shift ?? 0, ease: "none", scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: 0.5 } },
         );
       });
     });
@@ -37,6 +50,7 @@ export function Hero() {
 
   return (
     <section id="top" ref={ref} className="relative h-[100svh] min-h-[640px] overflow-hidden pt-16">
+      {intro && <div className="intro-screen fixed inset-0 z-[80] bg-background"><span className="intro-count meta absolute bottom-6 left-6 text-primary">000</span></div>}
       <div className="container-grid relative flex h-full flex-col">
         <div className="hero-fade grid grid-cols-2 gap-4 border-b border-hairline py-4 md:grid-cols-12">
           <span className="meta md:col-span-4">{t.hero.meta[0]}</span>
@@ -73,13 +87,17 @@ export function Hero() {
 
       <div aria-hidden className="pointer-events-none absolute inset-0 z-20">
         {floats.map((f, i) => (
-          <img
-            key={i}
-            src={f.src}
+          <picture key={i} className={`float absolute ${f.cls}`}>
+            <source srcSet={f.image.avif} type="image/avif" />
+            <img
+            src={f.image.webp}
             alt=""
+            width={f.image.width}
+            height={f.image.height}
             fetchPriority={i === 0 ? "high" : "auto"}
-            className={`float absolute aspect-video border border-hairline object-contain object-center will-change-transform ${f.cls}`}
+            className="aspect-video h-auto w-full border border-hairline object-contain object-center"
           />
+          </picture>
         ))}
       </div>
     </section>
