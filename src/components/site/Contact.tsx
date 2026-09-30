@@ -138,6 +138,9 @@ export function Contact() {
         </span>
         <LangSwitch className="col-span-2 md:col-span-2 md:justify-self-end" />
       </footer>
+      <div aria-hidden className="velocity-type pointer-events-none w-full origin-left translate-y-[18%] overflow-hidden px-2 font-expanded text-[clamp(5.5rem,18vw,22rem)] leading-[0.7] uppercase">
+        Radenon<span className="text-primary">.</span>
+      </div>
     </section>
   );
 }
