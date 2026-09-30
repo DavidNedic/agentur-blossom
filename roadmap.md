@@ -1,9 +1,9 @@
 # Roadmap
 
-- [ ] Replace the old palette with Graphit & Cyan across every shared state
-- [ ] Replace Archivo with self-hosted Geologica and Onest
-- [ ] Replace every site logo and favicon with the new Radenon slash identity
-- [ ] Audit source, interactions, and both routes for old brand remnants
+- [x] Replace the old palette with Graphit & Cyan across every shared state
+- [x] Replace Archivo with self-hosted Geologica and Onest
+- [x] Replace every site logo and favicon with the new Radenon slash identity
+- [x] Audit source, interactions, and both routes for old brand remnants
 
 - [x] Optimize active portfolio and hero imagery with intrinsic dimensions and modern formats
 - [x] Replace paint-heavy motion and add rendering containment

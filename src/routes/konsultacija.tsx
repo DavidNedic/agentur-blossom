@@ -347,7 +347,7 @@ function LeadForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-extrabold text-base py-3.5 rounded-lg hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/30 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-extrabold text-base py-3.5 rounded-lg hover:bg-foreground hover:text-background transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
@@ -632,7 +632,7 @@ function MiniPackages() {
                 onClick={() => choosePackage(p.interes)}
                 className={`mt-6 w-full py-2.5 rounded-lg font-semibold text-sm transition-all ${
                   p.highlight
-                    ? "bg-primary text-primary-foreground hover:scale-[1.02]"
+                    ? "bg-primary text-primary-foreground hover:bg-foreground hover:text-background"
                     : "border border-border text-foreground hover:border-primary hover:text-primary"
                 }`}
               >
