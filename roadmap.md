@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Rename every visitor-facing Radenon reference and brand asset to Klik
+- [x] Rename every visitor-facing Radenon reference and brand asset to Klik
 - [x] Replace the old palette with Graphit & Cyan across every shared state
 - [x] Replace Archivo with self-hosted Geologica and Onest
 - [x] Replace every site logo and favicon with the new Klik slash identity
