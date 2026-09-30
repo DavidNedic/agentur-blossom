@@ -5,6 +5,7 @@ import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { Marquee } from "@/components/site/Marquee";
 import { Manifesto } from "@/components/site/Manifesto";
+import { GermanStandard } from "@/components/site/GermanStandard";
 import { Work } from "@/components/site/Work";
 import { Services } from "@/components/site/Services";
 import { Capabilities } from "@/components/site/Capabilities";
@@ -15,9 +16,9 @@ import { Faq } from "@/components/site/Faq";
 import { Contact } from "@/components/site/Contact";
 import { SiteMotion } from "@/components/site/SiteMotion";
 
-const TITLE = "Radenon Digital | Online prodavnice koje prodaju";
+const TITLE = "Radenon Digital | SaaS, e-commerce i digitalna prodaja";
 const DESC =
-  "E-commerce agencija iz Srbije. Online prodavnica sa plaćanjem, dostavom i oglasima, live za 14 dana. Web dizajn, SEO, Google Ads i aplikacije. Od 199 €.";
+  "Digitalni partner za SaaS sisteme, e-commerce izradu i prodaju, sajtove, SEO, automatizaciju i marketing u Srbiji i Nemačkoj. Sajtovi od 199 €.";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -48,6 +49,7 @@ function Index() {
           <Hero />
           <Marquee />
           <Manifesto />
+          <GermanStandard />
           <Work />
           <Services />
           <Capabilities />
