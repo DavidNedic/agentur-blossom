@@ -19,7 +19,7 @@ export function Work() {
       const horizontal = gsap.to(track, {
         x: () => -travel(),
         ease: "none",
-        scrollTrigger: { trigger: section, start: "top top", end: () => `+=${travel()}`, pin: true, scrub: 0.5, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: section, start: "top top", end: () => `+=${travel()}`, pin: true, anticipatePin: 1, scrub: 0.5, invalidateOnRefresh: true },
       });
       gsap.utils.toArray<HTMLElement>(".wk-card", track).forEach((card) => {
         const image = card.querySelector(".wk-img");
@@ -64,10 +64,12 @@ export function Work() {
           {projects.map((p, i) => (
             <article key={p.name} className="wk-card group w-full md:grid md:w-[min(78vw,1120px)] md:shrink-0 md:grid-cols-12 md:gap-x-8">
               <div className="wk-frame relative aspect-video overflow-hidden border border-hairline bg-card md:col-span-8">
-                <picture className="wk-reveal absolute inset-0 block overflow-hidden">
-                  <source srcSet={p.image.avif} type="image/avif" />
-                  <img src={p.image.webp} alt={p.name} width={p.image.width} height={p.image.height} loading="lazy" decoding="async" className="wk-img h-full w-full object-contain object-center transition-transform duration-500 ease-out group-hover:translate-x-2 group-hover:scale-[1.02] motion-reduce:transition-none" />
-                </picture>
+                <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.02] motion-reduce:transition-none">
+                  <picture className="wk-reveal absolute inset-0 block overflow-hidden">
+                    <source srcSet={p.image.avif} type="image/avif" />
+                    <img src={p.image.webp} alt={p.name} width={p.image.width} height={p.image.height} loading="eager" decoding="async" className="wk-img h-full w-full object-contain object-center" />
+                  </picture>
+                </div>
               </div>
               <div className="md:col-span-4 md:flex md:flex-col">
               <div className="grid grid-cols-12 gap-x-4 border-b border-hairline py-5">
