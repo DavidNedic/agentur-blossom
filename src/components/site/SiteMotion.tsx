@@ -31,7 +31,7 @@ export function SiteMotion() {
 
       const canSmooth = window.matchMedia("(pointer: fine)").matches && navigator.maxTouchPoints === 0;
       if (canSmooth) {
-        const lenis = new Lenis({ duration: 1, smoothWheel: true, syncTouch: false });
+        const lenis = new Lenis({ lerp: 0.1, smoothWheel: true, syncTouch: false });
         const update = () => ScrollTrigger.update();
         const raf = (time: number) => lenis.raf(time * 1000);
         lenis.on("scroll", update);
@@ -40,18 +40,33 @@ export function SiteMotion() {
         cleanups.push(() => {
           lenis.off("scroll", update);
           gsap.ticker.remove(raf);
+          gsap.ticker.lagSmoothing(500, 33);
           lenis.destroy();
         });
       }
 
-      const refresh = () => ScrollTrigger.refresh();
-      document.fonts.ready.then(refresh);
-      window.addEventListener("load", refresh, { once: true });
-      const pendingImages = Array.from(document.images).filter((image) => !image.complete);
-      pendingImages.forEach((image) => image.addEventListener("load", refresh, { once: true }));
+      let refreshTimer: ReturnType<typeof setTimeout> | undefined;
+      const scheduleRefresh = () => {
+        if (refreshTimer) clearTimeout(refreshTimer);
+        refreshTimer = setTimeout(() => {
+          ScrollTrigger.sort();
+          ScrollTrigger.refresh();
+        }, 200);
+      };
+      document.fonts.ready.then(scheduleRefresh);
+      window.addEventListener("load", scheduleRefresh, { once: true });
+      let lastHeight = document.body.offsetHeight;
+      const observer = new ResizeObserver(() => {
+        const height = document.body.offsetHeight;
+        if (height === lastHeight) return;
+        lastHeight = height;
+        scheduleRefresh();
+      });
+      observer.observe(document.body);
       cleanups.push(() => {
-        window.removeEventListener("load", refresh);
-        pendingImages.forEach((image) => image.removeEventListener("load", refresh));
+        window.removeEventListener("load", scheduleRefresh);
+        observer.disconnect();
+        if (refreshTimer) clearTimeout(refreshTimer);
       });
     });
 
