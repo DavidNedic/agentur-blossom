@@ -75,7 +75,7 @@ export function Work() {
                 <span className="meta col-span-3 text-muted-foreground">{p.year}</span>
                 <span className="meta col-span-7 text-right text-muted-foreground">{p.type}</span>
               </div>
-              <h3 className="mt-4 font-expanded text-[clamp(2.25rem,5vw,5.5rem)] uppercase"><span className="link-draw">{p.name}</span></h3>
+              <h3 className="mt-4 overflow-wrap-anywhere font-expanded text-[clamp(2rem,2.5vw,3.5rem)] uppercase"><span className="link-draw">{p.name}</span></h3>
               <div className="mt-4 grid gap-3 md:grid-cols-2 md:gap-8">
                 <p className="max-w-md text-muted-foreground">{p.desc}</p>
                 <p className="meta text-muted-foreground md:text-right">
