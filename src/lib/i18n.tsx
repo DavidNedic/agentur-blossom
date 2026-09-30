@@ -64,13 +64,13 @@ const dict = {
     },
   },
   work: {
-    label: { sr: "03 / Izabrani radovi", en: "03 / Selected work" },
+    label: { sr: "04 / Izabrani radovi", en: "04 / Selected work" },
     title: { sr: "Radovi", en: "Work" },
     count: { sr: "4 projekta", en: "4 projects" },
     projects,
   },
   services: {
-    label: { sr: "04 / Usluge", en: "04 / Services" },
+    label: { sr: "05 / Usluge", en: "05 / Services" },
     title: { sr: "Šta radimo", en: "What we do" },
     intro: { sr: "Jedan partner za softver, prodaju i svakodnevni digitalni rad.", en: "One partner for software, sales and everyday digital operations." },
     items: {
@@ -93,7 +93,7 @@ const dict = {
     example: { sr: "Primer", en: "Example" },
   },
   caps: {
-    label: { sr: "05 / Sistem", en: "05 / System" },
+    label: { sr: "06 / Sistem", en: "06 / System" },
     title: { sr: "Sve što digitalni posao mora da poveže.", en: "Everything a digital business needs connected." },
     items: {
       sr: [
@@ -121,7 +121,7 @@ const dict = {
     },
   },
   process: {
-    label: { sr: "06 / Proces", en: "06 / Process" },
+    label: { sr: "07 / Proces", en: "07 / Process" },
     title: { sr: "Live za 14 dana.", en: "Live in 14 days." },
     steps: {
       sr: [
@@ -141,7 +141,7 @@ const dict = {
     },
   },
   proof: {
-    label: { sr: "07 / Brojevi", en: "07 / Numbers" },
+    label: { sr: "08 / Brojevi", en: "08 / Numbers" },
     stats: {
       sr: [[14, "", "Dana do isporuke"], [100, "%", "Podrška"], [6, "", "Meseci saradnje"], [5, "+", "Paketa"]],
       en: [[14, "", "Days to delivery"], [100, "%", "Support"], [6, "", "Months partnership"], [5, "+", "Packages"]],
@@ -180,7 +180,7 @@ const dict = {
     },
   },
   packages: {
-    label: { sr: "08 / Paketi", en: "08 / Packages" },
+    label: { sr: "09 / Paketi", en: "09 / Packages" },
     title: { sr: "Jasne cene. Bez avansa.", en: "Clear prices. No upfront payment." },
     note: { sr: "Sve cene su konačne. Važe za period od 6 meseci saradnje.", en: "All prices are final. Valid for a 6 month partnership." },
     from: { sr: "od", en: "from" },
@@ -199,7 +199,7 @@ const dict = {
     shop: { sr: "Online prodavnica? Ponuda po meri nakon konsultacije.", en: "Online store? Custom quote after a consultation." },
   },
   faq: {
-    label: { sr: "09 / FAQ", en: "09 / FAQ" },
+    label: { sr: "10 / FAQ", en: "10 / FAQ" },
     title: { sr: "Pitanja", en: "Questions" },
     items: {
       sr: [
@@ -219,7 +219,7 @@ const dict = {
     } as Bi<[string, string][]>,
   },
   contact: {
-    label: { sr: "10 / Kontakt", en: "10 / Contact" },
+    label: { sr: "11 / Kontakt", en: "11 / Contact" },
     big: { sr: ["Hajde da", "pričamo"], en: ["Let's", "talk"] },
     text: { sr: "Daj nam 30 minuta. Analiziramo zašto sajt ne prodaje, oglasi troše budžet ili korpe ostaju prazne, i dajemo ti jasnu procenu.", en: "Give us 30 minutes. We find out why the site does not sell, ads burn budget or carts stay empty, and give you a clear assessment." },
     name: { sr: "Ime i prezime *", en: "Full name *" },

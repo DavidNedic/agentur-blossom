@@ -23,7 +23,7 @@ export function Capabilities() {
   return (
     <section ref={ref} className="relative z-10 pb-24 md:pb-40">
       <div className="container-grid">
-        <SectionHead label={t.caps.label} right="Stripe / PayPal / COD" />
+        <SectionHead label={t.caps.label} right="SaaS / Commerce / Growth" />
         <h2 className="max-w-5xl pt-10 pb-16 font-expanded text-[clamp(2.5rem,6.5vw,7rem)]"><MaskedTitle>{t.caps.title}</MaskedTitle></h2>
         <div className="grid border-t border-hairline md:grid-cols-2">
           {t.caps.items.map((c, i) => (

@@ -6,3 +6,4 @@
 - Homepage motion is transform/opacity-only and under 700ms, except scroll-linked progress, the desktop work gallery, quiet process line, and hero parallax; why: motion remains smooth and purposeful.
 - Initial hidden states are set only from JS inside motion conditions, never in markup; why: SSR and reduced motion render full content.
 - Do not modify `/remotion` or its audio files.
+- Founder qualification claims must remain factual: David Nedić is a German-qualified Kaufmann für E-Commerce with work and training experience in Germany; why: this is a trust credential, not promotional embellishment.
