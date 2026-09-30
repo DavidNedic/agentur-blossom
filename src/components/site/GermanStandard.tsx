@@ -20,7 +20,7 @@ export function GermanStandard() {
           <div className="col-span-12 mt-12 border border-paper-hairline p-6 md:col-span-4 md:col-start-9 md:mt-0 md:p-8">
             <div className="flex items-start justify-between border-b border-paper-hairline pb-8">
               <span className="meta text-ink-muted">{kind}</span>
-              <span className="h-3 w-3 bg-primary" />
+              <span className="h-3 w-3 bg-deep-cyan" />
             </div>
             <strong className="mt-12 block font-expanded text-3xl leading-tight md:text-4xl">{qualification}</strong>
             <div className="meta mt-16 flex justify-between border-t border-paper-hairline pt-4 text-ink-muted"><span>{country}</span><span>{markets}</span></div>

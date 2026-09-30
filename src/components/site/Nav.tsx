@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { useLang, type Lang } from "@/lib/i18n";
 import { Roll } from "./ui";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/Logo";
 
 export function Wordmark() {
   return (
-    <a href="#top" className="flex items-baseline gap-2" aria-label="Radenon Digital">
-      <span className="inline-block h-2.5 w-2.5 translate-y-[1px] bg-primary" />
-      <span className="font-expanded text-lg uppercase leading-none tracking-tight">Radenon</span>
+    <a href="#top" className="flex items-center gap-2.5" aria-label="Radenon Digital">
+      <Logo className="h-6 md:h-7" />
       <span className="meta text-muted-foreground">Digital</span>
     </a>
   );

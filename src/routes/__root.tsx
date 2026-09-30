@@ -1,8 +1,10 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import archivoLatin from "../assets/fonts/archivo-latin.woff2?url";
-import archivoLatinExt from "../assets/fonts/archivo-latin-ext.woff2?url";
+import geologicaLatin from "@fontsource/geologica/files/geologica-latin-800-normal.woff2?url";
+import geologicaLatinExt from "@fontsource/geologica/files/geologica-latin-ext-800-normal.woff2?url";
+import onestLatin from "@fontsource/onest/files/onest-latin-400-normal.woff2?url";
+import onestLatinExt from "@fontsource/onest/files/onest-latin-ext-400-normal.woff2?url";
 import jetbrainsLatin from "../assets/fonts/jetbrains-mono-latin.woff2?url";
 
 function NotFoundComponent() {
@@ -37,12 +39,15 @@ export const Route = createRootRoute({
       { title: "Radenon Digital" },
       { name: "description", content: "Radenon Digital: online prodavnice, web dizajn, SEO i oglasi." },
       { name: "author", content: "Radenon Digital" },
-      { name: "theme-color", content: "#07111C" },
+      { name: "theme-color", content: "#17181C" },
     ],
     links: [
-      { rel: "preload", href: archivoLatin, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
-      { rel: "preload", href: archivoLatinExt, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: geologicaLatin, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: geologicaLatinExt, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: onestLatin, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: onestLatinExt, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       { rel: "preload", href: jetbrainsLatin, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       {
         rel: "stylesheet",
         href: appCss,

@@ -14,7 +14,7 @@ import {
   Star,
   Quote,
 } from "lucide-react";
-import logo from "@/assets/radenon-logo-digital.png";
+import { Logo } from "@/components/Logo";
 
 export const Route = createFileRoute("/konsultacija")({
   component: KonsultacijaPage,
@@ -100,7 +100,7 @@ function MinimalHeader() {
   return (
     <header className="border-b border-primary/10 bg-background/95 backdrop-blur">
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center">
-        <img src={logo} alt="Radenon Digital" className="h-14 w-auto" />
+        <Logo className="h-7" />
       </div>
     </header>
   );
@@ -347,7 +347,7 @@ function LeadForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-extrabold text-base py-3.5 rounded-lg hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/30 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-extrabold text-base py-3.5 rounded-lg hover:bg-foreground hover:text-background transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
@@ -632,7 +632,7 @@ function MiniPackages() {
                 onClick={() => choosePackage(p.interes)}
                 className={`mt-6 w-full py-2.5 rounded-lg font-semibold text-sm transition-all ${
                   p.highlight
-                    ? "bg-primary text-primary-foreground hover:scale-[1.02]"
+                    ? "bg-primary text-primary-foreground hover:bg-foreground hover:text-background"
                     : "border border-border text-foreground hover:border-primary hover:text-primary"
                 }`}
               >
@@ -654,7 +654,7 @@ function BottomCTA() {
 
   return (
     <section className="relative py-16 border-t border-primary/30">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_20px_rgba(181,240,0,0.6)]" />
+      <div className="absolute inset-x-0 top-0 h-px bg-primary" />
       <div className="max-w-3xl mx-auto px-6 text-center">
         <h2 className="text-2xl md:text-3xl font-extrabold">
           Još uvek nisi siguran? Nazovi nas direktno.
@@ -689,7 +689,7 @@ function MinimalFooter() {
   return (
     <footer className="border-t border-border/60 py-8">
       <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <img src={logo} alt="Radenon Digital" className="h-10 w-auto" />
+        <Logo className="h-6" />
         <p className="text-muted-foreground text-xs">
           © 2025 Radenon Digital
         </p>

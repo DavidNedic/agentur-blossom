@@ -3,6 +3,7 @@ import { useLang, CONTACT } from "@/lib/i18n";
 import { gsap, MOTION_OK } from "@/lib/motion";
 import { Roll, Arrow } from "./ui";
 import { Wordmark, LangSwitch } from "./Nav";
+import { Logo } from "@/components/Logo";
 
 function Clock() {
   const [time, setTime] = useState("--:--");
@@ -138,8 +139,8 @@ export function Contact() {
         </span>
         <LangSwitch className="col-span-2 md:col-span-2 md:justify-self-end" />
       </footer>
-      <div aria-hidden className="velocity-type pointer-events-none w-full origin-left translate-y-[18%] overflow-hidden px-2 font-expanded text-[clamp(5.5rem,18vw,22rem)] leading-[0.7] uppercase">
-        Radenon<span className="text-primary">.</span>
+      <div aria-hidden className="velocity-type pointer-events-none w-full origin-left translate-y-[18%] overflow-hidden px-2">
+        <Logo className="h-auto w-full" aria-hidden />
       </div>
     </section>
   );
