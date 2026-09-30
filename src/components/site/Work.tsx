@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useLang } from "@/lib/i18n";
 import { gsap, MOTION_OK } from "@/lib/motion";
 import { SectionHead } from "./ui";
+import { MaskedTitle } from "./SiteMotion";
 
 export function Work() {
   const { t } = useLang();
@@ -57,8 +58,7 @@ export function Work() {
           <SectionHead label={t.work.label} right={t.work.count} />
         </div>
         <h2 className="velocity-type container-grid mt-6 shrink-0 origin-left font-expanded text-[clamp(4rem,16vw,13rem)] uppercase">
-            {t.work.title}
-            <span className="text-primary">.</span>
+          <MaskedTitle>{t.work.title}<span className="text-primary">.</span></MaskedTitle>
         </h2>
         <div ref={trackRef} className="container-grid grid gap-y-20 pt-10 md:flex md:min-w-max md:flex-1 md:gap-8">
           {projects.map((p, i) => (
