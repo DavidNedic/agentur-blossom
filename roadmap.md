@@ -6,8 +6,8 @@
 - [x] Self-host and preload subsetted Archivo and JetBrains Mono fonts
 - [x] Implement horizontal work gallery, headline reveals, intro, process, nav, progress, and footer motion
 - [x] Validate build, console, desktop/mobile, SR/EN, reduced motion, and layout stability
-- [ ] Reposition copy across hero, services, and capabilities for SaaS through e-commerce sales
-- [ ] Add bilingual German qualification and standards section
-- [ ] Refresh contrast rhythm and services index while preserving brand and pricing
-- [ ] Update homepage metadata for the broader offer
-- [ ] Validate build, console, mobile, SR/EN, and reduced motion without publishing
+- [x] Reposition copy across hero, services, and capabilities for SaaS through e-commerce sales
+- [x] Add bilingual German qualification and standards section
+- [x] Refresh contrast rhythm and services index while preserving brand and pricing
+- [x] Update homepage metadata for the broader offer
+- [x] Validate build, console, mobile, SR/EN, and reduced motion without publishing
