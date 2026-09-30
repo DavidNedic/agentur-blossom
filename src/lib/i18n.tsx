@@ -264,7 +264,7 @@ const Ctx = createContext<{ lang: Lang; setLang: (l: Lang) => void; t: Resolve<D
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("sr");
   useEffect(() => {
-    const saved = localStorage.getItem("klik-lang");
+    const saved = localStorage.getItem("radenon-lang");
     if (saved === "en" || saved === "sr") setLangState(saved);
   }, []);
   useEffect(() => {
@@ -272,7 +272,7 @@ export function LangProvider({ children }: { children: ReactNode }) {
   }, [lang]);
   const setLang = (l: Lang) => {
     setLangState(l);
-    localStorage.setItem("klik-lang", l);
+    localStorage.setItem("radenon-lang", l);
   };
   return <Ctx.Provider value={{ lang, setLang, t: getT(lang) }}>{children}</Ctx.Provider>;
 }

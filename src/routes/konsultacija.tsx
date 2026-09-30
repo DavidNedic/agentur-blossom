@@ -203,8 +203,8 @@ function LeadForm() {
       if (detail?.interes) setValue("interes", detail.interes);
       formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     };
-    window.addEventListener("klik:select-interest", handler);
-    return () => window.removeEventListener("klik:select-interest", handler);
+    window.addEventListener("radenon:select-interest", handler);
+    return () => window.removeEventListener("radenon:select-interest", handler);
   }, [setValue]);
 
   const onSubmit = async (data: FormValues) => {
@@ -580,7 +580,7 @@ const miniPackages = [
 function MiniPackages() {
   const choosePackage = (interes: "paket" | "info" | "hitno") => {
     window.dispatchEvent(
-      new CustomEvent("klik:select-interest", { detail: { interes } })
+      new CustomEvent("radenon:select-interest", { detail: { interes } })
     );
   };
 
