@@ -150,17 +150,8 @@
   contain: strict;
 }
 
-#usluge,
-#proces,
-#paketi,
-#faq,
-section:has(.cap-card),
-section:has(.count) {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 900px;
-}
-
 .grid-lines {
+
   opacity: 0.42;
 }
 

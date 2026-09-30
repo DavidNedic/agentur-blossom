@@ -46,9 +46,12 @@ export function Nav() {
     let lastY = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      header.style.transform = y > lastY && y > 120 && !open ? "translateY(-100%)" : "translateY(0)";
+      const delta = y - lastY;
+      if (Math.abs(delta) < 8) return;
+      header.style.transform = y > 120 && delta > 0 && !open ? "translateY(-100%)" : "translateY(0)";
       lastY = y;
     };
+
     const sections = t.nav.links.map(([label, href]) => ({ label, node: document.querySelector(href) })).filter((x) => x.node);
     const observer = new IntersectionObserver((entries) => {
       const active = entries.find((entry) => entry.isIntersecting);
