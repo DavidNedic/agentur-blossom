@@ -6,13 +6,19 @@ import { SheetBody, SHOTS } from "./Sheets";
 type S = { x: number; y: number; r: number; vx: number; vy: number; tilt?: number };
 
 const L: Record<string, [number, number, number]> = {
-  card: [0.42, 0.4, -2], note: [0.12, 0.64, 4], cass: [0.43, 0.78, -7], menu: [0.56, 0.75, 6], proto: [0.68, 0.27, 5], plan: [0.7, 0.62, -4],
-  work: [0.86, 0.71, 3], biz: [0.13, 0.19, -7], phone: [0.88, 0.3, 8], sticky: [0.27, 0.85, -9], pen: [0.47, 0.09, 22],
+  card: [0.43, 0.42, -2], cup: [0.1, 0.38, 0], lap: [0.14, 0.68, -4], cal: [0.4, 0.8, -6], sys: [0.58, 0.79, 4], cert: [0.5, 0.12, -3],
+  score: [0.7, 0.2, 4], fold: [0.73, 0.56, -4], phone: [0.89, 0.3, 8], work: [0.87, 0.76, 3], biz: [0.13, 0.17, -7], sticky: [0.24, 0.88, -5], pen: [0.3, 0.07, 18],
 };
 const Lm: Record<string, [number, number, number]> = {
-  card: [0.5, 0.08, -2], note: [0.3, 0.27, 4], phone: [0.76, 0.26, 8], cass: [0.34, 0.42, -6], menu: [0.74, 0.43, 5], proto: [0.3, 0.55, 5], plan: [0.68, 0.56, -5],
-  work: [0.42, 0.71, 3], sticky: [0.78, 0.72, -9], biz: [0.5, 0.87, -6], pen: [0.62, 0.95, 18],
+  card: [0.5, 0.07, -2], cert: [0.32, 0.2, -3], phone: [0.76, 0.21, 8], lap: [0.34, 0.36, -3], cup: [0.82, 0.47, 0], cal: [0.72, 0.36, -5], fold: [0.4, 0.5, -3],
+  score: [0.66, 0.585, 4], sys: [0.3, 0.67, -3], work: [0.68, 0.775, 3], sticky: [0.28, 0.8, -8], biz: [0.5, 0.9, -6], pen: [0.62, 0.97, 18],
 };
+
+type Site = { n: string; img?: string; h?: string; bg?: string; fg?: string; hero?: string; hfg?: string; acc?: string; card?: string; f?: string; w?: string };
+const SITES: Site[] = [
+  { n: "ADRIATICUM", img: SHOTS.sala.src }, { n: "BITE CATERING", img: SHOTS.bite.src }, { n: "UNEARTHED", img: SHOTS.unearthed.src },
+  { n: "TVOJA FIRMA", h: "Sledeći je tvoj sajt", bg: "#FFF8EC", fg: "#5A3A1A", hero: "#F3E1C2", hfg: "#4A2E12", acc: "#C8672B", card: "#EED9B8", f: "", w: "800" },
+];
 
 const fmtT = () => new Intl.DateTimeFormat("sr-RS", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Belgrade" }).format(new Date());
 
@@ -96,7 +102,6 @@ export function Desk() {
 
     let z = 10;
     objs.forEach((o) => (o.style.zIndex = String(z++)));
-    desk.querySelector<HTMLElement>(".o-menu")!.style.zIndex = String(++z);
     desk.querySelector<HTMLElement>(".o-card")!.style.zIndex = String(++z);
     const raise = (o: HTMLElement) => (o.style.zIndex = String(++z));
 
@@ -200,8 +205,59 @@ export function Desk() {
 
     timers.push(setTimeout(hideHint, 9000));
 
+    // calendar
+    const cg = desk.querySelector<HTMLElement>(".o-cal .grid")!;
+    const runCal = () => {
+      const ds = [...cg.children] as HTMLElement[];
+      ds.forEach((d) => d.classList.remove("x", "live"));
+      ds.forEach((d, i) => timers.push(setTimeout(() => d.classList.add(i < 13 ? "x" : "live"), reduce ? 0 : i * 140)));
+    };
+    // laptop cycle
+    const lapv = desk.querySelector<HTMLElement>(".o-lap .view")!, lapph = lapv.querySelector<HTMLElement>(".ph")!, lapsc = lapv.querySelector<HTMLElement>(".scan")!;
+    const lapl = desk.querySelector<HTMLElement>(".o-lap .lbl")!, lapn = lapv.querySelector<HTMLElement>(".nv b")!, laph = lapv.querySelector<HTMLElement>(".hr b")!;
+    const mockParts = ([...lapv.children] as HTMLElement[]).filter((e) => e !== lapph && e !== lapsc);
+    let si = 0;
+    const buildSite = () => {
+      const x = SITES[si++ % SITES.length];
+      mockParts.forEach((p) => p.classList.remove("on")); lapph.classList.remove("on"); lapsc.classList.remove("go");
+      timers.push(setTimeout(() => {
+        if (dead) return;
+        lapl.textContent = "u izradi · " + x.n.toLowerCase();
+        if (x.img) { lapph.style.backgroundImage = "url(" + x.img + ")"; void lapsc.offsetWidth; lapsc.classList.add("go"); lapph.classList.add("on"); return; }
+        const v = (k: string, val: string) => lapv.style.setProperty(k, val);
+        v("--vbg", x.bg!); v("--vfg", x.fg!); v("--vhero", x.hero!); v("--vhfg", x.hfg!); v("--vacc", x.acc!); v("--vcard", x.card!); v("--vf", x.f || "var(--display)"); v("--vw", x.w!);
+        lapn.textContent = x.n; laph.textContent = x.h!;
+        mockParts.forEach((p, k) => timers.push(setTimeout(() => p.classList.add("on"), reduce ? 0 : k * 260)));
+      }, reduce ? 0 : 450));
+    };
+    const introEnd = reduce ? 0 : 200 + objs.length * 110 + 1300;
+    let siteInt: ReturnType<typeof setInterval> | undefined;
+    timers.push(setTimeout(runCal, introEnd * 0.6));
+    timers.push(setTimeout(() => { buildSite(); siteInt = setInterval(buildSite, 4200); }, introEnd * 0.5));
+    // systems panel
+    const camc = desk.querySelector<HTMLCanvasElement>(".o-sys canvas")!, cg2 = camc.getContext("2d")!;
+    const ppl = [...Array(4)].map(() => ({ x: Math.random(), y: 0.3 + Math.random() * 0.6, vx: (Math.random() - 0.5) * 0.004, vy: (Math.random() - 0.5) * 0.003 }));
+    let camRaf = 0;
+    const camFrame = () => {
+      if (dead) return;
+      const w = (camc.width = camc.clientWidth * 2), h = (camc.height = camc.clientHeight * 2);
+      cg2.clearRect(0, 0, w, h);
+      ppl.forEach((p) => {
+        if (!reduce) { p.x += p.vx; p.y += p.vy; if (p.x < 0.05 || p.x > 0.95) p.vx *= -1; if (p.y < 0.25 || p.y > 0.92) p.vy *= -1; }
+        const x = p.x * w, y = p.y * h;
+        cg2.fillStyle = "#EDEEF0"; cg2.beginPath(); cg2.arc(x, y, 5, 0, 7); cg2.fill();
+        cg2.strokeStyle = "#3DDCFF"; cg2.lineWidth = 2; cg2.strokeRect(x - 14, y - 18, 28, 32);
+      });
+      if (!reduce) camRaf = requestAnimationFrame(camFrame);
+    };
+    camFrame();
+    const bars = [...desk.querySelectorAll<HTMLElement>(".o-sys .bars i")];
+    const stock = () => bars.forEach((b) => { const v = 15 + Math.random() * 85; b.style.height = v + "%"; b.classList.toggle("low", v < 28); });
+    stock();
+    const stockInt = setInterval(stock, 2200);
+
     return () => {
-      dead = true; field.destroy(); clearTimeout(lt); timers.forEach(clearTimeout);
+      dead = true; field.destroy(); clearInterval(siteInt); clearInterval(stockInt); cancelAnimationFrame(camRaf); clearTimeout(lt); timers.forEach(clearTimeout);
       removeEventListener("resize", onResize); cleanups.forEach((c) => c());
     };
   }, [open, hideHint]);
@@ -212,57 +268,68 @@ export function Desk() {
     <div className="desk-root" ref={rootRef}>
       <canvas id="field" ref={cvRef} aria-hidden="true" />
       <div className="desk" ref={deskRef} aria-label="Radni sto agencije Promet Digital">
-        <div className="print tl">PROMET DIGITAL<br /><b>agencija za sajtove i online prodavnice</b></div>
+        <div className="print tl">PROMET DIGITAL<br /><b>sajtovi · prodavnice · sistemi</b></div>
         <div className="print br">Zrenjanin <span className="live">{time}</span><br /><b>promet.digital</b></div>
 
         <div className="obj o-card" data-k="card" data-open="intro" tabIndex={0} role="button" aria-label="Otvori: o agenciji">
           <span className="shadow" />
-          <div className="top"><span>PROMET DIGITAL</span><span>agencija · Zrenjanin</span></div>
-          <h1><span>Sajtovi sa</span><br /><em><span>potpisom.</span></em></h1>
-          <div className="bot"><span>Za svaku branšu drugi. Nikad šablon.</span><b>David</b></div>
+          <div className="top"><span>PROMET DIGITAL</span><span>Zrenjanin · Beograd</span></div>
+          <h1><span>Hajde na</span><br /><em><span>sastanak.</span></em></h1>
+          <div className="bot"><span>Prvo pričamo o tvom poslu i ciljevima.<br />Onda pravimo sajt.</span><b>David</b></div>
           <span className="tag">o nama</span>
         </div>
 
-        <div className="obj o-note" data-k="note" data-open="proces" tabIndex={0} role="button" aria-label="Otvori: proces">
-          <span className="shadow" /><span className="ring" />
-          1. kratak sastanak<br />2. nađemo <u>potpis</u><br />3. demo, besplatno<br />4. protokol, pa online<br /><s>šablon</s>
+        <div className="obj o-lap" data-k="lap" data-open="nacin" tabIndex={0} role="button" aria-label="Otvori: kako radimo">
+          <span className="lbl">u izradi</span>
+          <div className="scr"><div className="view v"><div className="nv"><b>FIRMA</b><i /></div><div className="hr"><b>Naslov</b></div><div className="cta" /><div className="cr"><i /><i /><i /></div><div className="ph" /><span className="scan" /></div></div>
+          <div className="deck" />
+          <span className="tag">kako radimo</span>
+        </div>
+
+        <div className="obj o-cup" data-k="cup" data-open="sastanak" tabIndex={0} role="button" aria-label="Otvori: sastanak">
+          <span className="shadow" /><span className="sp" /><span className="c" /><span className="h" />
+          <span className="tag" style={{ left: "12%" }}>sastanak</span>
+        </div>
+
+        <div className="obj o-cal" data-k="cal" data-open="dani" tabIndex={0} role="button" aria-label="Otvori: live za 14 dana">
+          <span className="shadow" />
+          <div className="bind">14 DANA</div>
+          <div className="grid">
+            {Array.from({ length: 14 }, (_, i) => (
+              <div className="d" key={i}>{i + 1}<svg viewBox="0 0 20 20"><path d="M3 3 L17 17 M17 3 L3 17" /></svg></div>
+            ))}
+          </div>
+          <div className="foot">i online je.<small>od sastanka do lansiranja</small></div>
           <span className="tag">proces</span>
         </div>
 
-        <div className="obj o-cass" data-k="cass" data-open="unearthed" tabIndex={0} role="button" aria-label="Otvori: Unearthed Samples">
-          <span className="shadow" />
-          <div className="lab"><b>UNEARTHED SAMPLES</b><i>vol. 1</i></div>
-          <div className="win"><span className="reel" /><span className="reel" /></div>
-          <span className="bot" />
-          <span className="tag">Unearthed Samples</span>
+        <div className="obj o-fold" data-k="fold" data-open="usluge" tabIndex={0} role="button" aria-label="Otvori: usluge">
+          <div className="f"><i>SEO</i></div><div className="f"><i>Kamere</i></div><div className="f"><i>Kasa</i></div><div className="f"><i>Magacin</i></div>
+          <div className="f"><i>Sajtovi</i><h3>Usluge</h3><p>Sajtovi, prodavnice, sistemi za magacin, kasu i kamere.</p></div>
+          <span className="tag">usluge</span>
         </div>
 
-        <div className="obj o-menu" data-k="menu" data-open="bite" tabIndex={0} role="button" aria-label="Otvori: Bite Catering">
+        <div className="obj o-cert" data-k="cert" data-open="ja" tabIndex={0} role="button" aria-label="Otvori: ko sam ja">
           <span className="shadow" />
-          <b>BITE</b><small>catering · Zrenjanin</small>
-          <p><span>mini burgeri</span><span>×</span></p><p><span>brusketi</span><span>×</span></p><p><span>tortilja rolnice</span><span>×</span></p><p><span>slatki zalogaji</span><span>×</span></p>
-          <span className="x">koliko gostiju?</span>
-          <span className="tag">Bite Catering</span>
-        </div>
-
-        <div className="obj o-proto" data-k="proto" data-open="standard" tabIndex={0} role="button" aria-label="Otvori: protokol provere">
-          <span className="shadow" />
-          <b>Protokol provere</b>Prüfprotokoll · br. 0247
-          <div className="r" style={{ marginTop: 10 }}><span>Učitavanje</span><i>1,4 s</i></div>
-          <div className="r"><span>Lighthouse</span><i>96</i></div>
-          <div className="r"><span>Kontrast</span><i>AA</i></div>
-          <div className="r"><span>Pravni tekstovi</span><i>3/3</i></div>
-          <div className="r"><span>Backup</span><i>dnevno</i></div>
-          <div className="r"><span>Domen klijenta</span><i>da</i></div>
-          <span className="st">PROVERENO</span>
+          <div className="in"><div className="flag" /><small>STRUČNO ZVANJE · NEMAČKA</small><b>Kaufmann für<br />E-Commerce</b><small>IHK · DE / RS</small><div className="sig">D. Nedić</div></div>
           <span className="tag">nemački standard</span>
         </div>
 
-        <div className="obj o-plan" data-k="plan" data-open="sala" tabIndex={0} role="button" aria-label="Otvori: Adriaticum">
-          <span className="shadow" /><span className="wall" /><span className="bina" />
-          <span className="t" style={{ left: "24%", top: "42%" }} /><span className="t" style={{ left: "46%", top: "42%" }} /><span className="t" style={{ left: "68%", top: "42%" }} /><span className="t" style={{ left: "35%", top: "66%" }} /><span className="t" style={{ left: "57%", top: "66%" }} />
-          <small>sala 18 × 12 m</small>
-          <span className="tag">Adriaticum</span>
+        <div className="obj o-score" data-k="score" data-open="poredjenje" tabIndex={0} role="button" aria-label="Otvori: poređenje">
+          <span className="shadow" />
+          <div className="h"><span>&nbsp;</span><span>obično</span><span>kod nas</span></div>
+          {[["dizajn", "šablon", "po meri"], ["prvi korak", "ponuda", "sastanak"], ["isporuka", "6+ ned.", "14 d."], ["sagovornik", "3+", "1"], ["kod i domen", "?", "tvoje"]].map(([a, b, c]) => (
+            <div className="r" key={a}><span>{a}</span><span className="no">{b}</span><span className="ok">{c}</span></div>
+          ))}
+          <span className="tag">poređenje</span>
+        </div>
+
+        <div className="obj o-sys" data-k="sys" data-open="sistemi" tabIndex={0} role="button" aria-label="Otvori: sistemi po meri">
+          <span className="shadow" />
+          <div className="cam"><canvas /><span>KAMERA 01</span></div>
+          <div className="row"><span>MAGACIN</span><span className="bars"><i /><i /><i /><i /><i /><i /></span></div>
+          <div className="row"><span>KASA</span><span className="on">povezano</span></div>
+          <span className="tag">sistemi</span>
         </div>
 
         <div className="obj o-work" data-k="work" data-open="radovi" tabIndex={0} role="button" aria-label="Otvori: radovi">
@@ -270,7 +337,7 @@ export function Desk() {
           <div className="wc wc-shot">
             <span className="tabx">RADOVI · 3</span>
             <img src={SHOTS.sala.src} alt="" draggable={false} />
-            <h3>Adriaticum</h3><p>Sistem za rezervacije opreme za događaje</p>
+            <h3>Adriaticum</h3><p>Booking platforma za opremu</p>
           </div>
           <span className="tag" style={{ bottom: -30 }}>radovi</span>
         </div>
@@ -295,16 +362,17 @@ export function Desk() {
           <span className="shadow" />
           <div className="scr">
             <span className="who">Promet Digital</span>
-            <div className="bub in">Zdravo! Imam pekaru u Zrenjaninu.</div>
-            <div className="bub in">Treba mi sajt, ali da ne liči na sve ostale.</div>
-            <div className="bub out">Može. Kad vam odgovara kratak sastanak?</div>
+            <div className="bub in">Zdravo, treba mi sajt za moju firmu.</div>
+            <div className="bub out">Hajde na sastanak. Ispričaj nam šta radiš i šta želiš da postigneš.</div>
+            <div className="bub in">Može sutra u 10?</div>
+            <div className="bub out">Vidimo se.</div>
           </div>
           <span className="tag">piši nam</span>
         </div>
 
-        <div className="obj o-sticky" data-k="sticky" data-open="paketi" tabIndex={0} role="button" aria-label="Otvori: paketi">
-          <span className="shadow" />demo je<br />besplatan.<br />plaćaš tek<br />kad ti se svidi.
-          <span className="tag">paketi</span>
+        <div className="obj o-sticky" data-k="sticky" data-open="sastanak" tabIndex={0} role="button" aria-label="Otvori: sastanak">
+          <span className="shadow" /><b>Prvi sastanak je besplatan.</b><small>cena po dogovoru · bez obaveze</small>
+          <span className="tag">sastanak</span>
         </div>
 
         <div className="obj o-pen" data-k="pen" aria-hidden="true">
@@ -314,7 +382,7 @@ export function Desk() {
 
       <div className="hintbar" ref={hintRef}>pomeri stvari po stolu · klikni na predmet</div>
       <nav className="tabs" aria-label="Brzi pristup">
-        {[["radovi", "Radovi", ""], ["paketi", "Paketi", ""], ["ja", "Ko sam ja", "me"], ["kontakt", "Kontakt", ""]].map(([k, label, cls]) => (
+        {[["radovi", "Radovi", ""], ["usluge", "Usluge", ""], ["sistemi", "Sistemi", ""], ["ja", "Ko sam ja", "me"], ["kontakt", "Kontakt", ""]].map(([k, label, cls]) => (
           <button key={k} type="button" className={cls || undefined} onClick={(e) => { hideHint(); open(k, e.currentTarget); }}>{label}</button>
         ))}
       </nav>
