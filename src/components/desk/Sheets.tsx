@@ -363,41 +363,82 @@ function Poredjenje({ go }: { go: Go }) {
   );
 }
 
-function Sistemi({ go }: { go: Go }) {
-  const cvRef = useRef<HTMLCanvasElement>(null), sinRef = useRef<HTMLElement>(null), snowRef = useRef<HTMLElement>(null);
+function Sistemi({ go, active }: { go: Go; active: boolean }) {
+  const cvRef = useRef<HTMLCanvasElement>(null), sinRef = useRef<HTMLElement>(null), snowRef = useRef<HTMLElement>(null), stimeRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    const cv = cvRef.current!, g = cv.getContext("2d")!;
+    if (!active) return;
+    const cv = cvRef.current;
+    const g = cv?.getContext("2d");
+    if (!cv || !g) return;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    type P = { x: number; y: number; path: number[][]; k: number; sp: number; c: boolean };
-    const spawn = (): P => ({ x: -0.02, y: 0.55 + Math.random() * 0.2, path: [[0.2 + Math.random() * 0.25, 0.2 + Math.random() * 0.6], [0.5 + Math.random() * 0.3, 0.2 + Math.random() * 0.6], [0.85, 0.85], [1.05, 0.6]], k: 0, sp: 0.0025 + Math.random() * 0.002, c: false });
-    let ppl: P[] = [spawn(), spawn()], inn = 0, raf = 0, dead = false;
-    const heat: number[][] = [];
+    type P = { x: number; y: number; path: [number, number][]; k: number; sp: number; c: boolean; wait: number; dwell: number; id: string; t: [number, number][]; dir: number };
+    const shelves: [number, number, number, number][] = [[0.22, 0.22, 0.05, 0.42], [0.37, 0.22, 0.05, 0.42], [0.52, 0.22, 0.05, 0.42]];
+    const counter: [number, number, number, number] = [0.64, 0.72, 0.16, 0.14];
+    const way = (): [number, number] => { const s = shelves[Math.floor(Math.random() * 3)]; return [s[0] + s[2] + 0.035, 0.26 + Math.random() * 0.34]; };
+    let nid2 = 101;
+    const spawn = (): P => ({ x: -0.02, y: 0.8 + Math.random() * 0.08, path: [[0.12, 0.8], way(), way(), [0.61, 0.79], [0.12, 0.92], [-0.05, 0.92]], k: 0, sp: 0.0022 + Math.random() * 0.0012, c: false, wait: 0, dwell: 0, id: "ID " + nid2++, t: [], dir: 0 });
+    let people: P[] = [spawn()], inn = 0, raf = 0, dead = false;
+    if (reduce) people = [
+      { ...spawn(), x: 0.29, y: 0.46, k: 1, c: true, wait: 80, dwell: 1.8, dir: 0.7 },
+      { ...spawn(), x: 0.58, y: 0.79, k: 3, c: true, wait: 0, dir: 0.1 },
+    ];
+    const gx = 28, gy = 14, heat = new Float32Array(gx * gy);
+    const pad = (n: number) => String(n).padStart(2, "0");
+    const camTime = () => { const d = new Date(); return pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds()); };
+    const person = (x: number, y: number, dir: number, s: number) => {
+      g.save(); g.translate(x, y); g.rotate(dir);
+      g.fillStyle = "#8E959E"; g.beginPath(); g.ellipse(0, 0, 4.2 * s, 7.2 * s, 0, 0, 7); g.fill();
+      g.fillStyle = "#EDEEF0"; g.beginPath(); g.arc(0.8 * s, 0, 3.1 * s, 0, 7); g.fill(); g.restore();
+    };
+    const track = (x: number, y: number, s: number, id: string, extra: string) => {
+      const r = 11 * s, l = 4 * s; g.strokeStyle = "#3DDCFF"; g.lineWidth = 1.2 * s; g.beginPath();
+      ([[-1, -1], [1, -1], [1, 1], [-1, 1]] as [number, number][]).forEach(([a, b]) => {
+        g.moveTo(x + a * r, y + b * r + -b * l); g.lineTo(x + a * r, y + b * r); g.lineTo(x + a * r + -a * l, y + b * r);
+      });
+      g.stroke(); g.fillStyle = "#3DDCFF"; g.font = 8.5 * s + "px JetBrains Mono, monospace"; g.fillText(id, x - r, y - r - 3 * s);
+      if (extra) { g.fillStyle = "#A0A6AE"; g.fillText(extra, x - r, y + r + 10 * s); }
+    };
+    const trail = (pts: [number, number][], w: number, h: number, s: number) => {
+      if (pts.length < 2) return;
+      g.strokeStyle = "rgba(61,220,255,.28)"; g.lineWidth = s; g.beginPath();
+      pts.forEach((p, i) => i ? g.lineTo(p[0] * w, p[1] * h) : g.moveTo(p[0] * w, p[1] * h)); g.stroke();
+    };
     function draw() {
       if (dead) return;
-      const d = devicePixelRatio, w = (cv.width = cv.clientWidth * d), h = (cv.height = cv.clientHeight * d);
+      if (document.hidden) return;
+      const d = devicePixelRatio || 1, w = (cv.width = cv.clientWidth * d), h = (cv.height = cv.clientHeight * d);
       g.clearRect(0, 0, w, h);
-      g.fillStyle = "#22252A"; [[0.28, 0.15, 0.04, 0.5], [0.48, 0.15, 0.04, 0.5], [0.68, 0.15, 0.04, 0.5]].forEach(([x, y, ww, hh]) => g.fillRect(x * w, y * h, ww * w, hh * h));
-      g.fillStyle = "#2B2F35"; g.fillRect(0.8 * w, 0.78 * h, 0.14 * w, 0.12 * h); g.fillStyle = "#8A8F98"; g.font = 10 * d + "px JetBrains Mono, monospace"; g.fillText("KASA", 0.82 * w, 0.86 * h);
-      g.strokeStyle = "rgba(61,220,255,.6)"; g.setLineDash([6 * d, 6 * d]); g.beginPath(); g.moveTo(0.08 * w, 0.4 * h); g.lineTo(0.08 * w, 0.95 * h); g.stroke(); g.setLineDash([]);
-      heat.forEach((p) => { g.fillStyle = "rgba(61,220,255,.05)"; g.beginPath(); g.arc(p[0] * w, p[1] * h, 18 * d, 0, 7); g.fill(); });
-      ppl.forEach((p) => {
+      const cw = w / gx, ch = h / gy;
+      for (let i = 0; i < heat.length; i++) { const v = heat[i]; if (v < 0.5) continue; g.fillStyle = "rgba(61,220,255," + Math.min(0.22, v / 400).toFixed(3) + ")"; g.fillRect((i % gx) * cw + 1, Math.floor(i / gx) * ch + 1, cw - 2, ch - 2); }
+      g.strokeStyle = "#4A4E57"; g.lineWidth = 2 * d; g.beginPath(); g.moveTo(0.06 * w, 0.74 * h); g.lineTo(0.06 * w, 0.15 * h); g.lineTo(0.84 * w, 0.15 * h); g.lineTo(0.84 * w, 0.96 * h); g.lineTo(0.06 * w, 0.96 * h); g.lineTo(0.06 * w, 0.97 * h); g.stroke();
+      g.lineWidth = d; shelves.forEach(([x, y, ww, hh]) => { g.strokeStyle = "#3A3D44"; g.strokeRect(x * w, y * h, ww * w, hh * h); for (let k = 1; k < 6; k++) { g.beginPath(); g.moveTo(x * w, (y + hh * k / 6) * h); g.lineTo((x + ww) * w, (y + hh * k / 6) * h); g.stroke(); } });
+      g.strokeStyle = "#3A3D44"; g.strokeRect(counter[0] * w, counter[1] * h, counter[2] * w, counter[3] * h);
+      g.fillStyle = "#6B6F78"; g.font = 9 * d + "px JetBrains Mono, monospace"; g.fillText("KASA", (counter[0] + 0.012) * w, (counter[1] + 0.085) * h);
+      g.strokeStyle = "rgba(61,220,255,.7)"; g.setLineDash([4 * d, 4 * d]); g.beginPath(); g.moveTo(0.09 * w, 0.74 * h); g.lineTo(0.09 * w, 0.96 * h); g.stroke(); g.setLineDash([]);
+      g.fillStyle = "#3DDCFF"; g.fillText("ULAZ", 0.105 * w, 0.995 * h - 4 * d);
+      people.forEach((p) => {
         const tg = p.path[p.k]; const dx = tg[0] - p.x, dy = tg[1] - p.y, dist = Math.hypot(dx, dy);
-        if (dist < 0.01) p.k++; else { p.x += (dx / dist) * p.sp; p.y += (dy / dist) * p.sp; }
-        if (!p.c && p.x > 0.08) { p.c = true; inn++; if (sinRef.current) sinRef.current.textContent = String(inn); }
-        if (Math.random() < 0.08) heat.push([p.x, p.y]);
-        const x = p.x * w, y = p.y * h;
-        g.fillStyle = "#EDEEF0"; g.beginPath(); g.arc(x, y, 5 * d, 0, 7); g.fill();
-        g.strokeStyle = "#3DDCFF"; g.lineWidth = 1.5 * d; g.strokeRect(x - 12 * d, y - 14 * d, 24 * d, 28 * d);
+        if (!reduce) {
+          if (p.wait > 0) { p.wait--; p.dwell += 1 / 60; }
+          else if (dist < 0.01) { p.k++; if (p.k === 2 || p.k === 3) { p.wait = 60 + Math.random() * 120; p.dwell = 0; } }
+          else { p.x += dx / dist * p.sp; p.y += dy / dist * p.sp; p.dir = Math.atan2(dy * h, dx * w); }
+        }
+        if (!p.c && p.x > 0.09) { p.c = true; inn++; if (sinRef.current) sinRef.current.textContent = String(inn); }
+        const gi = Math.floor(p.y * gy) * gx + Math.floor(p.x * gx); if (gi >= 0 && gi < heat.length) heat[gi] += 1;
+        p.t.push([p.x, p.y]); if (p.t.length > 90) p.t.shift(); trail(p.t, w, h, d);
+        const x = p.x * w, y = p.y * h; person(x, y, p.dir, d); track(x, y, d, p.id, p.wait > 0 ? p.dwell.toFixed(1) + " s" : "");
       });
-      ppl = ppl.filter((p) => p.k < p.path.length);
-      if (heat.length > 600) heat.splice(0, 100);
-      if (Math.random() < 0.012 && ppl.length < 7) ppl.push(spawn());
-      if (snowRef.current) snowRef.current.textContent = String(ppl.filter((p) => p.c).length);
+      people = people.filter((p) => p.k < p.path.length);
+      if (!reduce && Math.random() < 0.01 && people.length < 6) people.push(spawn());
+      if (snowRef.current) snowRef.current.textContent = String(people.filter((p) => p.c && p.x > 0.09).length);
+      if (stimeRef.current) stimeRef.current.textContent = camTime();
       if (!reduce) raf = requestAnimationFrame(draw);
     }
+    const onVisibility = () => { if (!document.hidden && !reduce) draw(); };
+    document.addEventListener("visibilitychange", onVisibility);
     draw();
-    return () => { dead = true; cancelAnimationFrame(raf); };
-  }, []);
+    return () => { dead = true; cancelAnimationFrame(raf); document.removeEventListener("visibilitychange", onVisibility); };
+  }, [active]);
   const cards = [
     ["Magacin i zalihe", "Prijem, izdavanje i stanje robe na jednom mestu. Upozorenje kad nešto počne da fali.", "lager · barkod · izveštaji"],
     ["Kasa i prodaja", "Prodaja u radnji i online prodavnica dele iste zalihe i iste brojeve.", "kasa · zalihe · online shop"],
@@ -411,7 +452,7 @@ function Sistemi({ go }: { go: Go }) {
       <div className="sysg">{cards.map(([h, p, s]) => <div key={h}><h3>{h}</h3><p>{p}</p><small>{s}</small></div>)}</div>
       <div className="store">
         <canvas ref={cvRef} />
-        <span className="lbl">PRIMER · KAMERA U RADNJI</span>
+        <span className="lbl"><b>CAM 01 · RADNJA · <span id="stime" ref={stimeRef}>--:--:--</span></b><small>primer · anonimno</small></span>
         <div className="hud"><span>ušlo</span><b ref={sinRef}>0</b><span>u radnji</span><b ref={snowRef}>0</b></div>
       </div>
       <p className="small">Primer prikaza. Cena i obim po dogovoru, posle sastanka.</p>
@@ -489,7 +530,7 @@ function Kontakt({ time }: { time: string }) {
   );
 }
 
-export function SheetBody({ name, go, time }: { name: string; go: Go; time: string }) {
+export function SheetBody({ name, go, time, active = true }: { name: string; go: Go; time: string; active?: boolean }) {
   switch (name) {
     case "intro": return <Intro go={go} />;
     case "sastanak": return <Sastanak />;
@@ -497,7 +538,7 @@ export function SheetBody({ name, go, time }: { name: string; go: Go; time: stri
     case "dani": return <Dani />;
     case "usluge": return <Usluge />;
     case "poredjenje": return <Poredjenje go={go} />;
-    case "sistemi": return <Sistemi go={go} />;
+    case "sistemi": return <Sistemi go={go} active={active} />;
     case "unearthed": return <Unearthed />;
     case "bite": return <Bite />;
     case "sala": return <Sala />;

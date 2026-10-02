@@ -234,22 +234,54 @@ export function Desk() {
     let siteInt: ReturnType<typeof setInterval> | undefined;
     timers.push(setTimeout(runCal, introEnd * 0.6));
     timers.push(setTimeout(() => { buildSite(); siteInt = setInterval(buildSite, 4200); }, introEnd * 0.5));
-    // systems panel
-    const camc = desk.querySelector<HTMLCanvasElement>(".o-sys canvas")!, cg2 = camc.getContext("2d")!;
-    const ppl = [...Array(4)].map(() => ({ x: Math.random(), y: 0.3 + Math.random() * 0.6, vx: (Math.random() - 0.5) * 0.004, vy: (Math.random() - 0.5) * 0.003 }));
+    // systems panel camera
+    const camc = desk.querySelector<HTMLCanvasElement>(".o-sys canvas");
+    const cg2 = camc?.getContext("2d");
+    type MiniPerson = { x: number; y: number; vx: number; vy: number; id: string; t: [number, number][] };
+    let nid = 31;
+    const ppl: MiniPerson[] = [...Array(3)].map(() => ({
+      x: 0.15 + Math.random() * 0.4,
+      y: 0.35 + Math.random() * 0.5,
+      vx: (Math.random() - 0.5) * 0.003,
+      vy: (Math.random() - 0.5) * 0.002,
+      id: "ID " + String(nid++).padStart(2, "0"),
+      t: [],
+    }));
+    const camPerson = (g: CanvasRenderingContext2D, x: number, y: number, dir: number, s: number) => {
+      g.save(); g.translate(x, y); g.rotate(dir);
+      g.fillStyle = "#8E959E"; g.beginPath(); g.ellipse(0, 0, 4.2 * s, 7.2 * s, 0, 0, 7); g.fill();
+      g.fillStyle = "#EDEEF0"; g.beginPath(); g.arc(0.8 * s, 0, 3.1 * s, 0, 7); g.fill(); g.restore();
+    };
+    const camTrack = (g: CanvasRenderingContext2D, x: number, y: number, s: number, id: string) => {
+      const r = 11 * s, l = 4 * s;
+      g.strokeStyle = "#3DDCFF"; g.lineWidth = 1.2 * s; g.beginPath();
+      ([[-1, -1], [1, -1], [1, 1], [-1, 1]] as [number, number][]).forEach(([a, b]) => {
+        g.moveTo(x + a * r, y + b * r + -b * l); g.lineTo(x + a * r, y + b * r); g.lineTo(x + a * r + -a * l, y + b * r);
+      });
+      g.stroke(); g.fillStyle = "#3DDCFF"; g.font = 8.5 * s + "px JetBrains Mono, monospace"; g.fillText(id, x - r, y - r - 3 * s);
+    };
+    const camTrail = (g: CanvasRenderingContext2D, pts: [number, number][], w: number, h: number, s: number) => {
+      if (pts.length < 2) return;
+      g.strokeStyle = "rgba(61,220,255,.28)"; g.lineWidth = s; g.beginPath();
+      pts.forEach((p, i) => i ? g.lineTo(p[0] * w, p[1] * h) : g.moveTo(p[0] * w, p[1] * h)); g.stroke();
+    };
     let camRaf = 0;
     const camFrame = () => {
-      if (dead) return;
-      const w = (camc.width = camc.clientWidth * 2), h = (camc.height = camc.clientHeight * 2);
+      if (dead || !camc || !cg2 || document.hidden) return;
+      const d = devicePixelRatio || 1, w = (camc.width = camc.clientWidth * d), h = (camc.height = camc.clientHeight * d);
       cg2.clearRect(0, 0, w, h);
+      cg2.strokeStyle = "#2E3137"; cg2.lineWidth = d;
+      cg2.strokeRect(0.62 * w, 0.3 * h, 0.08 * w, 0.55 * h); cg2.strokeRect(0.8 * w, 0.3 * h, 0.08 * w, 0.55 * h);
       ppl.forEach((p) => {
-        if (!reduce) { p.x += p.vx; p.y += p.vy; if (p.x < 0.05 || p.x > 0.95) p.vx *= -1; if (p.y < 0.25 || p.y > 0.92) p.vy *= -1; }
-        const x = p.x * w, y = p.y * h;
-        cg2.fillStyle = "#EDEEF0"; cg2.beginPath(); cg2.arc(x, y, 5, 0, 7); cg2.fill();
-        cg2.strokeStyle = "#3DDCFF"; cg2.lineWidth = 2; cg2.strokeRect(x - 14, y - 18, 28, 32);
+        if (!reduce) { p.x += p.vx; p.y += p.vy; if (p.x < 0.08 || p.x > 0.55) p.vx *= -1; if (p.y < 0.32 || p.y > 0.9) p.vy *= -1; }
+        p.t.push([p.x, p.y]); if (p.t.length > 60) p.t.shift();
+        camTrail(cg2, p.t, w, h, d); const x = p.x * w, y = p.y * h;
+        camPerson(cg2, x, y, Math.atan2(p.vy, p.vx), d * 0.9); camTrack(cg2, x, y, d * 0.9, p.id);
       });
       if (!reduce) camRaf = requestAnimationFrame(camFrame);
     };
+    const onVisibility = () => { if (!document.hidden && !reduce) camFrame(); };
+    document.addEventListener("visibilitychange", onVisibility);
     camFrame();
     const bars = [...desk.querySelectorAll<HTMLElement>(".o-sys .bars i")];
     const stock = () => bars.forEach((b) => { const v = 15 + Math.random() * 85; b.style.height = v + "%"; b.classList.toggle("low", v < 28); });
@@ -258,6 +290,7 @@ export function Desk() {
 
     return () => {
       dead = true; field.destroy(); clearInterval(siteInt); clearInterval(stockInt); cancelAnimationFrame(camRaf); clearTimeout(lt); timers.forEach(clearTimeout);
+      document.removeEventListener("visibilitychange", onVisibility);
       removeEventListener("resize", onResize); cleanups.forEach((c) => c());
     };
   }, [open, hideHint]);
@@ -389,7 +422,7 @@ export function Desk() {
       <div className={"veil" + (on ? " on" : "")} onClick={close} />
       <div ref={sheetRef} className={"sheet" + (on ? " on" : "")} role="dialog" aria-modal="true" aria-labelledby="sheetTitle" aria-hidden={!on}>
         <button className="close" ref={closeRef} type="button" onClick={close}>vrati na sto ✕</button>
-        <div>{name && <SheetBody key={name + seq} name={name} go={go} time={time} />}</div>
+        <div>{name && <SheetBody key={name + seq} name={name} go={go} time={time} active={on} />}</div>
       </div>
     </div>
   );
