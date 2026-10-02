@@ -1,20 +1,11 @@
-# Potpis homepage section
+# Retail camera canvas redraw
 
-## Changes
-- Add a new bilingual “Potpis / Signature” section directly after Manifesto and before GermanStandard.
-- Present the supplied headline, introduction, three-step sequence, five industry examples, closing line, and existing consultation CTA without changing other homepage content.
-- Use the existing 12-column editorial grid, hairlines, typography, spacing, semantic Graphit & Cyan tokens, and shared button style.
-- Keep examples as a simple two-column table on desktop and a readable stacked list on mobile, with no cards or icons.
-- On pointer-hover desktop only, reveal a small shared Promet pointer mark and turn the signature text cyan. Keep the static mobile and reduced-motion presentation fully visible.
-- Skip a navigation link because the existing desktop navigation is already full.
-
-## Technical details
-- Create one focused section component under the existing homepage section directory.
-- Add all Serbian and English copy to the shared localization dictionary.
-- Mount the section in the homepage route at the requested position.
-- Reuse the shared `Logo` mark by adding a mark-only display option without changing current logo callers or visuals.
-- Keep interaction CSS token-based and limited to color/opacity/transform transitions.
+## Build
+- Replace only the small systems-panel camera renderer with top-down person glyphs, corner tracking brackets, IDs, trails, and simple shelf outlines.
+- Replace only the large systems-sheet camera renderer with the supplied retail floor plan, discrete heat cells, tracked people, dwell times, count line, live clock, and existing HUD.
+- Pause each animation when inactive, render one static frame for reduced motion, and scale both canvases for device pixel ratio.
+- Adjust only the store canvas height and camera overlay label styling requested.
 
 ## Verification
-- Confirm Serbian and English copy, CTA target, desktop hover state, mobile layout, and reduced-motion behavior.
-- Check homepage ordering, responsive overflow, console errors, and the latest preview build.
+- Open the systems panel and sheet at desktop and 390px widths.
+- Confirm the camera graphics, live overlay/HUD, sizing, reduced-motion behavior, and absence of console errors.
