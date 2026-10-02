@@ -45,26 +45,35 @@ export function SiteMotion() {
         });
       }
 
+      // Never recalculate triggers while the user is scrolling: wait until scrolling has been idle.
       let refreshTimer: ReturnType<typeof setTimeout> | undefined;
+      let lastScroll = 0;
+      const onScroll = () => { lastScroll = performance.now(); };
+      window.addEventListener("scroll", onScroll, { passive: true });
       const scheduleRefresh = () => {
         if (refreshTimer) clearTimeout(refreshTimer);
         refreshTimer = setTimeout(() => {
+          if (performance.now() - lastScroll < 300) {
+            scheduleRefresh();
+            return;
+          }
           ScrollTrigger.sort();
           ScrollTrigger.refresh();
-        }, 200);
+        }, 250);
       };
       document.fonts.ready.then(scheduleRefresh);
       window.addEventListener("load", scheduleRefresh, { once: true });
       let lastHeight = document.body.offsetHeight;
       const observer = new ResizeObserver(() => {
         const height = document.body.offsetHeight;
-        if (height === lastHeight) return;
+        if (Math.abs(height - lastHeight) < 2) return;
         lastHeight = height;
         scheduleRefresh();
       });
       observer.observe(document.body);
       cleanups.push(() => {
         window.removeEventListener("load", scheduleRefresh);
+        window.removeEventListener("scroll", onScroll);
         observer.disconnect();
         if (refreshTimer) clearTimeout(refreshTimer);
       });
