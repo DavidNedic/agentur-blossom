@@ -7,6 +7,11 @@ import onestLatin from "@fontsource/onest/files/onest-latin-400-normal.woff2?url
 import onestLatinExt from "@fontsource/onest/files/onest-latin-ext-400-normal.woff2?url";
 import jetbrainsLatin from "../assets/fonts/jetbrains-mono-latin.woff2?url";
 
+const TITLE = "Promet Digital | Sajtovi, prodavnice i sistemi po meri";
+const DESC =
+  "Sajtovi, online prodavnice i sistemi po meri za magacin, kasu i kamere. Prvi sastanak je besplatan. Zrenjanin · Beograd.";
+const SOCIAL_IMAGE = "https://promet.digital/og-image.png";
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -36,10 +41,25 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Promet Digital" },
-      { name: "description", content: "Promet Digital: online prodavnice, web dizajn, SEO i oglasi." },
+      { title: TITLE },
+      { name: "description", content: DESC },
       { name: "author", content: "Promet Digital" },
       { name: "theme-color", content: "#17181C" },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESC },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://promet.digital/" },
+      { property: "og:site_name", content: "Promet Digital" },
+      { property: "og:image", content: SOCIAL_IMAGE },
+      { property: "og:image:secure_url", content: SOCIAL_IMAGE },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Promet Digital" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: TITLE },
+      { name: "twitter:description", content: DESC },
+      { name: "twitter:image", content: SOCIAL_IMAGE },
     ],
     links: [
       { rel: "preload", href: geologicaLatin, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
