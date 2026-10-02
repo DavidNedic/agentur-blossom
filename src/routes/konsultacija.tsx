@@ -20,13 +20,13 @@ export const Route = createFileRoute("/konsultacija")({
   component: KonsultacijaPage,
   head: () => ({
     meta: [
-      { title: "Besplatna konsultacija — Klik Digital" },
+      { title: "Besplatna konsultacija — Promet Digital" },
       {
         name: "description",
         content:
           "Popuni formu i dobij besplatnu konsultaciju u roku od 24h. Sajt već od 48h, od 199€. Bez rizika.",
       },
-      { property: "og:title", content: "Besplatna konsultacija — Klik Digital" },
+      { property: "og:title", content: "Besplatna konsultacija — Promet Digital" },
       {
         property: "og:description",
         content:
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/konsultacija")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Besplatna konsultacija — Klik Digital" },
+      { name: "twitter:title", content: "Besplatna konsultacija — Promet Digital" },
       {
         name: "twitter:description",
         content: "Sajt već od 48h. Od 199€. Bez skrivenih troškova. Plaćanje tek nakon isporuke.",
@@ -214,7 +214,7 @@ function LeadForm() {
         interesti.find((i) => i.value === data.interes)?.label ?? data.interes;
 
       const lines = [
-        "🔔 *NOVI ZAHTEV — Klik Digital*",
+        "🔔 *NOVI ZAHTEV — Promet Digital*",
         "",
         `👤 Ime: ${data.ime}`,
         `📞 Telefon: ${data.telefon}`,
@@ -698,7 +698,7 @@ function MinimalFooter() {
       <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <Logo className="h-6" />
         <p className="text-muted-foreground text-xs">
-          © 2026 Klik Digital
+          © 2026 Promet Digital
         </p>
         <a
           href="#"

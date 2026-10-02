@@ -162,8 +162,8 @@ const dict = {
         { tag: "BOFU", t: "Decision", s: "Booking and closing", i: ["Appointment booking", "Remarketing", "E-mail"] },
       ],
     },
-    compTitle: { sr: "Klik protiv tipične agencije.", en: "Klik vs a typical agency." },
-    compHead: { sr: ["Kriterijum", "Tipična agencija", "Klik Digital"], en: ["Criteria", "Typical agency", "Klik Digital"] },
+    compTitle: { sr: "Promet protiv tipične agencije.", en: "Promet vs a typical agency." },
+    compHead: { sr: ["Kriterijum", "Tipična agencija", "Promet Digital"], en: ["Criteria", "Typical agency", "Promet Digital"] },
     comp: {
       sr: [
         ["Kvalitet sadržaja", "Stock fotografije i generički dizajn", "Individualni dizajn prilagođen tvom brendu"],
