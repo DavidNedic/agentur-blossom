@@ -8,6 +8,14 @@
 @import "@fontsource/onest/latin-ext-500.css";
 @import "@fontsource/onest/latin-700.css";
 @import "@fontsource/onest/latin-ext-700.css";
+@import "@fontsource/caveat/latin-500.css";
+@import "@fontsource/caveat/latin-ext-500.css";
+@import "@fontsource/caveat/latin-700.css";
+@import "@fontsource/caveat/latin-ext-700.css";
+@import "@fontsource/barlow-condensed/latin-600.css";
+@import "@fontsource/barlow-condensed/latin-ext-600.css";
+@import "@fontsource/barlow-condensed/latin-700.css";
+@import "@fontsource/barlow-condensed/latin-ext-700.css";
 @font-face {
   font-family: "JetBrains Mono";
   src: url("./assets/fonts/jetbrains-mono-latin.woff2") format("woff2");
