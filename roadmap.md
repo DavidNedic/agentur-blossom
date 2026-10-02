@@ -1,5 +1,6 @@
 # Roadmap
 
+- [ ] Rebrand every visitor-facing Klik reference and shared logo to Promet, then audit protected remnants
 - [x] Rename every visitor-facing Radenon reference and brand asset to Klik
 - [x] Replace the old palette with Graphit & Cyan across every shared state
 - [x] Replace Archivo with self-hosted Geologica and Onest
