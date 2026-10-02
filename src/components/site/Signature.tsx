@@ -1,6 +1,5 @@
 import { PointerMark } from "@/components/Logo";
 import { useLang } from "@/lib/i18n";
-import { MaskedTitle } from "./SiteMotion";
 import { Roll, SectionHead } from "./ui";
 
 export function Signature() {
@@ -13,9 +12,7 @@ export function Signature() {
 
         <div className="grid grid-cols-12 gap-x-4 pt-12 md:gap-x-8 md:pt-20">
           <div className="col-span-12 md:col-span-8">
-            <h2 className="font-expanded text-[clamp(2.75rem,6.5vw,7rem)]">
-              <MaskedTitle>{t.signature.title}</MaskedTitle>
-            </h2>
+            <h2 className="font-expanded text-[clamp(2.75rem,6.5vw,7rem)]">{t.signature.title}</h2>
           </div>
           <p className="col-span-12 mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground md:col-span-4 md:mt-0 md:self-end md:text-xl">
             {t.signature.intro}
