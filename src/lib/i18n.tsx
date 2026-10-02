@@ -64,6 +64,47 @@ const dict = {
       en: "A beautiful site that does not sell is a cost. We build stores that measure every click, recover abandoned carts and fill your calendar with orders. You own everything: code, domain, data. No upfront payment, no hidden fees, a direct line over WhatsApp.",
     },
   },
+  signature: {
+    label: { sr: "Potpis", en: "Signature" },
+    title: { sr: "Svaki sajt ima svoj potpis.", en: "Every site has its own signature." },
+    intro: {
+      sr: "Ne pravimo sajtove po šablonu. Za svakog klijenta tražimo jednu stvar koju ima samo njegova branša, i od nje pravimo dizajn i funkciju koju kupci pamte.",
+      en: "We don't build from templates. For every client we find one thing that only their industry has, and turn it into a design element and a function customers remember.",
+    },
+    steps: {
+      sr: [
+        ["Upoznamo posao", "Dođemo kod vas, gledamo alate, materijale i kako radite."],
+        ["Nađemo potpis", "Jedan predmet ili trenutak koji je samo vaš."],
+        ["Pretvorimo ga u funkciju", "Ne ukras, nego nešto što kupcu stvarno pomaže."],
+      ],
+      en: [
+        ["We get to know the business", "We visit you and look at your tools, materials and how you work."],
+        ["We find the signature", "One object or moment that is only yours."],
+        ["We turn it into a function", "Not decoration, something that actually helps the customer."],
+      ],
+    } as Bi<[string, string][]>,
+    exampleHead: { sr: ["Branša", "Potpis"], en: ["Industry", "Signature"] } as Bi<[string, string]>,
+    examples: {
+      sr: [
+        ["Geodetski biro", "Lenjir na ivici stranice meri skrol u metrima, a u uglu se vide koordinate miša."],
+        ["Ketering", "Upišete broj gostiju i vidite raspored stolova i okvirne količine hrane."],
+        ["Pekara", "Odbrojavanje do kraja porudžbina za danas i oznaka koliko je hleb svež."],
+        ["Iznajmljivanje opreme", "Raspored sale na koji prevučete stolice, stolove i dekoraciju."],
+        ["Auto servis", "Kliknete deo automobila i vidite uslugu i cenu."],
+      ],
+      en: [
+        ["Surveyor", "A ruler on the page edge measures the scroll in metres, with live cursor coordinates in the corner."],
+        ["Catering", "Enter the number of guests and see the table plan and estimated food quantities."],
+        ["Bakery", "A countdown to today's order cutoff and a note on how fresh the bread is."],
+        ["Event rental", "A floor plan of the venue where you drag in chairs, tables and decor."],
+        ["Car service", "Click a part of the car and see the service and price."],
+      ],
+    } as Bi<[string, string][]>,
+    closing: {
+      sr: "Koji je potpis vašeg posla? Otkrićemo ga na prvom razgovoru.",
+      en: "What is your business's signature? We'll find it in the first conversation.",
+    },
+  },
   work: {
     label: { sr: "04 / Izabrani radovi", en: "04 / Selected work" },
     title: { sr: "Radovi", en: "Work" },

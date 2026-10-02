@@ -1,6 +1,23 @@
 import type { SVGProps } from "react";
 import { cn } from "@/lib/utils";
 
+export function PointerMark({ className, light = false, ...props }: SVGProps<SVGSVGElement> & { light?: boolean }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="-240 -140 1660 2240"
+      className={cn("block text-foreground", light && "text-ink", className)}
+      {...props}
+    >
+      <polygon points="420,560 507,1805 791,1504 1017,1941 1213,1842 996,1419 1370,1393" fill="currentColor" stroke="currentColor" strokeWidth="257" strokeLinejoin="round" />
+      <polygon points="420,560 507,1805 791,1504 1017,1941 1213,1842 996,1419 1370,1393" fill={light ? "var(--deep-cyan)" : "var(--primary)"} stroke={light ? "var(--deep-cyan)" : "var(--primary)"} strokeWidth="70" strokeLinejoin="round" />
+      <line x1="377" y1="314" x2="333" y2="68" stroke="currentColor" strokeWidth="101" strokeLinecap="round" />
+      <line x1="216" y1="417" x2="11" y2="274" stroke="currentColor" strokeWidth="101" strokeLinecap="round" />
+      <line x1="174" y1="603" x2="-72" y2="647" stroke="currentColor" strokeWidth="101" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function Logo({ className, light = false, ...props }: SVGProps<SVGSVGElement> & { light?: boolean }) {
   return (
     <svg

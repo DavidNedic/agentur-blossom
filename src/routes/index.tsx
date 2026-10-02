@@ -5,6 +5,7 @@ import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { Marquee } from "@/components/site/Marquee";
 import { Manifesto } from "@/components/site/Manifesto";
+import { Signature } from "@/components/site/Signature";
 import { GermanStandard } from "@/components/site/GermanStandard";
 import { Work } from "@/components/site/Work";
 import { Services } from "@/components/site/Services";
@@ -49,6 +50,7 @@ function Index() {
           <Hero />
           <Marquee />
           <Manifesto />
+          <Signature />
           <GermanStandard />
           <Work />
           <Services />
