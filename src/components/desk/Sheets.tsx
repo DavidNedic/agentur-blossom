@@ -34,31 +34,6 @@ function GoBtn({ go, to = "kontakt" }: { go: Go; to?: string }) {
   );
 }
 
-function Intro({ go }: { go: Go }) {
-  return (
-    <div className="sh paper">
-      <h2 id="sheetTitle">Sajtovi sa potpisom.</h2>
-      <p className="lead">Mi smo Promet Digital, agencija za sajtove i online prodavnice iz Zrenjanina. Ne radimo po šablonu. Svaki projekat počinje kratkim sastankom, na kom tražimo jednu stvar koju ima samo tvoja branša. Od nje pravimo sajt koji kupci pamte.</p>
-      <p className="lead">Na ovom stolu je sve što radimo. Pomeraj stvari, otvaraj ih.</p>
-      <GoBtn go={go} />
-    </div>
-  );
-}
-
-function Proces() {
-  return (
-    <div className="sh paper" style={{ backgroundImage: "linear-gradient(transparent 39px,#DCE3EC 40px)", backgroundSize: "100% 40px" }}>
-      <h2 id="sheetTitle">Kako radimo.</h2>
-      <div className="steps">
-        <div><b>1.</b><div><h3>Kratak sastanak</h3><p>Pola sata, uživo ili online. Pričamo o tvojim kupcima i o tome kako zaista radiš.</p></div></div>
-        <div><b>2.</b><div><h3>Nađemo potpis</h3><p>Jedan predmet ili trenutak koji ima samo tvoja branša. Raspored sale kod iznajmljivanja, zvuk kod prodavnice semplova.</p></div></div>
-        <div><b>3.</b><div><h3>Demo, besplatno</h3><p>Pravimo demo pre nego što išta platiš. Ako ti se ne svidi, ne duguješ ništa.</p></div></div>
-        <div><b>4.</b><div><h3>Protokol, pa online</h3><p>Svaki sajt prolazi naš protokol provere. Ako nešto ne prođe, ne puštamo ga.</p></div></div>
-      </div>
-    </div>
-  );
-}
-
 const PAD_NAMES = ["kick", "snare", "hat", "clap", "bas C", "bas E♭", "akord", "zvono"];
 
 function Unearthed() {
@@ -124,8 +99,9 @@ function Unearthed() {
   return (
     <div className="sh dark">
       <h2 id="sheetTitle">Unearthed Samples.</h2>
-      <p className="lead">Prodavnica muzičkih semplova. Potpis je zvuk: kupac čuje paket pre nego što ga kupi. Probaj, klikni ili pritisni 1 do 8.</p>
+      <p className="lead">Online prodavnica muzičkih semplova sa integrisanim plaćanjem, brza na mobilnom i građena za konverziju. Shopify, Stripe, Meta Pixel.</p>
       <Shot k="unearthed" />
+      <p className="demo-h">PROBAJ · KLIKNI ILI PRITISNI 1 DO 8</p>
       <div className="pads" ref={padsRef}>
         {PAD_NAMES.map((n, i) => (
           <button
@@ -162,8 +138,9 @@ function Bite() {
   return (
     <div className="sh paper" style={{ background: "#F4EFE4", color: "#2A2420" }}>
       <h2 id="sheetTitle">Bite Catering.</h2>
-      <p className="lead" style={{ color: "#6E625A" }}>Ketering iz Zrenjanina. Potpis je meni koji računa umesto tebe: upišeš broj gostiju, sajt kaže koliko zalogaja i tacni treba.</p>
+      <p className="lead" style={{ color: "#6E625A" }}>Ketering iz Zrenjanina: finger food, mesne i sirne daske, mini deserti i slavska trpeza. Sajt sa menijem i upitom za ponudu.</p>
       <Shot k="bite" />
+      <p className="demo-h">PROBAJ · KOLIKO GOSTIJU?</p>
       <div className="guests">
         <label htmlFor="gs"><span>Broj gostiju</span><b>{n}</b></label>
         <input type="range" id="gs" min={10} max={300} step={5} defaultValue={60} onInput={(e) => upd(+(e.target as HTMLInputElement).value)} />
@@ -212,111 +189,15 @@ function Sala() {
   return (
     <div className="sh paper" style={{ background: "#F3EEE6", color: "#2A2420" }}>
       <h2 id="sheetTitle">Adriaticum.</h2>
-      <p className="lead" style={{ color: "#6E625A" }}>Iznajmljivanje dekoracije i opreme za događaje. Potpis je plan sale: kupac složi svoju salu i odmah vidi ponudu. Dodaj stolove i prevuci ih po planu.</p>
+      <p className="lead" style={{ color: "#6E625A" }}>Booking platforma za iznajmljivanje opreme za događaje. Vođeni upitnik u nekoliko koraka, katalog i direktna rezervacija.</p>
       <Shot k="sala" />
+      <p className="demo-h">PROBAJ · PLAN SALE SA CENOM</p>
       <div className="addrow">
         <button type="button" onClick={() => rnd(1200)}>+ okrugli sto · 1.200 RSD</button>
         <button type="button" onClick={() => rnd(900)}>+ aranžman · 900 RSD</button>
         <button type="button" onClick={() => api.current.clear()}>očisti</button>
       </div>
       <div className="floor" ref={floorRef}><span className="bina">bina</span><span className="tot" ref={totRef}>0 · 0 RSD</span></div>
-    </div>
-  );
-}
-
-function Standard() {
-  const rows = [
-    ["Učitavanje, mobilni", "< 2,0 s", "1,4 s"],
-    ["Lighthouse, mobilni", "≥ 90", "96"],
-    ["Kontrast teksta", "WCAG AA", "7,2 : 1"],
-    ["Pravni tekstovi", "kompletni", "3 / 3"],
-    ["Rezervna kopija", "dnevno", "aktivno"],
-    ["Domen i nalozi", "na ime klijenta", "da"],
-  ];
-  return (
-    <div className="sh paper">
-      <h2 id="sheetTitle">Ne obećavamo. Merimo.</h2>
-      <p className="lead">Po uzoru na nemački Prüfprotokoll: svaki sajt pre puštanja prolazi proveru, a ti dobiješ potpisan protokol sa izmerenim vrednostima.</p>
-      <div className="ptw">
-        <table className="pt">
-          <thead><tr><th>Kriterijum</th><th>Cilj</th><th>Izmereno</th><th>Status</th></tr></thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr key={r[0]}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td><td className="ok">prošlo</td></tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="bigstamp">PROVERENO</div>
-      <p className="lead" style={{ fontSize: 14, marginTop: 18 }}>Potpisuje David Nedić, Kaufmann für E-Commerce (IHK). Vrednosti su primer.</p>
-    </div>
-  );
-}
-
-function Radovi({ go }: { go: Go }) {
-  const items: [keyof typeof SHOTS, string, string][] = [
-    ["sala", "Iznajmljivanje dekoracije i opreme", "plan sale sa cenom"],
-    ["bite", "Ketering, Zrenjanin", "meni koji računa"],
-    ["unearthed", "Muzički semplovi", "zvuk pre kupovine"],
-  ];
-  return (
-    <div className="sh dark">
-      <h2 id="sheetTitle">Radovi.</h2>
-      <div className="wl">
-        {items.map(([k, desc, sig]) => (
-          <div key={k} className="wr" onClick={() => go(k)}>
-            <img className="thumb" src={SHOTS[k].src} alt="" loading="lazy" />
-            <h3><a href="#" onClick={(e) => { e.preventDefault(); e.stopPropagation(); go(k); }} style={{ color: "inherit" }}>{SHOTS[k].name}</a></h3>
-            <span>{desc}</span>
-            <small>{sig}</small>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function Paketi({ go }: { go: Go }) {
-  return (
-    <div className="sh dark">
-      <h2 id="sheetTitle">Paketi.</h2>
-      <div className="wl">
-        <div><h3>Sajt za firmu</h3><span>Do 5 stranica, potpis branše, protokol provere. Gotovo za 48h od odobrenog dema.</span><small>od 199 €</small></div>
-        <div><h3>Online prodavnica</h3><span>Shopify sa plaćanjem, dostavom i potpisom. Održavanje uključeno.</span><small>45.000 RSD + 20.000/mes.</small></div>
-      </div>
-      <p className="lead">Demo je uvek besplatan. Plaćaš tek kad ti se svidi.</p>
-      <GoBtn go={go} />
-    </div>
-  );
-}
-
-const DIPLOMAS = [
-  {
-    title: "Kaufmann für E-Commerce (IHK)",
-    text: "Državno priznato nemačko stručno zvanje za e-trgovinu. Online prodaja, marketing, pravo i obrada porudžbina.",
-    country: "DE",
-  },
-];
-
-function Ja({ go }: { go: Go }) {
-  return (
-    <div className="sh paper">
-      <h2 id="sheetTitle">Ko sam ja.</h2>
-      <p className="lead">Ja sam David Nedić, osnivač Promet Digital. Školovao sam se i radio u Nemačkoj, a danas radim iz Zrenjanina. Sajtove pravim onako kako sam naučio tamo: precizno, dokumentovano i bez prečica.</p>
-      <div className="dip">
-        {DIPLOMAS.map((d) => (
-          <div className="row" key={d.title}>
-            <div><h3>{d.title}</h3><p>{d.text}</p></div>
-            <span className="de">{d.country}</span>
-          </div>
-        ))}
-      </div>
-      <div className="why">
-        <div><b>Nemački standard</b>Svaki sajt prolazi protokol provere pre puštanja.</div>
-        <div><b>Pravno čisto</b>Pravni tekstovi i podaci kupaca uređeni od prvog dana.</div>
-        <div><b>Jedan sagovornik</b>Pričaš direktno sa mnom, od sastanka do puštanja.</div>
-      </div>
-      <GoBtn go={go} />
     </div>
   );
 }
@@ -339,14 +220,268 @@ function CopyBtn({ value }: { value: string }) {
   );
 }
 
+type Step = [string, string, string];
+function Steps({ items }: { items: Step[] }) {
+  return (
+    <div className="steps">
+      {items.map(([n, h, p]) => (
+        <div key={n}><b>{n}</b><div><h3>{h}</h3><p>{p}</p></div></div>
+      ))}
+    </div>
+  );
+}
+
+function Intro({ go }: { go: Go }) {
+  return (
+    <div className="sh paper">
+      <h2 id="sheetTitle">Hajde na sastanak.</h2>
+      <p className="lead">Promet Digital pravi sajtove, online prodavnice i sisteme po meri: za magacin, kasu, rezervacije i kamere. Za firme u Srbiji i Nemačkoj.</p>
+      <p className="lead">Ne počinjemo od dizajna, nego od tebe. Na prvom sastanku pričamo šta radiš, ko su tvoji kupci i šta želiš da postigneš. Tek onda pravimo sajt koji za to služi.</p>
+      <GoBtn go={go} to="sastanak" />
+    </div>
+  );
+}
+
+function Sastanak() {
+  return (
+    <div className="sh paper">
+      <h2 id="sheetTitle">O čemu pričamo.</h2>
+      <p className="lead">Pola sata, uživo u Zrenjaninu ili Beogradu, ili online. Prvi sastanak je besplatan.</p>
+      <Steps items={[
+        ["01", "Šta radiš", "Tvoj posao, tvoji proizvodi ili usluge, i kako danas dolaze kupci."],
+        ["02", "Ko su tvoji kupci", "Ko kupuje, šta traže i gde te nalaze: Instagram, Google, preporuka."],
+        ["03", "Koji su tvoji ciljevi", "Više upita, online prodaja, manje posla oko rezervacija, novi kupci u Nemačkoj. Šta tačno treba da se promeni."],
+        ["04", "Šta je sledeći korak", "Posle sastanka dobijaš jasan plan i rok. Cena po dogovoru, bez obaveze."],
+      ]} />
+      <a className="btn" href={`https://wa.me/${CONTACT.wa}?text=Zdravo%2C%20hteo%20bih%20da%20zaka%C5%BEem%20sastanak.`} target="_blank" rel="noopener noreferrer">Zakaži preko WhatsApp-a</a>
+    </div>
+  );
+}
+
+function Nacin({ go }: { go: Go }) {
+  return (
+    <div className="sh paper">
+      <h2 id="sheetTitle">Kako radimo.</h2>
+      <Steps items={[
+        ["01", "Sastanak", "Pričamo o tvom poslu, kupcima i ciljevima. Uživo ili online."],
+        ["02", "Plan i dogovor", "Šta pravimo, zašto i kad je gotovo. Cenu dogovaramo pre nego što išta počne."],
+        ["03", "Dizajn i izrada", "Sajt po meri tvoje firme, ne šablon. Vidiš ga u toku izrade i daješ povratne informacije."],
+        ["04", "Online za 14 dana", "Testiramo sve i puštamo. Domen, kod i podaci su tvoji."],
+      ]} />
+      <GoBtn go={go} to="sastanak" />
+    </div>
+  );
+}
+
+const STAGES: [number, number, string, string, string][] = [
+  [0, 0, "Dan 0", "Sastanak", "Pričamo o tvom poslu, kupcima i ciljevima. Posle toga dogovaramo plan i rok."],
+  [1, 6, "Dan 01 do 06", "Dizajn po meri", "Na osnovu tvojih ciljeva: tvoje ime, boje i proizvodi. Fokus na mobilni prikaz i na to da kupac brzo nađe šta traži."],
+  [7, 10, "Dan 07 do 10", "Funkcije", "Plaćanje, dostava, rezervacije, WhatsApp. Sve što tvoj posao stvarno treba, ništa više."],
+  [11, 13, "Dan 11 do 13", "Testiranje", "Proveravamo porudžbine, plaćanja i obaveštenja pre starta."],
+  [14, 14, "Dan 14", "Online", "Sajt je online. Domen, kod i podaci su tvoji."],
+];
+
+function Dani() {
+  const [d, setD] = useState(0);
+  const i = STAGES.findIndex(([a, b]) => d >= a && d <= b);
+  const st = STAGES[i];
+  return (
+    <div className="sh paper">
+      <h2 id="sheetTitle">Live za 14 dana.</h2>
+      <p className="lead">Od prvog sastanka do sajta koji radi. Pomeri dane i gledaj kako nastaje.</p>
+      <div className="days">
+        <label htmlFor="dd"><span>Dan</span><b>{d}</b></label>
+        <input type="range" id="dd" min={0} max={14} step={1} value={d} onChange={(e) => setD(+e.target.value)} />
+      </div>
+      <div className="build">
+        <div className="stage"><small>{st[2]}</small><h3>{st[3]}</h3><p>{st[4]}</p></div>
+        <div className={"mock s" + (i + 1)}>
+          <div className="bar"><i /><i /><i /></div>
+          <div className="pg">
+            <div className="note">šta radiš?<br />kupci?<br />ciljevi?</div>
+            <div className="w">
+              <div className="blk hero">Tvoja prodavnica</div>
+              <div className="row"><div className="blk">proizvod</div><div className="blk">proizvod</div><div className="blk">proizvod</div></div>
+              <div className="row"><div className="blk">proizvod</div><div className="blk">proizvod</div><div className="blk">proizvod</div></div>
+            </div>
+            <span className="cartb">korpa · 2</span>
+            <span className="pay">kartica · pouzeće · dostava</span>
+            <div className="chk">porudžbina <span>✓</span><br />plaćanje <span>✓</span><br />obaveštenja <span>✓</span></div>
+            <div className="live"><i />online · prva porudžbina</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const SVC: [string, string, string, string[]][] = [
+  ["SaaS i softverski sistemi", "primer: Adriaticum", "Booking i rental sistemi, CRM rešenja, interni alati i dashboard-i napravljeni prema stvarnom procesu firme.", ["Specifikacija i UX", "Korisničke uloge", "Integracije i automatizacija", "Održavanje i razvoj"]],
+  ["E-commerce izrada", "primer: Unearthed Samples", "Shopify i custom prodavnice sa katalogom, korpom, plaćanjem, dostavom i povezanim poslovnim alatima.", ["Shopify ili custom", "Unos proizvoda", "Plaćanje i dostava", "ERP i CRM integracije"]],
+  ["E-commerce prodaja", "prodajni sistemi", "Vodimo i razvijamo online prodaju kroz oglase, optimizaciju konverzije, marketplace kanale i preciznu analitiku.", ["Google i Meta Ads", "CRO i A/B testovi", "Marketplace kanali", "GA4 i izveštaji"]],
+  ["Sajtovi i landing stranice", "po dogovoru", "Brzi poslovni sajtovi i landing stranice sa jasnom ponudom.", ["Dizajn po meri", "Mobile first", "SEO osnova", "Domen, SSL i hosting"]],
+  ["Sistemi za magacin, kasu i kamere", "po meri", "Softver koji prati robu, prodaju i kretanje kupaca u radnji. Povezano sa tvojom online prodavnicom.", ["Magacin i zalihe", "Kasa i prodaja u radnji", "Kamera tracking", "Izveštaji i upozorenja"]],
+  ["SEO, automatizacija i marketing", "kontinuirani rast", "Tehnički SEO, sadržaj, automatizovani tokovi i kampanje povezani sa konkretnim poslovnim ciljem.", ["Tehnički SEO", "Automatizovani tokovi", "Sadržaj i kampanje", "Mesečna analiza"]],
+];
+
+function Usluge() {
+  return (
+    <div className="sh paper">
+      <h2 id="sheetTitle">Šta radimo.</h2>
+      <p className="lead">Jedan partner za softver, prodaju i svakodnevni digitalni rad.</p>
+      <div className="svc">
+        {SVC.map(([h, sm, p, li], i) => (
+          <details key={h} open={i === 0}>
+            <summary><h3>{h}</h3><small>{sm}</small></summary>
+            <div className="body"><p>{p}</p><ul>{li.map((x) => <li key={x}>{x}</li>)}</ul></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Poredjenje({ go }: { go: Go }) {
+  const rows = [
+    ["Prvi korak", "Gotova ponuda iz šablona", "Sastanak o tvom poslu i ciljevima"],
+    ["Dizajn", "Šablon i stock fotografije", "Po meri tvoje firme i tvojih kupaca"],
+    ["Sve iz jednog mesta", "3+ agencije za koordinaciju", "Sajt, SEO, društvene mreže i oglasi na jednom mestu"],
+    ["Podrška", "E-mail sa odgovorom za 48h", "Direktno preko WhatsApp-a"],
+    ["Isporuka", "6 do 12 nedelja", "14 dana"],
+  ];
+  return (
+    <div className="sh paper">
+      <h2 id="sheetTitle">Obično, i kod nas.</h2>
+      <div className="tw">
+        <table className="cmp">
+          <thead><tr><th>Kriterijum</th><th>Tipična agencija</th><th>Promet Digital</th></tr></thead>
+          <tbody>{rows.map((r) => <tr key={r[0]}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td></tr>)}</tbody>
+        </table>
+      </div>
+      <GoBtn go={go} to="sastanak" />
+    </div>
+  );
+}
+
+function Sistemi({ go }: { go: Go }) {
+  const cvRef = useRef<HTMLCanvasElement>(null), sinRef = useRef<HTMLElement>(null), snowRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const cv = cvRef.current!, g = cv.getContext("2d")!;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    type P = { x: number; y: number; path: number[][]; k: number; sp: number; c: boolean };
+    const spawn = (): P => ({ x: -0.02, y: 0.55 + Math.random() * 0.2, path: [[0.2 + Math.random() * 0.25, 0.2 + Math.random() * 0.6], [0.5 + Math.random() * 0.3, 0.2 + Math.random() * 0.6], [0.85, 0.85], [1.05, 0.6]], k: 0, sp: 0.0025 + Math.random() * 0.002, c: false });
+    let ppl: P[] = [spawn(), spawn()], inn = 0, raf = 0, dead = false;
+    const heat: number[][] = [];
+    function draw() {
+      if (dead) return;
+      const d = devicePixelRatio, w = (cv.width = cv.clientWidth * d), h = (cv.height = cv.clientHeight * d);
+      g.clearRect(0, 0, w, h);
+      g.fillStyle = "#22252A"; [[0.28, 0.15, 0.04, 0.5], [0.48, 0.15, 0.04, 0.5], [0.68, 0.15, 0.04, 0.5]].forEach(([x, y, ww, hh]) => g.fillRect(x * w, y * h, ww * w, hh * h));
+      g.fillStyle = "#2B2F35"; g.fillRect(0.8 * w, 0.78 * h, 0.14 * w, 0.12 * h); g.fillStyle = "#8A8F98"; g.font = 10 * d + "px JetBrains Mono, monospace"; g.fillText("KASA", 0.82 * w, 0.86 * h);
+      g.strokeStyle = "rgba(61,220,255,.6)"; g.setLineDash([6 * d, 6 * d]); g.beginPath(); g.moveTo(0.08 * w, 0.4 * h); g.lineTo(0.08 * w, 0.95 * h); g.stroke(); g.setLineDash([]);
+      heat.forEach((p) => { g.fillStyle = "rgba(61,220,255,.05)"; g.beginPath(); g.arc(p[0] * w, p[1] * h, 18 * d, 0, 7); g.fill(); });
+      ppl.forEach((p) => {
+        const tg = p.path[p.k]; const dx = tg[0] - p.x, dy = tg[1] - p.y, dist = Math.hypot(dx, dy);
+        if (dist < 0.01) p.k++; else { p.x += (dx / dist) * p.sp; p.y += (dy / dist) * p.sp; }
+        if (!p.c && p.x > 0.08) { p.c = true; inn++; if (sinRef.current) sinRef.current.textContent = String(inn); }
+        if (Math.random() < 0.08) heat.push([p.x, p.y]);
+        const x = p.x * w, y = p.y * h;
+        g.fillStyle = "#EDEEF0"; g.beginPath(); g.arc(x, y, 5 * d, 0, 7); g.fill();
+        g.strokeStyle = "#3DDCFF"; g.lineWidth = 1.5 * d; g.strokeRect(x - 12 * d, y - 14 * d, 24 * d, 28 * d);
+      });
+      ppl = ppl.filter((p) => p.k < p.path.length);
+      if (heat.length > 600) heat.splice(0, 100);
+      if (Math.random() < 0.012 && ppl.length < 7) ppl.push(spawn());
+      if (snowRef.current) snowRef.current.textContent = String(ppl.filter((p) => p.c).length);
+      if (!reduce) raf = requestAnimationFrame(draw);
+    }
+    draw();
+    return () => { dead = true; cancelAnimationFrame(raf); };
+  }, []);
+  const cards = [
+    ["Magacin i zalihe", "Prijem, izdavanje i stanje robe na jednom mestu. Upozorenje kad nešto počne da fali.", "lager · barkod · izveštaji"],
+    ["Kasa i prodaja", "Prodaja u radnji i online prodavnica dele iste zalihe i iste brojeve.", "kasa · zalihe · online shop"],
+    ["Kamera tracking", "Koliko ljudi uđe, kuda se kreću kroz radnju i gde se zadržavaju. Anonimno, bez prepoznavanja lica.", "brojanje · kretanje · toplotna mapa"],
+    ["Rezervacije i booking", "Kalendar, dostupnost i potvrde, kao kod Adriaticum-a.", "booking · kalendar · WhatsApp"],
+  ];
+  return (
+    <div className="sh dark">
+      <h2 id="sheetTitle">Sistemi po meri.</h2>
+      <p className="lead">Ne samo sajtovi. Pravimo softver koji radi u tvojoj radnji i magacinu, i povezuje sve sa online prodajom.</p>
+      <div className="sysg">{cards.map(([h, p, s]) => <div key={h}><h3>{h}</h3><p>{p}</p><small>{s}</small></div>)}</div>
+      <div className="store">
+        <canvas ref={cvRef} />
+        <span className="lbl">PRIMER · KAMERA U RADNJI</span>
+        <div className="hud"><span>ušlo</span><b ref={sinRef}>0</b><span>u radnji</span><b ref={snowRef}>0</b></div>
+      </div>
+      <p className="small">Primer prikaza. Cena i obim po dogovoru, posle sastanka.</p>
+      <GoBtn go={go} to="sastanak" />
+    </div>
+  );
+}
+
+function Radovi({ go }: { go: Go }) {
+  const items: [keyof typeof SHOTS, string, string][] = [
+    ["sala", "Booking platforma za iznajmljivanje opreme", "2026"],
+    ["unearthed", "Online prodavnica muzičkih semplova", "2025"],
+    ["bite", "Ketering, Zrenjanin", "2026"],
+  ];
+  return (
+    <div className="sh dark">
+      <h2 id="sheetTitle">Radovi.</h2>
+      <div style={{ marginTop: 24, borderTop: "1px solid #33363D" }}>
+        {items.map(([k, desc, y]) => (
+          <a key={k} className="proj" href="#" onClick={(e) => { e.preventDefault(); go(k); }}>
+            <img src={SHOTS[k].src} alt="" loading="lazy" />
+            <div><h3>{SHOTS[k].name}</h3><span>{desc}</span></div>
+            <small>{y}</small>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const DIPLOMAS = [
+  {
+    title: "Kaufmann für E-Commerce (IHK)",
+    text: "Komercijalista za elektronsku trgovinu. Državno priznato stručno zvanje stečeno u Nemačkoj kroz dualno obrazovanje.",
+    country: "DE / RS",
+  },
+];
+
+function Ja({ go }: { go: Go }) {
+  return (
+    <div className="sh paper">
+      <h2 id="sheetTitle">Nemački standard. Za srpski biznis.</h2>
+      <p className="lead">Ja sam David Nedić, osnivač Promet Digital. Školovao sam se i radio u Nemačkoj, a danas to iskustvo primenjujem za firme u Srbiji i Nemačkoj: precizno, pouzdano i transparentno.</p>
+      <div className="dip">
+        {DIPLOMAS.map((d) => (
+          <div className="row" key={d.title}>
+            <div><h3>{d.title}</h3><p>{d.text}</p></div>
+            <span className="de">{d.country}</span>
+          </div>
+        ))}
+      </div>
+      <div className="pts">
+        <div><b>Fiksni rokovi</b>Dogovoreni datumi, jasne faze i odgovornost za isporuku.</div>
+        <div><b>Jasni ugovori</b>Obim posla i uslovi definišu se pre početka.</div>
+        <div><b>Dokumentovani procesi</b>Odluke, pristupi i sledeći koraci ostaju uredno zabeleženi.</div>
+        <div><b>GDPR nivo rada sa podacima</b>Pristupi, podaci kupaca i analitika tretiraju se pažljivo.</div>
+      </div>
+      <GoBtn go={go} to="sastanak" />
+    </div>
+  );
+}
+
 function Kontakt({ time }: { time: string }) {
   return (
     <div className="sh dark">
-      <h2 id="sheetTitle">Koji je tvoj potpis?</h2>
-      <p className="lead">Javi se i zakažemo kratak sastanak, uživo ili online. Sastanak i demo ne koštaju ništa.</p>
+      <h2 id="sheetTitle">Hajde na sastanak.</h2>
+      <p className="lead">Javi se i dogovorimo termin, uživo ili online. Pričamo o tvom poslu i ciljevima. Prvi sastanak je besplatan.</p>
       <div className="contact">
-        <div><span>Telefon i WhatsApp</span><b><a href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener noreferrer">{CONTACT.phone}</a></b> <CopyBtn value={CONTACT.phone} /></div>
-        <div><span>Email</span><b><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></b> <CopyBtn value={CONTACT.email} /></div>
+        <div><span>WhatsApp i telefon</span><b><a href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener noreferrer">{CONTACT.phone}</a></b> <CopyBtn value={CONTACT.phone} /></div>
+        <div><span>E-mail</span><b><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></b> <CopyBtn value={CONTACT.email} /></div>
         <div><span>Gde smo</span><b>Zrenjanin · Beograd</b></div>
         <div><span>Sada je u Zrenjaninu</span><b>{time}</b></div>
       </div>
@@ -357,13 +492,16 @@ function Kontakt({ time }: { time: string }) {
 export function SheetBody({ name, go, time }: { name: string; go: Go; time: string }) {
   switch (name) {
     case "intro": return <Intro go={go} />;
-    case "proces": return <Proces />;
+    case "sastanak": return <Sastanak />;
+    case "nacin": return <Nacin go={go} />;
+    case "dani": return <Dani />;
+    case "usluge": return <Usluge />;
+    case "poredjenje": return <Poredjenje go={go} />;
+    case "sistemi": return <Sistemi go={go} />;
     case "unearthed": return <Unearthed />;
     case "bite": return <Bite />;
     case "sala": return <Sala />;
-    case "standard": return <Standard />;
     case "radovi": return <Radovi go={go} />;
-    case "paketi": return <Paketi go={go} />;
     case "ja": return <Ja go={go} />;
     case "kontakt": return <Kontakt time={time} />;
     default: return null;
