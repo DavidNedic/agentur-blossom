@@ -1,21 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { LangProvider } from "@/lib/i18n";
-import { GridLines } from "@/components/site/ui";
-import { Nav } from "@/components/site/Nav";
-import { Hero } from "@/components/site/Hero";
-import { Marquee } from "@/components/site/Marquee";
-import { Manifesto } from "@/components/site/Manifesto";
-import { Signature } from "@/components/site/Signature";
-import { GermanStandard } from "@/components/site/GermanStandard";
-import { Work } from "@/components/site/Work";
-import { Services } from "@/components/site/Services";
-import { Capabilities } from "@/components/site/Capabilities";
-import { Process } from "@/components/site/Process";
-import { Proof } from "@/components/site/Proof";
-import { Packages } from "@/components/site/Packages";
-import { Faq } from "@/components/site/Faq";
-import { Contact } from "@/components/site/Contact";
-import { SiteMotion } from "@/components/site/SiteMotion";
+import { Desk } from "@/components/desk/Desk";
+import deskCss from "@/components/desk/desk.css?url";
 
 const TITLE = "Promet Digital | SaaS, e-commerce i digitalna prodaja";
 const DESC =
@@ -36,32 +21,10 @@ export const Route = createFileRoute("/")({
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESC },
     ],
+    links: [{ rel: "stylesheet", href: deskCss }],
   }),
 });
 
 function Index() {
-  return (
-    <LangProvider>
-      <GridLines />
-      <SiteMotion />
-      <div className="relative min-h-screen text-foreground">
-        <Nav />
-        <main>
-          <Hero />
-          <Marquee />
-          <Manifesto />
-          <Signature />
-          <GermanStandard />
-          <Work />
-          <Services />
-          <Capabilities />
-          <Process />
-          <Proof />
-          <Packages />
-          <Faq />
-          <Contact />
-        </main>
-      </div>
-    </LangProvider>
-  );
+  return <Desk />;
 }

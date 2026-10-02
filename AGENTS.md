@@ -8,3 +8,4 @@
 - Initial hidden states are set only from JS inside motion conditions, never in markup; why: SSR and reduced motion render full content.
 - Do not modify `/remotion` or its audio files.
 - Founder qualification claims must remain factual: David Nedić is a German-qualified Kaufmann für E-Commerce with work and training experience in Germany; why: this is a trust credential, not promotional embellishment.
+- The homepage "/" renders only the "Radni sto" desk from `src/components/desk/` (CSS scoped under `.desk-root`, browser code inside effects); old `src/components/site/` sections are kept but not rendered; why: the desk is a self-contained full-screen experience.
