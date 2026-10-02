@@ -17,3 +17,4 @@
 - [x] Refresh contrast rhythm and services index while preserving brand and pricing
 - [x] Update homepage metadata for the broader offer
 - [x] Validate build, console, mobile, SR/EN, and reduced motion without publishing
+- [ ] Add and verify the bilingual Potpis / Signature homepage section
