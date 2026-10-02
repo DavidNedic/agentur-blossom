@@ -368,8 +368,9 @@ function Sistemi({ go, active }: { go: Go; active: boolean }) {
   useEffect(() => {
     if (!active) return;
     const cv = cvRef.current;
-    const g = cv?.getContext("2d");
-    if (!cv || !g) return;
+    const context = cv?.getContext("2d");
+    if (!cv || !context) return;
+    const g = context;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     type P = { x: number; y: number; path: [number, number][]; k: number; sp: number; c: boolean; wait: number; dwell: number; id: string; t: [number, number][]; dir: number };
     const shelves: [number, number, number, number][] = [[0.22, 0.22, 0.05, 0.42], [0.37, 0.22, 0.05, 0.42], [0.52, 0.22, 0.05, 0.42]];
