@@ -42,7 +42,16 @@ export function Services() {
           {items.map((s, i) => {
             const isOpen = open === i;
             return (
-              <li key={i} className="sv-row relative" onMouseEnter={() => setOpen(i)} onMouseLeave={() => setOpen(null)}>
+              <li
+                key={i}
+                className="sv-row relative"
+                onPointerMove={(e) => {
+                  // Only open on a real mouse movement, not when the page scrolls under a resting cursor.
+                  if (e.pointerType !== "mouse" || (e.movementX === 0 && e.movementY === 0)) return;
+                  if (open !== i) setOpen(i);
+                }}
+                onMouseLeave={() => setOpen(null)}
+              >
                 <span className="sv-line absolute inset-x-0 top-0 h-px origin-left bg-hairline" />
                 <button
                   type="button"

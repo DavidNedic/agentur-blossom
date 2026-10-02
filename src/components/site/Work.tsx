@@ -19,7 +19,7 @@ export function Work() {
       const horizontal = gsap.to(track, {
         x: () => -travel(),
         ease: "none",
-        scrollTrigger: { trigger: section, start: "top top", end: () => `+=${travel()}`, pin: true, anticipatePin: 1, scrub: 0.5, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: section, start: "top top", end: () => `+=${travel()}`, pin: true, scrub: 0.5, invalidateOnRefresh: true },
       });
       gsap.utils.toArray<HTMLElement>(".wk-card", track).forEach((card) => {
         const image = card.querySelector(".wk-img");
