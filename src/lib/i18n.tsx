@@ -60,7 +60,7 @@ const dict = {
   manifesto: {
     label: { sr: "02 / Manifest", en: "02 / Manifesto" },
     text: {
-      sr: "Lep sajt koji ne prodaje je trošak. Mi gradimo prodavnice koje mere svaki klik, vraćaju napuštene korpe i pune kalendar porudžbinama. Ti poseduješ sve: kod, domen, podatke. Bez avansa, bez skrivenih troškova, sa direktnom linijom preko WhatsApp-a.",
+      sr: "Lep sajt koji ne prodaje je trošak. Mi gradimo prodavnice koje mere svaku interakciju, vraćaju napuštene korpe i pune kalendar porudžbinama. Ti poseduješ sve: kod, domen, podatke. Bez avansa, bez skrivenih troškova, sa direktnom linijom preko WhatsApp-a.",
       en: "A beautiful site that does not sell is a cost. We build stores that measure every click, recover abandoned carts and fill your calendar with orders. You own everything: code, domain, data. No upfront payment, no hidden fees, a direct line over WhatsApp.",
     },
   },
@@ -100,7 +100,7 @@ const dict = {
       sr: [
         { k: "Softver", t: "Sistem prati način na koji firma radi.", d: "Radni tokovi, korisničke uloge, dashboard-i i automatizacije bez suvišnih koraka.", tags: ["Booking", "CRM", "Dashboard", "Automatizacija"] },
         { k: "Prodavnica", t: "Proizvod, korpa i plaćanje rade zajedno.", d: "Shopify ili custom izrada sa pouzdanim checkout-om, dostavom i upravljanjem proizvodima.", tags: ["Shopify", "Custom", "Plaćanje", "Dostava"] },
-        { k: "Prodaja", t: "Svaki kanal ima jasan rezultat.", d: "Oglasi, marketplace kanali i optimizacija konverzije vode se prema prihodu, ne prema klikovima.", tags: ["Meta", "Google", "CRO", "Marketplace"] },
+        { k: "Prodaja", t: "Svaki kanal ima jasan rezultat.", d: "Oglasi, marketplace kanali i optimizacija konverzije vode se prema prihodu, ne prema posetama.", tags: ["Meta", "Google", "CRO", "Marketplace"] },
         { k: "Podaci", t: "Odluke se zasnivaju na tačnim podacima.", d: "Analitika, praćenje konverzija i dokumentovani izveštaji pokazuju šta radi i šta menjamo.", tags: ["GA4", "Tracking", "Izveštaji", "GDPR"] },
       ],
       en: [
