@@ -101,17 +101,41 @@ export function Desk() {
     const raise = (o: HTMLElement) => (o.style.zIndex = String(++z));
 
     if (!reduce) {
-      objs.forEach((o, i) => {
-        const s = st.get(o)!;
+      const ordered = [...objs.filter((o) => o.dataset.k !== "card"), ...objs.filter((o) => o.dataset.k === "card")];
+      ordered.forEach((o, i) => {
+        const s = st.get(o);
+        if (!s) return;
+        const W = desk.clientWidth, H = desk.clientHeight, mobile = small();
+        const cx = s.x + o.offsetWidth / 2, cy = s.y + o.offsetHeight / 2;
+        const edge = mobile
+          ? (cx <= W / 2 ? "left" : "right")
+          : ([
+              ["left", cx], ["right", W - cx], ["top", cy], ["bottom", H - cy],
+            ] as const).reduce((nearest, candidate) => candidate[1] < nearest[1] ? candidate : nearest)[0];
+        const extra = mobile ? 0.05 : 0.15;
+        let startX = s.x, startY = s.y, overX = s.x, overY = s.y;
+        if (edge === "left") { startX = -o.offsetWidth - W * extra; overX += 8; }
+        if (edge === "right") { startX = W + W * extra; overX -= 8; }
+        if (edge === "top") { startY = -o.offsetHeight - H * extra; overY += 8; }
+        if (edge === "bottom") { startY = H + H * extra; overY -= 8; }
+        const card = o.dataset.k === "card", duration = card ? 1300 : 1100, delay = 200 + i * 110;
         o.animate(
           [
-            { transform: "translate(" + s.x + "px," + (s.y - innerHeight * 0.9) + "px) rotate(" + (s.r + (i % 2 ? -25 : 25)) + "deg)", opacity: 0.6 },
-            { transform: "translate(" + s.x + "px," + (s.y + 6) + "px) rotate(" + (s.r - 1) + "deg)", opacity: 1, offset: 0.8 },
-            { transform: "translate(" + s.x + "px," + s.y + "px) rotate(" + s.r + "deg)", opacity: 1 },
+            { transform: "translate(" + startX + "px," + startY + "px) rotate(" + (s.r + (i % 2 ? -35 : 35)) + "deg) scale(1.18)" },
+            { transform: "translate(" + overX + "px," + overY + "px) rotate(" + (s.r - 2) + "deg) scale(.99)", offset: 0.72 },
+            { transform: "translate(" + s.x + "px," + s.y + "px) rotate(" + s.r + "deg) scale(1)" },
           ],
-          { duration: 750, delay: 120 + i * 90, easing: "cubic-bezier(.2,.8,.25,1)", fill: "backwards" },
+          { duration, delay, easing: "cubic-bezier(.2,.8,.25,1)", fill: "backwards" },
         );
-        if (i % 2 === 0 || o.dataset.k === "card") timers.push(setTimeout(() => field.drop(o, o.dataset.k === "card" ? 0.8 : 0.4), 120 + i * 90 + 620));
+        const shadow = o.querySelector<HTMLElement>(".shadow");
+        shadow?.animate(
+          [
+            { boxShadow: "0 18px 24px rgba(0,0,0,.22), 0 58px 90px rgba(0,0,0,.28)" },
+            { boxShadow: "0 2px 3px rgba(0,0,0,.45), 0 18px 36px rgba(0,0,0,.35)" },
+          ],
+          { duration, delay, easing: "cubic-bezier(.2,.8,.25,1)", fill: "backwards" },
+        );
+        timers.push(setTimeout(() => field.drop(o, card ? 0.9 : 0.45), delay + duration));
       });
     }
 
@@ -196,13 +220,13 @@ export function Desk() {
           <div className="top"><span>PROMET DIGITAL</span><span>agencija · Zrenjanin</span></div>
           <h1><span>Sajtovi sa</span><br /><em><span>potpisom.</span></em></h1>
           <div className="bot"><span>Za svaku branšu drugi. Nikad šablon.</span><b>David</b></div>
-          <span className="tag">kartica · o nama</span>
+          <span className="tag">o nama</span>
         </div>
 
         <div className="obj o-note" data-k="note" data-open="proces" tabIndex={0} role="button" aria-label="Otvori: proces">
           <span className="shadow" /><span className="ring" />
           1. kratak sastanak<br />2. nađemo <u>potpis</u><br />3. demo, besplatno<br />4. protokol, pa online<br /><s>šablon</s>
-          <span className="tag">beležnica · proces</span>
+          <span className="tag">proces</span>
         </div>
 
         <div className="obj o-cass" data-k="cass" data-open="unearthed" tabIndex={0} role="button" aria-label="Otvori: Unearthed Samples">
@@ -210,7 +234,7 @@ export function Desk() {
           <div className="lab"><b>UNEARTHED SAMPLES</b><i>vol. 1</i></div>
           <div className="win"><span className="reel" /><span className="reel" /></div>
           <span className="bot" />
-          <span className="tag">kaseta · Unearthed Samples</span>
+          <span className="tag">Unearthed Samples</span>
         </div>
 
         <div className="obj o-menu" data-k="menu" data-open="bite" tabIndex={0} role="button" aria-label="Otvori: Bite Catering">
@@ -218,7 +242,7 @@ export function Desk() {
           <b>BITE</b><small>catering · Zrenjanin</small>
           <p><span>mini burgeri</span><span>×</span></p><p><span>brusketi</span><span>×</span></p><p><span>tortilja rolnice</span><span>×</span></p><p><span>slatki zalogaji</span><span>×</span></p>
           <span className="x">koliko gostiju?</span>
-          <span className="tag">meni · Bite Catering</span>
+          <span className="tag">Bite Catering</span>
         </div>
 
         <div className="obj o-proto" data-k="proto" data-open="standard" tabIndex={0} role="button" aria-label="Otvori: protokol provere">
@@ -231,14 +255,14 @@ export function Desk() {
           <div className="r"><span>Backup</span><i>dnevno</i></div>
           <div className="r"><span>Domen klijenta</span><i>da</i></div>
           <span className="st">PROVERENO</span>
-          <span className="tag">protokol · nemački standard</span>
+          <span className="tag">nemački standard</span>
         </div>
 
         <div className="obj o-plan" data-k="plan" data-open="sala" tabIndex={0} role="button" aria-label="Otvori: Adriaticum">
           <span className="shadow" /><span className="wall" /><span className="bina" />
           <span className="t" style={{ left: "24%", top: "42%" }} /><span className="t" style={{ left: "46%", top: "42%" }} /><span className="t" style={{ left: "68%", top: "42%" }} /><span className="t" style={{ left: "35%", top: "66%" }} /><span className="t" style={{ left: "57%", top: "66%" }} />
           <small>sala 18 × 12 m</small>
-          <span className="tag">plan sale · Adriaticum</span>
+          <span className="tag">Adriaticum</span>
         </div>
 
         <div className="obj o-work" data-k="work" data-open="radovi" tabIndex={0} role="button" aria-label="Otvori: radovi">
@@ -248,7 +272,7 @@ export function Desk() {
             <img src={SHOTS.sala.src} alt="" draggable={false} />
             <h3>Adriaticum</h3><p>Sistem za rezervacije opreme za događaje</p>
           </div>
-          <span className="tag" style={{ bottom: -30 }}>kartoteka · radovi</span>
+          <span className="tag" style={{ bottom: -30 }}>radovi</span>
         </div>
 
         <div className="obj o-biz" data-k="biz" data-open="kontakt" tabIndex={0} role="button" aria-label="Otvori: kontakt">
@@ -264,7 +288,7 @@ export function Desk() {
             promet
           </div>
           <p><b>David Nedić</b><br />{CONTACT.phone}<br />{CONTACT.email}</p>
-          <span className="tag">vizitkarta · kontakt</span>
+          <span className="tag">kontakt</span>
         </div>
 
         <div className="obj o-phone" data-k="phone" data-open="kontakt" tabIndex={0} role="button" aria-label="Otvori: poruka">
@@ -275,12 +299,12 @@ export function Desk() {
             <div className="bub in">Treba mi sajt, ali da ne liči na sve ostale.</div>
             <div className="bub out">Može. Kad vam odgovara kratak sastanak?</div>
           </div>
-          <span className="tag">telefon · piši nam</span>
+          <span className="tag">piši nam</span>
         </div>
 
         <div className="obj o-sticky" data-k="sticky" data-open="paketi" tabIndex={0} role="button" aria-label="Otvori: paketi">
           <span className="shadow" />demo je<br />besplatan.<br />plaćaš tek<br />kad ti se svidi.
-          <span className="tag">ceduljica · paketi</span>
+          <span className="tag">paketi</span>
         </div>
 
         <div className="obj o-pen" data-k="pen" aria-hidden="true">
