@@ -370,6 +370,7 @@ function Sistemi({ go, active }: { go: Go; active: boolean }) {
     const cv = cvRef.current;
     const context = cv?.getContext("2d");
     if (!cv || !context) return;
+    const canvas = cv;
     const g = context;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     type P = { x: number; y: number; path: [number, number][]; k: number; sp: number; c: boolean; wait: number; dwell: number; id: string; t: [number, number][]; dir: number };
@@ -407,7 +408,7 @@ function Sistemi({ go, active }: { go: Go; active: boolean }) {
     function draw() {
       if (dead) return;
       if (document.hidden) return;
-      const d = devicePixelRatio || 1, w = (cv.width = cv.clientWidth * d), h = (cv.height = cv.clientHeight * d);
+      const d = devicePixelRatio || 1, w = (canvas.width = canvas.clientWidth * d), h = (canvas.height = canvas.clientHeight * d);
       g.clearRect(0, 0, w, h);
       const cw = w / gx, ch = h / gy;
       for (let i = 0; i < heat.length; i++) { const v = heat[i]; if (v < 0.5) continue; g.fillStyle = "rgba(61,220,255," + Math.min(0.22, v / 400).toFixed(3) + ")"; g.fillRect((i % gx) * cw + 1, Math.floor(i / gx) * ch + 1, cw - 2, ch - 2); }
