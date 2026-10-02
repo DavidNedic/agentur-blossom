@@ -18,3 +18,4 @@
 - [x] Update homepage metadata for the broader offer
 - [x] Validate build, console, mobile, SR/EN, and reduced motion without publishing
 - [x] Add and verify the bilingual Potpis / Signature homepage section
+- [x] Redraw both desk camera-tracking canvases and verify desktop plus 390px mobile
