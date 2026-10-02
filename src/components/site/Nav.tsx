@@ -6,8 +6,8 @@ import { Logo } from "@/components/Logo";
 
 export function Wordmark() {
   return (
-    <a href="#top" className="flex items-center gap-2.5" aria-label="Klik Digital">
-      <Logo className="h-6 md:h-7" />
+    <a href="#top" className="flex items-center gap-2.5" aria-label="Promet Digital">
+      <Logo className="h-7 md:h-[30px]" />
       <span className="meta text-muted-foreground">Digital</span>
     </a>
   );
