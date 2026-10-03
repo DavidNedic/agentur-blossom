@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CONTACT } from "@/lib/i18n";
-import { createField } from "./ContourField";
+import { createOffice } from "./office";
 import { SheetBody, SHOTS } from "./Sheets";
 
 type S = { x: number; y: number; r: number; vx: number; vy: number; tilt?: number };
@@ -75,7 +75,7 @@ export function Desk() {
     const objs = [...desk.querySelectorAll<HTMLElement>(".obj")];
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const small = () => innerWidth <= 760;
-    const field = createField(cvRef.current!, reduce);
+    const field = createOffice(cvRef.current!, desk);
     let dead = false;
     const timers: ReturnType<typeof setTimeout>[] = [];
 
@@ -222,7 +222,7 @@ export function Desk() {
       mockParts.forEach((p) => p.classList.remove("on")); lapph.classList.remove("on"); lapsc.classList.remove("go");
       timers.push(setTimeout(() => {
         if (dead) return;
-        lapl.textContent = "u izradi · " + x.n.toLowerCase();
+        lapl.textContent = "u izradi: " + x.n.toLowerCase();
         if (x.img) { lapph.style.backgroundImage = "url(" + x.img + ")"; void lapsc.offsetWidth; lapsc.classList.add("go"); lapph.classList.add("on"); return; }
         const v = (k: string, val: string) => lapv.style.setProperty(k, val);
         v("--vbg", x.bg!); v("--vfg", x.fg!); v("--vhero", x.hero!); v("--vhfg", x.hfg!); v("--vacc", x.acc!); v("--vcard", x.card!); v("--vf", x.f || "var(--display)"); v("--vw", x.w!);
@@ -251,12 +251,12 @@ export function Desk() {
     <div className="desk-root" ref={rootRef}>
       <canvas id="field" ref={cvRef} aria-hidden="true" />
       <div className="desk" ref={deskRef} aria-label="Radni sto agencije Promet Digital">
-        <div className="print tl">PROMET DIGITAL<br /><b>sajtovi · prodavnice · sistemi</b></div>
+        <div className="print tl">PROMET DIGITAL<br /><b>sajtovi, prodavnice, sistemi</b></div>
         <div className="print br">Zrenjanin <span className="live">{time}</span><br /><b>promet.digital</b></div>
 
         <div className="obj o-card" data-k="card" data-open="intro" tabIndex={0} role="button" aria-label="Otvori: o agenciji">
           <span className="shadow" />
-          <div className="top"><span>PROMET DIGITAL</span><span>Zrenjanin · Beograd</span></div>
+          <div className="top"><span>PROMET DIGITAL</span><span>Zrenjanin / Beograd</span></div>
           <h1><span>Hajde na</span><br /><em><span>sastanak.</span></em></h1>
           <div className="bot"><span>Prvo pričamo o tvom poslu i ciljevima.<br />Onda pravimo sajt.</span><b>David Nedić</b></div>
           <span className="tag">o nama</span>
@@ -294,7 +294,7 @@ export function Desk() {
 
         <div className="obj o-cert" data-k="cert" data-open="ja" tabIndex={0} role="button" aria-label="Otvori: ko sam ja">
           <span className="shadow" />
-          <div className="in"><div className="flag" /><small>STRUČNO ZVANJE · NEMAČKA</small><b>Kaufmann für<br />E-Commerce</b><small>IHK · DE / RS</small><div className="sig">DAVID NEDIĆ</div></div>
+          <div className="in"><div className="flag" /><small>STRUČNO ZVANJE, NEMAČKA</small><b>Kaufmann für<br />E-Commerce</b><small>IHK, DE / RS</small><div className="sig">DAVID NEDIĆ</div></div>
           <span className="tag">nemački standard</span>
         </div>
 
@@ -320,7 +320,7 @@ export function Desk() {
         <div className="obj o-work" data-k="work" data-open="radovi" tabIndex={0} role="button" aria-label="Otvori: radovi">
           <div className="wc" /><div className="wc" />
           <div className="wc wc-shot">
-            <span className="tabx">RADOVI · 3</span>
+            <span className="tabx">RADOVI 3</span>
             <img src={SHOTS.sala.src} alt="" draggable={false} />
             <h3>Adriaticum</h3><p>Booking platforma za opremu</p>
           </div>
@@ -356,7 +356,7 @@ export function Desk() {
         </div>
 
         <div className="obj o-sticky" data-k="sticky" data-open="sastanak" tabIndex={0} role="button" aria-label="Otvori: sastanak">
-          <span className="shadow" /><b>Prvi sastanak je besplatan.</b><small>cena po dogovoru · bez obaveze</small>
+          <span className="shadow" /><b>Prvi sastanak je besplatan.</b><small>cena po dogovoru, bez obaveze</small>
           <span className="tag">sastanak</span>
         </div>
 
@@ -365,7 +365,7 @@ export function Desk() {
         </div>
       </div>
 
-      <div className="hintbar" ref={hintRef}>pomeri stvari po stolu · klikni na predmet</div>
+      <div className="hintbar" ref={hintRef}>pomeri stvari po stolu, klikni na predmet</div>
       <nav className="tabs" aria-label="Brzi pristup">
         {[["radovi", "Radovi", ""], ["usluge", "Usluge", ""], ["sistemi", "Sistemi", ""], ["ja", "Ko sam ja", "me"], ["kontakt", "Kontakt", ""]].map(([k, label, cls]) => (
           <button key={k} type="button" className={cls || undefined} onClick={(e) => { hideHint(); open(k, e.currentTarget); }}>{label}</button>
