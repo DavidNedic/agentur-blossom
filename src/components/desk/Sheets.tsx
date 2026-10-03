@@ -101,7 +101,7 @@ function Unearthed() {
       <h2 id="sheetTitle">Unearthed Samples.</h2>
       <p className="lead">Online prodavnica muzičkih semplova sa integrisanim plaćanjem, brza na mobilnom i građena za konverziju. Shopify, Stripe, Meta Pixel.</p>
       <Shot k="unearthed" />
-      <p className="demo-h">PROBAJ · KLIKNI ILI PRITISNI 1 DO 8</p>
+      <p className="demo-h">PROBAJ: KLIKNI ILI PRITISNI 1 DO 8</p>
       <div className="pads" ref={padsRef}>
         {PAD_NAMES.map((n, i) => (
           <button
@@ -140,7 +140,7 @@ function Bite() {
       <h2 id="sheetTitle">Bite Catering.</h2>
       <p className="lead" style={{ color: "#6E625A" }}>Ketering iz Zrenjanina: finger food, mesne i sirne daske, mini deserti i slavska trpeza. Sajt sa menijem i upitom za ponudu.</p>
       <Shot k="bite" />
-      <p className="demo-h">PROBAJ · KOLIKO GOSTIJU?</p>
+      <p className="demo-h">PROBAJ: KOLIKO GOSTIJU?</p>
       <div className="guests">
         <label htmlFor="gs"><span>Broj gostiju</span><b>{n}</b></label>
         <input type="range" id="gs" min={10} max={300} step={5} defaultValue={60} onInput={(e) => upd(+(e.target as HTMLInputElement).value)} />
@@ -161,7 +161,7 @@ function Sala() {
   const api = useRef<{ add: (p: number, x: number, y: number) => void; clear: () => void }>({ add: () => {}, clear: () => {} });
   useEffect(() => {
     const fl = floorRef.current!; let n = 0, sum = 0;
-    const upd = () => { totRef.current!.textContent = n + " · " + sum.toLocaleString("sr-RS") + " RSD"; };
+    const upd = () => { totRef.current!.textContent = n + ", " + sum.toLocaleString("sr-RS") + " RSD"; };
     function add(price: number, fx: number, fy: number) {
       const it = document.createElement("div"); it.className = "it"; it.textContent = price == 1200 ? "8" : "✿";
       if (price == 900) { it.style.background = "#9DBF7A"; it.style.width = it.style.height = "34px"; }
@@ -191,13 +191,13 @@ function Sala() {
       <h2 id="sheetTitle">Adriaticum.</h2>
       <p className="lead" style={{ color: "#6E625A" }}>Booking platforma za iznajmljivanje opreme za događaje. Vođeni upitnik u nekoliko koraka, katalog i direktna rezervacija.</p>
       <Shot k="sala" />
-      <p className="demo-h">PROBAJ · PLAN SALE SA CENOM</p>
+      <p className="demo-h">PROBAJ: PLAN SALE SA CENOM</p>
       <div className="addrow">
-        <button type="button" onClick={() => rnd(1200)}>+ okrugli sto · 1.200 RSD</button>
-        <button type="button" onClick={() => rnd(900)}>+ aranžman · 900 RSD</button>
+        <button type="button" onClick={() => rnd(1200)}>+ okrugli sto, 1.200 RSD</button>
+        <button type="button" onClick={() => rnd(900)}>+ aranžman, 900 RSD</button>
         <button type="button" onClick={() => api.current.clear()}>očisti</button>
       </div>
-      <div className="floor" ref={floorRef}><span className="bina">bina</span><span className="tot" ref={totRef}>0 · 0 RSD</span></div>
+      <div className="floor" ref={floorRef}><span className="bina">bina</span><span className="tot" ref={totRef}>0, 0 RSD</span></div>
     </div>
   );
 }
@@ -304,10 +304,10 @@ function Dani() {
               <div className="row"><div className="blk">proizvod</div><div className="blk">proizvod</div><div className="blk">proizvod</div></div>
               <div className="row"><div className="blk">proizvod</div><div className="blk">proizvod</div><div className="blk">proizvod</div></div>
             </div>
-            <span className="cartb">korpa · 2</span>
-            <span className="pay">kartica · pouzeće · dostava</span>
+            <span className="cartb">korpa: 2</span>
+            <span className="pay">kartica, pouzeće, dostava</span>
             <div className="chk">porudžbina <span>✓</span><br />plaćanje <span>✓</span><br />obaveštenja <span>✓</span></div>
-            <div className="live"><i />online · prva porudžbina</div>
+            <div className="live"><i />online, prva porudžbina</div>
           </div>
         </div>
       </div>
@@ -365,10 +365,10 @@ function Poredjenje({ go }: { go: Go }) {
 
 function Sistemi({ go }: { go: Go }) {
   const cards = [
-    ["Magacin i zalihe", "Prijem, izdavanje i stanje robe na jednom mestu. Upozorenje kad nešto počne da fali.", "lager · barkod · izveštaji"],
-    ["Kasa i prodaja", "Prodaja u radnji i online prodavnica dele iste zalihe i iste brojeve.", "kasa · zalihe · online shop"],
-    ["Kamera tracking", "Koliko ljudi uđe, kuda se kreću kroz radnju i gde se zadržavaju. Anonimno, bez prepoznavanja lica.", "brojanje · kretanje · toplotna mapa"],
-    ["Rezervacije i booking", "Kalendar, dostupnost i potvrde, kao kod Adriaticum-a.", "booking · kalendar · WhatsApp"],
+    ["Magacin i zalihe", "Prijem, izdavanje i stanje robe na jednom mestu. Upozorenje kad nešto počne da fali.", "lager, barkod, izveštaji"],
+    ["Kasa i prodaja", "Prodaja u radnji i online prodavnica dele iste zalihe i iste brojeve.", "kasa, zalihe, online shop"],
+    ["Kamera tracking", "Koliko ljudi uđe, kuda se kreću kroz radnju i gde se zadržavaju. Anonimno, bez prepoznavanja lica.", "brojanje, kretanje, toplotna mapa"],
+    ["Rezervacije i booking", "Kalendar, dostupnost i potvrde, kao kod Adriaticum-a.", "booking, kalendar, WhatsApp"],
   ];
   return (
     <div className="sh dark">
@@ -443,7 +443,7 @@ function Kontakt({ time }: { time: string }) {
       <div className="contact">
         <div><span>WhatsApp i telefon</span><b><a href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener noreferrer">{CONTACT.phone}</a></b> <CopyBtn value={CONTACT.phone} /></div>
         <div><span>E-mail</span><b><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></b> <CopyBtn value={CONTACT.email} /></div>
-        <div><span>Gde smo</span><b>Zrenjanin · Beograd</b></div>
+        <div><span>Gde smo</span><b>Zrenjanin / Beograd</b></div>
         <div><span>Sada je u Zrenjaninu</span><b>{time}</b></div>
       </div>
     </div>
