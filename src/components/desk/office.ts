@@ -280,7 +280,7 @@ requestAnimationFrame(tick);if(reduce)_si(()=>tick(performance.now()),60000);
   })();
 
   return {
-    drop() {}, press() {},
+    drop(..._a: any[]) {}, press(..._a: any[]) {},
     destroy() {
       dead = true; tms.forEach(clearTimeout); ints.forEach(clearInterval); offs.forEach((f) => f());
       extra.forEach((e) => e.remove()); deskEl.style.transform = "";
