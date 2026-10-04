@@ -11,6 +11,7 @@ export const SHOTS = {
 } as const;
 
 type Go = (name: string) => void;
+export const MEETING_URL = `https://wa.me/${CONTACT.wa}?text=Zdravo%2C%20hteo%20bih%20da%20zaka%C5%BEem%20sastanak.`;
 
 function Shot({ k }: { k: keyof typeof SHOTS }) {
   const s = SHOTS[k];
@@ -28,15 +29,15 @@ function Shot({ k }: { k: keyof typeof SHOTS }) {
   );
 }
 
-function GoBtn({ go, to = "kontakt" }: { go: Go; to?: string }) {
+function GoBtn() {
   return (
-    <a className="btn" href="#" onClick={(e) => { e.preventDefault(); go(to); }}>Zakaži sastanak</a>
+    <a className="btn" href={MEETING_URL} target="_blank" rel="noopener noreferrer">Zakaži sastanak</a>
   );
 }
 
 const PAD_NAMES = ["kick", "snare", "hat", "clap", "bas C", "bas E♭", "akord", "zvono"];
 
-function Unearthed() {
+function Unearthed({ headingId }: { headingId: string }) {
   const padsRef = useRef<HTMLDivElement>(null);
   const cvRef = useRef<HTMLCanvasElement>(null);
   const playRef = useRef<(i: number) => void>(() => {});
@@ -98,7 +99,7 @@ function Unearthed() {
 
   return (
     <div className="sh dark">
-      <h2 id="sheetTitle">Unearthed Samples.</h2>
+      <h2 id={headingId}>Unearthed Samples.</h2>
       <p className="lead">Online prodavnica muzičkih semplova sa integrisanim plaćanjem, brza na mobilnom i građena za konverziju. Shopify, Stripe, Meta Pixel.</p>
       <Shot k="unearthed" />
       <p className="demo-h">PROBAJ: KLIKNI ILI PRITISNI 1 DO 8</p>
@@ -119,7 +120,7 @@ function Unearthed() {
   );
 }
 
-function Bite() {
+function Bite({ headingId }: { headingId: string }) {
   const [n, setN] = useState(60);
   const c1 = useRef<HTMLElement>(null), c2 = useRef<HTMLElement>(null), c3 = useRef<HTMLElement>(null);
   const anim = (el: HTMLElement | null, v: number) => {
@@ -137,7 +138,7 @@ function Bite() {
   };
   return (
     <div className="sh paper" style={{ background: "#F4EFE4", color: "#2A2420" }}>
-      <h2 id="sheetTitle">Bite Catering.</h2>
+      <h2 id={headingId}>Bite Catering.</h2>
       <p className="lead" style={{ color: "#6E625A" }}>Ketering iz Zrenjanina: finger food, mesne i sirne daske, mini deserti i slavska trpeza. Sajt sa menijem i upitom za ponudu.</p>
       <Shot k="bite" />
       <p className="demo-h">PROBAJ: KOLIKO GOSTIJU?</p>
@@ -155,7 +156,7 @@ function Bite() {
   );
 }
 
-function Sala() {
+function Sala({ headingId }: { headingId: string }) {
   const floorRef = useRef<HTMLDivElement>(null);
   const totRef = useRef<HTMLSpanElement>(null);
   const api = useRef<{ add: (p: number, x: number, y: number) => void; clear: () => void }>({ add: () => {}, clear: () => {} });
@@ -188,7 +189,7 @@ function Sala() {
   const rnd = (p: number) => api.current.add(p, 0.15 + Math.random() * 0.7, 0.3 + Math.random() * 0.6);
   return (
     <div className="sh paper" style={{ background: "#F3EEE6", color: "#2A2420" }}>
-      <h2 id="sheetTitle">Adriaticum.</h2>
+      <h2 id={headingId}>Adriaticum.</h2>
       <p className="lead" style={{ color: "#6E625A" }}>Booking platforma za iznajmljivanje opreme za događaje. Vođeni upitnik u nekoliko koraka, katalog i direktna rezervacija.</p>
       <Shot k="sala" />
       <p className="demo-h">PROBAJ: PLAN SALE SA CENOM</p>
@@ -231,21 +232,21 @@ function Steps({ items }: { items: Step[] }) {
   );
 }
 
-function Intro({ go }: { go: Go }) {
+function Intro({ headingId }: { headingId: string }) {
   return (
     <div className="sh paper">
-      <h2 id="sheetTitle">Hajde na sastanak.</h2>
+      <h2 id={headingId}>Hajde na sastanak.</h2>
       <p className="lead">Promet Digital pravi sajtove, online prodavnice i sisteme po meri: za magacin, kasu, rezervacije i kamere. Za firme u Srbiji i Nemačkoj.</p>
       <p className="lead">Ne počinjemo od dizajna, nego od tebe. Na prvom sastanku pričamo šta radiš, ko su tvoji kupci i šta želiš da postigneš. Tek onda pravimo sajt koji za to služi.</p>
-      <GoBtn go={go} to="sastanak" />
+      <GoBtn />
     </div>
   );
 }
 
-function Sastanak() {
+function Sastanak({ headingId }: { headingId: string }) {
   return (
     <div className="sh paper">
-      <h2 id="sheetTitle">O čemu pričamo.</h2>
+      <h2 id={headingId}>O čemu pričamo.</h2>
       <p className="lead">Pola sata, uživo u Zrenjaninu ili Beogradu, ili online. Prvi sastanak je besplatan.</p>
       <Steps items={[
         ["01", "Šta radiš", "Tvoj posao, tvoji proizvodi ili usluge, i kako danas dolaze kupci."],
@@ -253,22 +254,23 @@ function Sastanak() {
         ["03", "Koji su tvoji ciljevi", "Više upita, online prodaja, manje posla oko rezervacija, novi kupci u Nemačkoj. Šta tačno treba da se promeni."],
         ["04", "Šta je sledeći korak", "Posle sastanka dobijaš jasan plan i rok. Cena po dogovoru, bez obaveze."],
       ]} />
-      <a className="btn" href={`https://wa.me/${CONTACT.wa}?text=Zdravo%2C%20hteo%20bih%20da%20zaka%C5%BEem%20sastanak.`} target="_blank" rel="noopener noreferrer">Zakaži preko WhatsApp-a</a>
+      <a className="btn" href={MEETING_URL} target="_blank" rel="noopener noreferrer">Zakaži sastanak</a>
+      <small className="wa-note">otvara WhatsApp</small>
     </div>
   );
 }
 
-function Nacin({ go }: { go: Go }) {
+function Nacin({ headingId }: { headingId: string }) {
   return (
     <div className="sh paper">
-      <h2 id="sheetTitle">Kako radimo.</h2>
+      <h2 id={headingId}>Kako radimo.</h2>
       <Steps items={[
         ["01", "Sastanak", "Pričamo o tvom poslu, kupcima i ciljevima. Uživo ili online."],
         ["02", "Plan i dogovor", "Šta pravimo, zašto i kad je gotovo. Cenu dogovaramo pre nego što išta počne."],
         ["03", "Dizajn i izrada", "Sajt po meri tvoje firme, ne šablon. Vidiš ga u toku izrade i daješ povratne informacije."],
         ["04", "Online za 14 dana", "Testiramo sve i puštamo. Domen, kod i podaci su tvoji."],
       ]} />
-      <GoBtn go={go} to="sastanak" />
+      <GoBtn />
     </div>
   );
 }
@@ -281,13 +283,13 @@ const STAGES: [number, number, string, string, string][] = [
   [14, 14, "Dan 14", "Online", "Sajt je online. Domen, kod i podaci su tvoji."],
 ];
 
-function Dani() {
+function Dani({ headingId }: { headingId: string }) {
   const [d, setD] = useState(0);
   const i = STAGES.findIndex(([a, b]) => d >= a && d <= b);
   const st = STAGES[i];
   return (
     <div className="sh paper">
-      <h2 id="sheetTitle">Live za 14 dana.</h2>
+      <h2 id={headingId}>Live za 14 dana.</h2>
       <p className="lead">Od prvog sastanka do sajta koji radi. Pomeri dane i gledaj kako nastaje.</p>
       <div className="days">
         <label htmlFor="dd"><span>Dan</span><b>{d}</b></label>
@@ -324,10 +326,10 @@ const SVC: [string, string, string, string[]][] = [
   ["SEO, automatizacija i marketing", "kontinuirani rast", "Tehnički SEO, sadržaj, automatizovani tokovi i kampanje povezani sa konkretnim poslovnim ciljem.", ["Tehnički SEO", "Automatizovani tokovi", "Sadržaj i kampanje", "Mesečna analiza"]],
 ];
 
-function Usluge() {
+function Usluge({ headingId }: { headingId: string }) {
   return (
     <div className="sh paper">
-      <h2 id="sheetTitle">Šta radimo.</h2>
+      <h2 id={headingId}>Šta radimo.</h2>
       <p className="lead">Jedan partner za softver, prodaju i svakodnevni digitalni rad.</p>
       <div className="svc">
         {SVC.map(([h, sm, p, li], i) => (
@@ -341,29 +343,29 @@ function Usluge() {
   );
 }
 
-function Poredjenje({ go }: { go: Go }) {
+function Poredjenje({ headingId }: { headingId: string }) {
   const rows = [
     ["Prvi korak", "Gotova ponuda iz šablona", "Sastanak o tvom poslu i ciljevima"],
     ["Dizajn", "Šablon i stock fotografije", "Po meri tvoje firme i tvojih kupaca"],
     ["Sve iz jednog mesta", "3+ agencije za koordinaciju", "Sajt, SEO, društvene mreže i oglasi na jednom mestu"],
     ["Podrška", "E-mail sa odgovorom za 48h", "Direktno preko WhatsApp-a"],
-    ["Isporuka", "6 do 12 nedelja", "14 dana"],
+    ["Isporuka sajta", "6 do 12 nedelja", "14 dana"],
   ];
   return (
     <div className="sh paper">
-      <h2 id="sheetTitle">Obično, i kod nas.</h2>
+      <h2 id={headingId}>Obično, i kod nas.</h2>
       <div className="tw">
         <table className="cmp">
           <thead><tr><th>Kriterijum</th><th>Tipična agencija</th><th>Promet Digital</th></tr></thead>
           <tbody>{rows.map((r) => <tr key={r[0]}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td></tr>)}</tbody>
         </table>
       </div>
-      <GoBtn go={go} to="sastanak" />
+      <GoBtn />
     </div>
   );
 }
 
-function Sistemi({ go }: { go: Go }) {
+function Sistemi({ headingId }: { headingId: string }) {
   const cards = [
     ["Magacin i zalihe", "Prijem, izdavanje i stanje robe na jednom mestu. Upozorenje kad nešto počne da fali.", "lager, barkod, izveštaji"],
     ["Kasa i prodaja", "Prodaja u radnji i online prodavnica dele iste zalihe i iste brojeve.", "kasa, zalihe, online shop"],
@@ -372,16 +374,16 @@ function Sistemi({ go }: { go: Go }) {
   ];
   return (
     <div className="sh dark">
-      <h2 id="sheetTitle">Sistemi po meri.</h2>
+      <h2 id={headingId}>Sistemi po meri.</h2>
       <p className="lead">Ne samo sajtovi. Pravimo softver koji radi u tvojoj radnji i magacinu, i povezuje sve sa online prodajom.</p>
       <div className="sysg">{cards.map(([h, p, s]) => <div key={h}><h3>{h}</h3><p>{p}</p><small>{s}</small></div>)}</div>
       <p className="small">Cena i obim po dogovoru, posle sastanka.</p>
-      <GoBtn go={go} to="sastanak" />
+      <GoBtn />
     </div>
   );
 }
 
-function Radovi({ go }: { go: Go }) {
+function Radovi({ go, headingId }: { go: Go; headingId: string }) {
   const items: [keyof typeof SHOTS, string, string][] = [
     ["sala", "Booking platforma za iznajmljivanje opreme", "2026"],
     ["unearthed", "Online prodavnica muzičkih semplova", "2025"],
@@ -389,7 +391,7 @@ function Radovi({ go }: { go: Go }) {
   ];
   return (
     <div className="sh dark">
-      <h2 id="sheetTitle">Radovi.</h2>
+      <h2 id={headingId}>Radovi.</h2>
       <div style={{ marginTop: 24, borderTop: "1px solid #33363D" }}>
         {items.map(([k, desc, y]) => (
           <a key={k} className="proj" href="#" onClick={(e) => { e.preventDefault(); go(k); }}>
@@ -411,10 +413,10 @@ const DIPLOMAS = [
   },
 ];
 
-function Ja({ go }: { go: Go }) {
+function Ja({ headingId }: { headingId: string }) {
   return (
     <div className="sh paper">
-      <h2 id="sheetTitle">Nemački standard. Za srpski biznis.</h2>
+      <h2 id={headingId}>Nemački standard. Za srpski biznis.</h2>
       <p className="lead">Ja sam David Nedić, osnivač Promet Digital. Školovao sam se i radio u Nemačkoj, a danas to iskustvo primenjujem za firme u Srbiji i Nemačkoj: precizno, pouzdano i transparentno.</p>
       <div className="dip">
         {DIPLOMAS.map((d) => (
@@ -430,16 +432,17 @@ function Ja({ go }: { go: Go }) {
         <div><b>Dokumentovani procesi</b>Odluke, pristupi i sledeći koraci ostaju uredno zabeleženi.</div>
         <div><b>GDPR nivo rada sa podacima</b>Pristupi, podaci kupaca i analitika tretiraju se pažljivo.</div>
       </div>
-      <GoBtn go={go} to="sastanak" />
+      <GoBtn />
     </div>
   );
 }
 
-function Kontakt({ time }: { time: string }) {
+function Kontakt({ time, headingId }: { time: string; headingId: string }) {
   return (
     <div className="sh dark">
-      <h2 id="sheetTitle">Hajde na sastanak.</h2>
+      <h2 id={headingId}>Javi se.</h2>
       <p className="lead">Javi se i dogovorimo termin, uživo ili online. Pričamo o tvom poslu i ciljevima. Prvi sastanak je besplatan.</p>
+      <GoBtn />
       <div className="contact">
         <div><span>WhatsApp i telefon</span><b><a href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener noreferrer">{CONTACT.phone}</a></b> <CopyBtn value={CONTACT.phone} /></div>
         <div><span>E-mail</span><b><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></b> <CopyBtn value={CONTACT.email} /></div>
@@ -450,21 +453,36 @@ function Kontakt({ time }: { time: string }) {
   );
 }
 
-export function SheetBody({ name, go, time }: { name: string; go: Go; time: string; active?: boolean }) {
+export function SheetBody({ name, go, time, idPrefix = "sheet" }: { name: string; go: Go; time: string; idPrefix?: string }) {
+  const headingId = `${idPrefix}-${name}`;
   switch (name) {
-    case "intro": return <Intro go={go} />;
-    case "sastanak": return <Sastanak />;
-    case "nacin": return <Nacin go={go} />;
-    case "dani": return <Dani />;
-    case "usluge": return <Usluge />;
-    case "poredjenje": return <Poredjenje go={go} />;
-    case "sistemi": return <Sistemi go={go} />;
-    case "unearthed": return <Unearthed />;
-    case "bite": return <Bite />;
-    case "sala": return <Sala />;
-    case "radovi": return <Radovi go={go} />;
-    case "ja": return <Ja go={go} />;
-    case "kontakt": return <Kontakt time={time} />;
+    case "intro": return <Intro headingId={headingId} />;
+    case "sastanak": return <Sastanak headingId={headingId} />;
+    case "nacin": return <Nacin headingId={headingId} />;
+    case "dani": return <Dani headingId={headingId} />;
+    case "usluge": return <Usluge headingId={headingId} />;
+    case "poredjenje": return <Poredjenje headingId={headingId} />;
+    case "sistemi": return <Sistemi headingId={headingId} />;
+    case "unearthed": return <Unearthed headingId={headingId} />;
+    case "bite": return <Bite headingId={headingId} />;
+    case "sala": return <Sala headingId={headingId} />;
+    case "radovi": return <Radovi go={go} headingId={headingId} />;
+    case "ja": return <Ja headingId={headingId} />;
+    case "kontakt": return <Kontakt time={time} headingId={headingId} />;
     default: return null;
   }
+}
+
+const MOBILE_SECTIONS = ["radovi", "usluge", "sistemi", "nacin", "poredjenje", "ja", "kontakt"] as const;
+
+export function MobileSheetStack({ go, time }: { go: Go; time: string }) {
+  return (
+    <main className="mobile-stack">
+      {MOBILE_SECTIONS.map((section, index) => (
+        <section id={section} className={index % 2 ? "tilt-right" : "tilt-left"} key={section}>
+          <SheetBody name={section} go={go} time={time} idPrefix="mobile-heading" />
+        </section>
+      ))}
+    </main>
+  );
 }
