@@ -143,6 +143,8 @@ export function Desk() {
         timers.push(setTimeout(() => field.drop(o, card ? 0.9 : 0.45), delay + duration));
       });
     }
+    desk.classList.add("ready");
+
 
     function glide(o: HTMLElement) {
       const s = st.get(o)!;
@@ -240,6 +242,7 @@ export function Desk() {
     const stockInt = setInterval(stock, 2200);
 
     return () => {
+      desk.classList.remove("ready");
       dead = true; field.destroy(); clearInterval(siteInt); clearInterval(stockInt); clearTimeout(lt); timers.forEach(clearTimeout);
       removeEventListener("resize", onResize); cleanups.forEach((c) => c());
     };
