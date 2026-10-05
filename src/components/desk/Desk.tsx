@@ -377,7 +377,7 @@ export function Desk() {
       <div className={"veil" + (on ? " on" : "")} onClick={close} />
       <div ref={sheetRef} className={"sheet" + (on ? " on" : "")} role="dialog" aria-modal="true" aria-labelledby="sheetTitle" aria-hidden={!on}>
         <button className="close" ref={closeRef} type="button" onClick={close}>vrati na sto ✕</button>
-        <div>{name && <SheetBody key={name + seq} name={name} go={go} time={time} active={on} />}</div>
+        <div>{name && <SheetBody key={name + seq} name={name} go={go} time={time} />}</div>
       </div>
     </div>
   );
