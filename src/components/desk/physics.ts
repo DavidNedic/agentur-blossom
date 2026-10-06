@@ -22,6 +22,7 @@ export function createDeskPhysics(desk: HTMLElement, paused: () => boolean) {
     Body.setMass(body, mass);
     const entry = { body, update }; entries.add(entry); Composite.add(engine.world, body);
     return {
+      resize(width: number, height: number) { const bounds = body.bounds; Body.scale(body, width * .88 / (bounds.max.x - bounds.min.x), height * .88 / (bounds.max.y - bounds.min.y)); Body.setMass(body, mass); },
       move(x: number, y: number, angle: number) { Body.setPosition(body, { x, y }); Body.setAngle(body, angle); Body.setVelocity(body, { x: 0, y: 0 }); Body.setAngularVelocity(body, 0); },
       hold(held: boolean) { Body.setStatic(body, held); if (!held) Body.setMass(body, mass); },
       release(vx: number, vy: number) { active = true; Matter.Sleeping.set(body, false); Body.setVelocity(body, { x: Math.max(-18, Math.min(18, vx)), y: Math.max(-18, Math.min(18, vy)) }); },
@@ -37,6 +38,9 @@ export function createDeskPhysics(desk: HTMLElement, paused: () => boolean) {
     while (accumulator >= STEP) {
       for (const { body } of entries) {
         if (body.isStatic) continue;
+        if (Math.hypot(gx, gy) < .04 && body.speed < .035 && Math.abs(body.angularVelocity) < .001) {
+          Body.setVelocity(body, { x: 0, y: 0 }); Body.setAngularVelocity(body, 0); Matter.Sleeping.set(body, true);
+        }
         const threshold = body.frictionAir * .55;
         if (Math.hypot(gx, gy) > threshold) {
           Matter.Sleeping.set(body, false);
@@ -57,7 +61,7 @@ export function createDeskPhysics(desk: HTMLElement, paused: () => boolean) {
       }
       accumulator -= STEP;
     }
-    for (const { body, update } of entries) update(body.position.x, body.position.y, body.angle);
+    for (const { body, update } of entries) update(Math.round(body.position.x * 100) / 100, Math.round(body.position.y * 100) / 100, Math.round(body.angle * 10000) / 10000);
   };
   frame = requestAnimationFrame(loop);
   return {

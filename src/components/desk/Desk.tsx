@@ -114,6 +114,7 @@ export function Desk() {
       st.set(o, { x: fx * W - o.offsetWidth / 2, y: fy * H - o.offsetHeight / 2, r, vx: 0, vy: 0 });
       draw(o);
       bodies.get(o)?.move(fx * W, fy * H, r * Math.PI / 180);
+      bodies.get(o)?.resize(o.offsetWidth, o.offsetHeight);
     };
     const layout = () => { setScale(); objs.forEach(place); };
     layout();
