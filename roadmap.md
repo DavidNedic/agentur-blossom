@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Correct mobile plant anchoring and enable iPhone tilt permission with stronger bounded sliding; verify permission flow, tilt, scrolling, and console.
+- [x] Correct mobile plant anchoring and enable iPhone tilt permission with stronger bounded sliding; simulated permission, tilt and scrolling verified at 390px, desktop checked at 1440px, no console errors. Physical iPhone sensor verification remains a device-only check.
 
 - [x] Rebrand every visitor-facing brand reference and shared logo to Promet, then audit protected remnants
 - [x] Replace the old palette with Graphit & Cyan across every shared state
