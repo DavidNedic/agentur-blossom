@@ -387,7 +387,7 @@ html[data-tod=noc] .desk-root .o-phone.ping .scr::after{opacity:.1}
 .desk-root .tr-smudge .s2{stroke-width:4;opacity:.05}
 
 /* hero card: cup ring in the free corner, tape at the top edge, folded corner */
-.desk-root .o-card .tr-ring{left:73%;top:15%;width:calc(78px*var(--s));height:calc(78px*var(--s));color:var(--stain);opacity:.40;mix-blend-mode:multiply;transform:rotate(-8deg)}
+.desk-root .o-card .tr-ring{left:73%;top:15%;width:calc(78px*var(--s));height:calc(78px*var(--s));color:var(--stain);opacity:.5;mix-blend-mode:multiply;transform:rotate(-8deg)}
 .desk-root .o-card .tr-tape{left:calc(-24px*var(--s));top:calc(-10px*var(--s));width:calc(76px*var(--s));height:calc(22px*var(--s));color:var(--tape);transform:rotate(-8deg)}
 .desk-root .o-card .tr-fold{left:calc(-1px*var(--s));bottom:calc(-1px*var(--s));width:calc(19px*var(--s));height:calc(19px*var(--s));color:#FFFDF8}
 
