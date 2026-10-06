@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Replace grouped tilt offsets with independent rigid bodies for desk objects and 3D props; verify inertia, collisions, permissions and reduced motion.
+- [x] Replace grouped tilt offsets with independent rigid bodies for desk objects and 3D props; simulated iPhone permission and individual movement checked at 390px, desktop sheets checked, collision transfer and eventual settling verified in isolated physics test. Reduced motion bypasses simulation. Physical iPhone remains unverified.
 
 - [x] Correct mobile plant anchoring and enable iPhone tilt permission with stronger bounded sliding; simulated permission, tilt and scrolling verified at 390px, desktop checked at 1440px, no console errors. Physical iPhone sensor verification remains a device-only check.
 
