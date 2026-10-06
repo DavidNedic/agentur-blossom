@@ -438,3 +438,10 @@ html{--px:0px;--py:0px}
   .desk-root .o-cert:hover::after,.desk-root .o-biz:hover::after{opacity:1;background-position:-20% 0}
 }
 @media (prefers-reduced-motion:reduce){.desk-root .o-cert::after,.desk-root .o-biz::after{display:none}}
+/* touch easter eggs: long-press */
+.desk-root .o-cup.puff .steam{display:block!important;opacity:1!important}
+.desk-root .o-cup.puff .steam i{animation:steam 1.6s ease-out 2!important}
+.desk-root .obj.wob>*:not(.shadow){animation:desk-wob .6s ease-out}
+@keyframes desk-wob{0%,100%{transform:none}20%{transform:rotate(-3deg)}45%{transform:rotate(2.4deg)}70%{transform:rotate(-1.2deg)}}
+@media (pointer:coarse){.desk-root .obj{-webkit-touch-callout:none;user-select:none}}
+@media (prefers-reduced-motion:reduce){.desk-root .obj.wob>*{animation:none}}
