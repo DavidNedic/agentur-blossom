@@ -20,9 +20,10 @@ export function createDeskPhysics(desk: HTMLElement, paused: () => boolean) {
       ? Bodies.circle(x, y, Math.min(width, height) * .42, options)
       : Bodies.rectangle(x, y, width * .88, height * .88, options);
     Body.setMass(body, mass);
+    let currentWidth = width, currentHeight = height;
     const entry = { body, update }; entries.add(entry); Composite.add(engine.world, body);
     return {
-      resize(width: number, height: number) { const bounds = body.bounds; Body.scale(body, width * .88 / (bounds.max.x - bounds.min.x), height * .88 / (bounds.max.y - bounds.min.y)); Body.setMass(body, mass); },
+      resize(width: number, height: number) { const angle = body.angle; Body.setAngle(body, 0); Body.scale(body, width / currentWidth, height / currentHeight); Body.setAngle(body, angle); currentWidth = width; currentHeight = height; Body.setMass(body, mass); },
       move(x: number, y: number, angle: number) { Body.setPosition(body, { x, y }); Body.setAngle(body, angle); Body.setVelocity(body, { x: 0, y: 0 }); Body.setAngularVelocity(body, 0); },
       hold(held: boolean) { Body.setStatic(body, held); if (!held) Body.setMass(body, mass); },
       release(vx: number, vy: number) { active = true; Matter.Sleeping.set(body, false); Body.setVelocity(body, { x: Math.max(-18, Math.min(18, vx)), y: Math.max(-18, Math.min(18, vy)) }); },
