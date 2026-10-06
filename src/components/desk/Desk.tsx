@@ -164,6 +164,15 @@ export function Desk() {
       requestAnimationFrame(step);
     }
 
+    let pressT = 0, longP = false; let lpT: ReturnType<typeof setTimeout> | undefined;
+    const egg = (o: HTMLElement) => {
+      navigator.vibrate?.(18);
+      const k = o.dataset.k === "cup" ? "puff" : "wob";
+      o.classList.remove(k); void o.offsetWidth; o.classList.add(k);
+      timers.push(setTimeout(() => o.classList.remove(k), k === "puff" ? 3200 : 700));
+      field.drop(o, 0.5);
+    };
+    void pressT;
     let drag: { o: HTMLElement; sx: number; sy: number; ox: number; oy: number; lx: number; ly: number; lt: number; moved: number } | null = null;
     const cleanups: (() => void)[] = [];
     objs.forEach((o) => {
@@ -172,6 +181,9 @@ export function Desk() {
         const s = st.get(o)!; raise(o);
         if (!small()) { o.classList.add("grab"); o.setPointerCapture(e.pointerId); }
         drag = { o, sx: e.clientX, sy: e.clientY, ox: s.x, oy: s.y, lx: e.clientX, ly: e.clientY, lt: performance.now(), moved: 0 };
+        pressT = performance.now();
+        clearTimeout(lpT);
+        if (e.pointerType !== "mouse") lpT = setTimeout(() => { if (drag && drag.o === o && drag.moved < 10) { longP = true; egg(o); } }, 520);
         s.vx = s.vy = 0;
         hideHint();
       };
@@ -188,7 +200,8 @@ export function Desk() {
       const end = () => {
         if (!drag || drag.o !== o) return;
         o.classList.remove("grab");
-        const moved = drag.moved; drag = null; field.press(null);
+        const moved = drag.moved; drag = null; field.press(null); clearTimeout(lpT);
+        if (longP) { longP = false; return; }
         if (moved < 6 && o.dataset.open) { open(o.dataset.open, o); return; }
         if (!reduce) glide(o); else { st.get(o)!.tilt = 0; draw(o); }
       };
@@ -218,6 +231,16 @@ export function Desk() {
       });
     };
     addEventListener("pointermove", onPt);
+    const onTilt = (e: DeviceOrientationEvent) => {
+      if (reduce || e.gamma == null || e.beta == null || pr) return;
+      pr = requestAnimationFrame(() => {
+        pr = 0;
+        html.style.setProperty("--px", (-Math.max(-30, Math.min(30, e.gamma!)) * 0.4).toFixed(1) + "px");
+        html.style.setProperty("--py", (-Math.max(-30, Math.min(30, e.beta! - 45)) * 0.3).toFixed(1) + "px");
+      });
+    };
+    if (matchMedia("(pointer: coarse)").matches) addEventListener("deviceorientation", onTilt);
+    cleanups.push(() => removeEventListener("deviceorientation", onTilt));
     cleanups.push(() => { removeEventListener("pointermove", onPt); cancelAnimationFrame(pr); html.style.removeProperty("--px"); html.style.removeProperty("--py"); });
 
     // calendar
