@@ -1,20 +1,8 @@
-// Decorative "traces of use" for the desk: coffee rings, tape, folded corners,
-// paperclips and pencil marks. Every element is aria-hidden and pointer-events:none.
+// Decorative "traces of use" for the desk: tape, folded corners,
+// paperclips, pencil marks and smudges. Every element is aria-hidden and pointer-events:none.
 // Colors, sizes and positions live in desk.css.
 
 type P = { className?: string };
-
-export function Ring({ className = "" }: P) {
-  return (
-    <svg className={"tr tr-ring " + className} viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-      <path className="r1" d="M50 9C72 8 91 27 91 49 91 72 73 91 50 91 27 91 9 72 9 50 9 28 28 10 50 9Z" />
-      <path className="r2" d="M50 15C69 14 86 30 86 50 86 71 70 86 50 86 30 86 14 70 15 50 15 31 31 16 50 15Z" />
-      <circle className="r3" cx="74" cy="90" r="2.6" />
-      <circle className="r3" cx="88" cy="70" r="1.5" />
-      <circle className="r3" cx="12" cy="66" r="1.9" />
-    </svg>
-  );
-}
 
 export function Tape({ className = "" }: P) {
   return (
@@ -73,10 +61,7 @@ export function Smudge({ className = "" }: P) {
 export function DeskTraces() {
   return (
     <div className="tr-desk" aria-hidden="true">
-      <Ring className="wet" />
-      <Ring className="dry-a" />
-      <Ring className="dry-b" />
-      <Ring className="dry-c" />
+      <Pencil kind="scribble" className="pens" />
       <Pencil kind="note" className="marg" />
       <Tape className="scrap" />
     </div>
