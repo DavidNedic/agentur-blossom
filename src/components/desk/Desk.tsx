@@ -237,10 +237,15 @@ export function Desk() {
         pr = 0;
         html.style.setProperty("--px", (-Math.max(-30, Math.min(30, e.gamma!)) * 0.4).toFixed(1) + "px");
         html.style.setProperty("--py", (-Math.max(-30, Math.min(30, e.beta! - 45)) * 0.3).toFixed(1) + "px");
+        const gx = Math.max(-35, Math.min(35, e.gamma!)) / 35, gy = Math.max(-35, Math.min(35, e.beta! - 45)) / 35;
+        objs.forEach((o, i) => {
+          const w = 0.55 + ((i * 7) % 5) * 0.2;
+          o.style.translate = (gx * 38 * w).toFixed(1) + "px " + (gy * 30 * w).toFixed(1) + "px";
+        });
       });
     };
     if (matchMedia("(pointer: coarse)").matches) addEventListener("deviceorientation", onTilt);
-    cleanups.push(() => removeEventListener("deviceorientation", onTilt));
+    cleanups.push(() => { removeEventListener("deviceorientation", onTilt); objs.forEach((o) => (o.style.translate = "")); });
     cleanups.push(() => { removeEventListener("pointermove", onPt); cancelAnimationFrame(pr); html.style.removeProperty("--px"); html.style.removeProperty("--py"); });
 
     // calendar
