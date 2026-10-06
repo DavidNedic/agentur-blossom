@@ -207,6 +207,18 @@ export function Desk() {
     });
 
     timers.push(setTimeout(hideHint, 9000));
+    const html = document.documentElement;
+    let pr = 0;
+    const onPt = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse" || reduce || pr) return;
+      pr = requestAnimationFrame(() => {
+        pr = 0;
+        html.style.setProperty("--px", ((0.5 - e.clientX / innerWidth) * 16).toFixed(1) + "px");
+        html.style.setProperty("--py", ((0.5 - e.clientY / innerHeight) * 12).toFixed(1) + "px");
+      });
+    };
+    addEventListener("pointermove", onPt);
+    cleanups.push(() => { removeEventListener("pointermove", onPt); cancelAnimationFrame(pr); html.style.removeProperty("--px"); html.style.removeProperty("--py"); });
 
     // calendar
     const cg = desk.querySelector<HTMLElement>(".o-cal .grid")!;
