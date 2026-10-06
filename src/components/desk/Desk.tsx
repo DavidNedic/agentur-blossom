@@ -126,7 +126,14 @@ export function Desk() {
       }, (gone) => { o.style.visibility = gone ? "hidden" : ""; }));
     });
     let lt: ReturnType<typeof setTimeout> | undefined;
-    const onResize = () => { clearTimeout(lt); lt = setTimeout(layout, 120); };
+    let layoutWidth = desk.clientWidth, layoutHeight = desk.clientHeight;
+    const onResize = () => {
+      clearTimeout(lt);
+      lt = setTimeout(() => {
+        if (layoutWidth === desk.clientWidth && layoutHeight === desk.clientHeight) return;
+        layoutWidth = desk.clientWidth; layoutHeight = desk.clientHeight; layout();
+      }, 120);
+    };
     addEventListener("resize", onResize);
 
     let z = 10;
