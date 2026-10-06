@@ -5,8 +5,9 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
+import type { DeskPhysics } from "./physics";
 
-export function createOffice(bgCanvas: HTMLCanvasElement, deskEl: HTMLElement) {
+export function createOffice(bgCanvas: HTMLCanvasElement, deskEl: HTMLElement, physics?: DeskPhysics) {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let dead = false;
   const extra: HTMLElement[] = [], tms: any[] = [], ints: any[] = [], offs: (() => void)[] = [];
@@ -246,10 +247,16 @@ function headOf(o){o.updateMatrixWorld(true);let mY=0;const v=new THREE.Vector3(
 function holder(p,o,real){const h=new THREE.Group();h.add(o);fit(o,p.size(innerWidth<=760));h.rotation.y=p.rot;cast(h);scene.add(h);
   if(p.k==='lamp'&&real){h.updateMatrixWorld(true);const hd=headOf(o);o.userData.head=hd;
     const bl=new THREE.Mesh(new THREE.SphereGeometry(.05/o.scale.x,16,12),new THREE.MeshStandardMaterial({color:0xfff2dd,emissive:0xffc48a,emissiveIntensity:0}));bl.position.copy(hd);bl.visible=false;o.add(bl);o.userData.bulb=bl;}
-  objs[p.k]={h,p,o};place();}
+  if(dead)return;
+  objs[p.k]={h,p,o};place();
+  if(physics&&!(innerWidth<=760&&p.desk)){
+    const [x,y]=p.at(W,H,mob),size=p.size(mob);
+    const body=physics.add(p.k,x,y,size*(p.k==='plant'?.5:.8),size*.65,-p.rot,(px,py,angle)=>{h.position.set(px/100-W/200,0,py/100-H/200);h.rotation.y=-angle;});
+    objs[p.k].body=body;offs.push(()=>body.remove());
+  }}
 PROPS.forEach(p=>{loader.load(p.file,g=>holder(p,g.scene,true),undefined,()=>holder(p,p.fb()));});
 let W=innerWidth,H=innerHeight,mob=W<=760;
-function place(){Object.values(objs).forEach(({h,p})=>{h.visible=!(mob&&p.desk);const [x,y]=p.at(W,H,mob);h.position.set(x/100-W/200,0,y/100-H/200);});}
+function place(){Object.values(objs).forEach(({h,p,body})=>{h.visible=!(mob&&p.desk);const [x,y]=p.at(W,H,mob);h.position.set(x/100-W/200,0,y/100-H/200);body?.move(x,y,-p.rot);});}
 function size(){W=innerWidth;mob=W<=760;H=mob?deskEl.clientHeight:innerHeight;cv.style.height=mob?H+'px':'';renderer.setSize(W,H,false);cam.aspect=W/H;
   const d=(H/100)/2/Math.tan(THREE.MathUtils.degToRad(cam.fov/2));cam.userData.d=d;cam.updateProjectionMatrix();place();}
 size();_on('resize',size);

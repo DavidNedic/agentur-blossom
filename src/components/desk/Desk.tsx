@@ -310,7 +310,7 @@ export function Desk() {
 
     return () => {
       desk.classList.remove("ready");
-      dead = true; field.destroy(); clearInterval(siteInt); clearInterval(stockInt); clearTimeout(lt); timers.forEach(clearTimeout);
+      dead = true; field.destroy(); physics.destroy(); clearInterval(siteInt); clearInterval(stockInt); clearTimeout(lt); timers.forEach(clearTimeout);
       removeEventListener("resize", onResize); cleanups.forEach((c) => c());
     };
   }, [open, hideHint]);

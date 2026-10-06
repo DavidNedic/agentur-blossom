@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Replace grouped tilt offsets with independent rigid bodies for desk objects and 3D props; verify inertia, collisions, permissions and reduced motion.
+
 - [x] Correct mobile plant anchoring and enable iPhone tilt permission with stronger bounded sliding; simulated permission, tilt and scrolling verified at 390px, desktop checked at 1440px, no console errors. Physical iPhone sensor verification remains a device-only check.
 
 - [x] Rebrand every visitor-facing brand reference and shared logo to Promet, then audit protected remnants

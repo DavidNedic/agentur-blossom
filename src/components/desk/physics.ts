@@ -50,8 +50,9 @@ export function createDeskPhysics(desk: HTMLElement, paused: () => boolean) {
         const y = Math.max(0, Math.min(desk.clientHeight, body.position.y));
         if (x !== body.position.x || y !== body.position.y) {
           const vx = body.velocity.x, vy = body.velocity.y;
+          const hitX = x !== body.position.x, hitY = y !== body.position.y;
           Body.setPosition(body, { x, y });
-          Body.setVelocity(body, { x: x !== body.position.x ? -vx * .25 : vx, y: y !== body.position.y ? -vy * .25 : vy });
+          Body.setVelocity(body, { x: hitX ? -vx * .25 : vx, y: hitY ? -vy * .25 : vy });
         }
       }
       accumulator -= STEP;
