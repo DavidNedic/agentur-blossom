@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { CONTACT } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { createOffice } from "./office";
+import { createDeskPhysics } from "./physics";
 import { Clip, DeskTraces, Fold, Pencil, Smudge, Tape } from "./Traces";
 import { SheetBody, SHOTS } from "./Sheets";
 
@@ -35,6 +36,8 @@ export function Desk() {
   const [time, setTime] = useState("--:--");
   const [name, setName] = useState<string | null>(null);
   const [on, setOn] = useState(false);
+  const dialogOpen = useRef(false);
+  dialogOpen.current = on;
   const [seq, setSeq] = useState(0);
   const sheetRef = useRef<HTMLDivElement>(null);
   const [tiltPermission, setTiltPermission] = useState<"hidden" | "ask" | "denied">("hidden");
@@ -84,15 +87,19 @@ export function Desk() {
   }, []);
 
   useEffect(() => {
-    const root = rootRef.current!, desk = deskRef.current!;
+    const root = rootRef.current, desk = deskRef.current, canvas = cvRef.current;
+    if (!root || !desk || !canvas) return;
     const objs = [...desk.querySelectorAll<HTMLElement>(".obj")];
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const small = () => innerWidth <= 760;
-    const field = createOffice(cvRef.current!, desk);
+    let physicsReady = reduce;
+    const physics = createDeskPhysics(desk, () => reduce || !physicsReady || dialogOpen.current);
+    const field = createOffice(canvas, desk, physics);
     let dead = false;
     const timers: ReturnType<typeof setTimeout>[] = [];
 
     const st = new Map<HTMLElement, S>();
+    const bodies = new Map<HTMLElement, ReturnType<typeof physics.add>>();
     const setScale = () => {
       const s = small() ? Math.min(innerWidth / 600, 0.78) : Math.max(0.62, Math.min(innerWidth / 1500, innerHeight / 950, 1.12));
       root.style.setProperty("--s", s.toFixed(3));
@@ -106,9 +113,18 @@ export function Desk() {
       const W = desk.clientWidth, H = desk.clientHeight;
       st.set(o, { x: fx * W - o.offsetWidth / 2, y: fy * H - o.offsetHeight / 2, r, vx: 0, vy: 0 });
       draw(o);
+      bodies.get(o)?.move(fx * W, fy * H, r * Math.PI / 180);
+      bodies.get(o)?.resize(o.offsetWidth, o.offsetHeight);
     };
     const layout = () => { setScale(); objs.forEach(place); };
     layout();
+    objs.forEach((o) => {
+      const s = st.get(o);
+      if (!s) return;
+      bodies.set(o, physics.add(o.dataset.k || "paper", s.x + o.offsetWidth / 2, s.y + o.offsetHeight / 2, o.offsetWidth, o.offsetHeight, s.r * Math.PI / 180, (x, y, angle) => {
+        s.x = x - o.offsetWidth / 2; s.y = y - o.offsetHeight / 2; s.r = angle * 180 / Math.PI; s.tilt = 0; draw(o);
+      }));
+    });
     let lt: ReturnType<typeof setTimeout> | undefined;
     const onResize = () => { clearTimeout(lt); lt = setTimeout(layout, 120); };
     addEventListener("resize", onResize);
@@ -160,20 +176,8 @@ export function Desk() {
 
 
     function glide(o: HTMLElement) {
-      const s = st.get(o)!;
-      function step() {
-        if (dead) return;
-        s.vx *= 0.9; s.vy *= 0.9; s.tilt = (s.tilt || 0) * 0.85; s.x += s.vx; s.y += s.vy;
-        const W = desk.clientWidth, H = desk.clientHeight, w = o.offsetWidth, h = o.offsetHeight;
-        if (s.x < -w * 0.4) { s.x = -w * 0.4; s.vx *= -0.5; }
-        if (s.x > W - w * 0.6) { s.x = W - w * 0.6; s.vx *= -0.5; }
-        if (s.y < -h * 0.3) { s.y = -h * 0.3; s.vy *= -0.5; }
-        if (s.y > H - h * 0.6) { s.y = H - h * 0.6; s.vy *= -0.5; }
-        draw(o);
-        if (Math.abs(s.vx) + Math.abs(s.vy) > 0.2 || Math.abs(s.tilt) > 0.1) requestAnimationFrame(step);
-        else { s.tilt = 0; draw(o); field.drop(o, 0.6); }
-      }
-      requestAnimationFrame(step);
+      const s = st.get(o);
+      if (s) bodies.get(o)?.release(s.vx, s.vy);
     }
 
     let pressT = 0, longP = false; let lpT: ReturnType<typeof setTimeout> | undefined;
@@ -191,6 +195,7 @@ export function Desk() {
       const down = (e: PointerEvent) => {
         if (e.button !== 0) return;
         const s = st.get(o)!; raise(o);
+        bodies.get(o)?.hold(true);
         if (!small()) { o.classList.add("grab"); o.setPointerCapture(e.pointerId); }
         drag = { o, sx: e.clientX, sy: e.clientY, ox: s.x, oy: s.y, lx: e.clientX, ly: e.clientY, lt: performance.now(), moved: 0 };
         pressT = performance.now();
@@ -208,11 +213,13 @@ export function Desk() {
         s.tilt = Math.max(-8, Math.min(8, s.vx * 0.6));
         drag.moved = Math.max(drag.moved, Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy));
         drag.lx = e.clientX; drag.ly = e.clientY; drag.lt = now; draw(o); field.press(o);
+        bodies.get(o)?.move(s.x + o.offsetWidth / 2, s.y + o.offsetHeight / 2, (s.r + (s.tilt || 0)) * Math.PI / 180);
       };
       const end = () => {
         if (!drag || drag.o !== o) return;
         o.classList.remove("grab");
         const moved = drag.moved; drag = null; field.press(null); clearTimeout(lpT);
+        bodies.get(o)?.hold(false);
         if (longP) { longP = false; return; }
         if (moved < 6 && o.dataset.open) { open(o.dataset.open, o); return; }
         if (!reduce) glide(o); else { st.get(o)!.tilt = 0; draw(o); }
@@ -254,14 +261,7 @@ export function Desk() {
         html.style.setProperty("--px", (-Math.max(-30, Math.min(30, gamma)) * 0.4).toFixed(1) + "px");
         html.style.setProperty("--py", (-Math.max(-30, Math.min(30, relativeBeta)) * 0.3).toFixed(1) + "px");
         const gx = Math.max(-35, Math.min(35, gamma)) / 35, gy = Math.max(-35, Math.min(35, relativeBeta)) / 35;
-        objs.forEach((o, i) => {
-          const position = st.get(o);
-          if (!position) return;
-          const w = 0.55 + ((i * 7) % 5) * 0.2;
-          const dx = Math.max(-o.offsetWidth * .35 - position.x, Math.min(desk.clientWidth - o.offsetWidth * .65 - position.x, gx * 150 * w));
-          const dy = Math.max(-o.offsetHeight * .25 - position.y, Math.min(desk.clientHeight - o.offsetHeight * .75 - position.y, gy * 110 * w));
-          o.style.translate = dx.toFixed(1) + "px " + dy.toFixed(1) + "px";
-        });
+        physics.tilt(gx, gy);
       });
     };
     const startTilt = () => addEventListener("deviceorientation", onTilt);
@@ -300,6 +300,7 @@ export function Desk() {
       }, reduce ? 0 : 450));
     };
     const introEnd = reduce ? 0 : 200 + objs.length * 110 + 1300;
+    timers.push(setTimeout(() => { physicsReady = true; }, introEnd));
     let siteInt: ReturnType<typeof setInterval> | undefined;
     timers.push(setTimeout(runCal, introEnd * 0.6));
     timers.push(setTimeout(() => { buildSite(); siteInt = setInterval(buildSite, 4200); }, introEnd * 0.5));
@@ -310,7 +311,7 @@ export function Desk() {
 
     return () => {
       desk.classList.remove("ready");
-      dead = true; field.destroy(); clearInterval(siteInt); clearInterval(stockInt); clearTimeout(lt); timers.forEach(clearTimeout);
+      dead = true; field.destroy(); physics.destroy(); clearInterval(siteInt); clearInterval(stockInt); clearTimeout(lt); timers.forEach(clearTimeout);
       removeEventListener("resize", onResize); cleanups.forEach((c) => c());
     };
   }, [open, hideHint]);
