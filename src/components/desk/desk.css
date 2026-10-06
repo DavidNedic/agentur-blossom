@@ -430,7 +430,6 @@ html[data-tod=noc] .desk-root .o-phone.ping .scr::after{opacity:.1}
 .desk-root .tr-desk .dry-a{left:22%;top:26%;width:calc(112px*var(--s));height:calc(112px*var(--s));color:var(--stain-dry);opacity:.10;transform:rotate(9deg)}
 .desk-root .tr-desk .dry-b{left:63%;top:38%;width:calc(132px*var(--s));height:calc(132px*var(--s));color:var(--stain-dry);opacity:.09;transform:rotate(-22deg)}
 .desk-root .tr-desk .dry-c{left:5%;top:84%;width:calc(96px*var(--s));height:calc(96px*var(--s));color:var(--stain-dry);opacity:.08;transform:rotate(18deg)}
-.desk-root .tr-desk .pens{left:70%;top:91%;width:calc(42px*var(--s));height:calc(37px*var(--s));color:#C9CCD2;opacity:.16}
 .desk-root .tr-desk .marg{left:24%;top:13%;width:calc(14px*var(--s));height:calc(29px*var(--s));color:#C9CCD2;opacity:.14}
 .desk-root .tr-desk .scrap{left:76%;top:7%;width:calc(76px*var(--s));height:calc(22px*var(--s));color:#EDEEF0;opacity:.45;transform:rotate(-14deg)}
 @media (max-width:760px){.desk-root .tr-desk{display:none}}

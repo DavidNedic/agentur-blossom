@@ -77,7 +77,6 @@ export function DeskTraces() {
       <Ring className="dry-a" />
       <Ring className="dry-b" />
       <Ring className="dry-c" />
-      <Pencil kind="scribble" className="pens" />
       <Pencil kind="note" className="marg" />
       <Tape className="scrap" />
     </div>
