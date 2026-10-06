@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CONTACT } from "@/lib/i18n";
+import { Button } from "@/components/ui/button";
 import { createOffice } from "./office";
 import { Clip, DeskTraces, Fold, Pencil, Smudge, Tape } from "./Traces";
 import { SheetBody, SHOTS } from "./Sheets";
@@ -36,6 +37,17 @@ export function Desk() {
   const [on, setOn] = useState(false);
   const [seq, setSeq] = useState(0);
   const sheetRef = useRef<HTMLDivElement>(null);
+  const [tiltPermission, setTiltPermission] = useState<"hidden" | "ask" | "denied">("hidden");
+  const enableTilt = useRef<(() => void) | null>(null);
+  const requestTilt = async () => {
+    const sensor = window.DeviceOrientationEvent as typeof DeviceOrientationEvent & { requestPermission?: () => Promise<string> };
+    if (!sensor?.requestPermission) return;
+    try {
+      const permission = await sensor.requestPermission();
+      if (permission === "granted") { enableTilt.current?.(); setTiltPermission("hidden"); }
+      else setTiltPermission("denied");
+    } catch { setTiltPermission("denied"); }
+  };
 
   const hideHint = useCallback(() => {
     if (hinted.current) return;
@@ -231,21 +243,35 @@ export function Desk() {
       });
     };
     addEventListener("pointermove", onPt);
+    let neutralBeta: number | null = null;
     const onTilt = (e: DeviceOrientationEvent) => {
       if (reduce || e.gamma == null || e.beta == null || pr) return;
+      const gamma = e.gamma, beta = e.beta;
+      if (neutralBeta === null) neutralBeta = beta;
+      const relativeBeta = beta - neutralBeta;
       pr = requestAnimationFrame(() => {
         pr = 0;
-        html.style.setProperty("--px", (-Math.max(-30, Math.min(30, e.gamma!)) * 0.4).toFixed(1) + "px");
-        html.style.setProperty("--py", (-Math.max(-30, Math.min(30, e.beta! - 45)) * 0.3).toFixed(1) + "px");
-        const gx = Math.max(-35, Math.min(35, e.gamma!)) / 35, gy = Math.max(-35, Math.min(35, e.beta! - 45)) / 35;
+        html.style.setProperty("--px", (-Math.max(-30, Math.min(30, gamma)) * 0.4).toFixed(1) + "px");
+        html.style.setProperty("--py", (-Math.max(-30, Math.min(30, relativeBeta)) * 0.3).toFixed(1) + "px");
+        const gx = Math.max(-35, Math.min(35, gamma)) / 35, gy = Math.max(-35, Math.min(35, relativeBeta)) / 35;
         objs.forEach((o, i) => {
+          const position = st.get(o);
+          if (!position) return;
           const w = 0.55 + ((i * 7) % 5) * 0.2;
-          o.style.translate = (gx * 38 * w).toFixed(1) + "px " + (gy * 30 * w).toFixed(1) + "px";
+          const dx = Math.max(-o.offsetWidth * .35 - position.x, Math.min(desk.clientWidth - o.offsetWidth * .65 - position.x, gx * 150 * w));
+          const dy = Math.max(-o.offsetHeight * .25 - position.y, Math.min(desk.clientHeight - o.offsetHeight * .75 - position.y, gy * 110 * w));
+          o.style.translate = dx.toFixed(1) + "px " + dy.toFixed(1) + "px";
         });
       });
     };
-    if (matchMedia("(pointer: coarse)").matches) addEventListener("deviceorientation", onTilt);
-    cleanups.push(() => { removeEventListener("deviceorientation", onTilt); objs.forEach((o) => (o.style.translate = "")); });
+    const startTilt = () => addEventListener("deviceorientation", onTilt);
+    enableTilt.current = startTilt;
+    if (!reduce && matchMedia("(pointer: coarse)").matches) {
+      const sensor = window.DeviceOrientationEvent as typeof DeviceOrientationEvent & { requestPermission?: () => Promise<string> };
+      if (sensor?.requestPermission) setTiltPermission("ask");
+      else startTilt();
+    }
+    cleanups.push(() => { enableTilt.current = null; removeEventListener("deviceorientation", onTilt); objs.forEach((o) => (o.style.translate = "")); });
     cleanups.push(() => { removeEventListener("pointermove", onPt); cancelAnimationFrame(pr); html.style.removeProperty("--px"); html.style.removeProperty("--py"); });
 
     // calendar
@@ -425,6 +451,7 @@ export function Desk() {
       </div>
 
       <div className="hintbar" ref={hintRef}>pomeri stvari po stolu, klikni na predmet</div>
+      {tiltPermission !== "hidden" && <Button type="button" variant="ghost" className="tilt-enable" onClick={requestTilt}>{tiltPermission === "denied" ? "Pokušaj ponovo: nagib" : "Uključi nagib"}</Button>}
       <nav className="tabs" aria-label="Brzi pristup">
         {[["radovi", "Radovi", ""], ["usluge", "Usluge", ""], ["sistemi", "Sistemi", ""], ["ja", "Ko sam ja", "me"], ["kontakt", "Kontakt", ""]].map(([k, label, cls]) => (
           <button key={k} type="button" className={cls || undefined} onClick={(e) => { hideHint(); open(k, e.currentTarget); }}>{label}</button>

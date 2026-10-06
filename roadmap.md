@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Correct mobile plant anchoring and enable iPhone tilt permission with stronger bounded sliding; verify permission flow, tilt, scrolling, and console.
+
 - [x] Rebrand every visitor-facing brand reference and shared logo to Promet, then audit protected remnants
 - [x] Replace the old palette with Graphit & Cyan across every shared state
 - [x] Replace Archivo with self-hosted Geologica and Onest

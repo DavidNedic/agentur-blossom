@@ -9,3 +9,4 @@
 - Do not modify `/remotion` or its audio files.
 - Founder qualification claims must remain factual: David Nedić is a German-qualified Kaufmann für E-Commerce with work and training experience in Germany; why: this is a trust credential, not promotional embellishment.
 - The homepage "/" renders only the "Radni sto" desk from `src/components/desk/` (CSS scoped under `.desk-root`, browser code inside effects); old `src/components/site/` sections are kept but not rendered; why: the desk is a self-contained full-screen experience.
+- Touch orientation is enabled through a user-gesture permission request where required, with bounded object translations and a calibrated vertical baseline; mobile 3D coordinates use the desk height rather than viewport height, so props remain anchored to the desk while scrolling.
