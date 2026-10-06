@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CONTACT } from "@/lib/i18n";
 import { createOffice } from "./office";
+import { Clip, DeskTraces, Fold, Pencil, Ring, Smudge, Tape } from "./Traces";
 import { SheetBody, SHOTS } from "./Sheets";
 
 type S = { x: number; y: number; r: number; vx: number; vy: number; tilt?: number };
@@ -254,6 +255,7 @@ export function Desk() {
     <div className="desk-root" ref={rootRef}>
       <canvas id="field" ref={cvRef} aria-hidden="true" />
       <div className="desk" ref={deskRef} aria-label="Radni sto agencije Promet Digital">
+        <DeskTraces />
         <div className="print tl">PROMET DIGITAL<br /><b>sajtovi, prodavnice, sistemi</b></div>
         <div className="print br">Zrenjanin <span className="live">{time}</span><br /><b>promet.digital</b></div>
 
@@ -263,6 +265,9 @@ export function Desk() {
           <h1><span>Hajde na</span><br /><em><span>sastanak.</span></em></h1>
           <div className="bot"><span>Prvo pričamo o tvom poslu i ciljevima.<br />Onda pravimo sajt.</span><b>David Nedić</b></div>
           <span className="tag">o nama</span>
+          <Ring />
+          <Tape />
+          <Fold className="flip" />
         </div>
 
         <div className="obj o-lap" data-k="lap" data-open="nacin" tabIndex={0} role="button" aria-label="Otvori: kako radimo">
@@ -287,18 +292,24 @@ export function Desk() {
           </div>
           <div className="foot">i online je.<small>od sastanka do lansiranja</small></div>
           <span className="tag">proces</span>
+          <Tape className="l" />
+          <Tape className="r" />
+          <Fold className="br" />
         </div>
 
         <div className="obj o-fold" data-k="fold" data-open="usluge" tabIndex={0} role="button" aria-label="Otvori: usluge">
           <div className="f"><i>SEO</i></div><div className="f"><i>Kamere</i></div><div className="f"><i>Kasa</i></div><div className="f"><i>Magacin</i></div>
           <div className="f"><i>Sajtovi</i><h3>Usluge</h3><p>Sajtovi, prodavnice, sistemi za magacin, kasu i kamere.</p></div>
           <span className="tag">usluge</span>
+          <Ring />
         </div>
 
         <div className="obj o-cert" data-k="cert" data-open="ja" tabIndex={0} role="button" aria-label="Otvori: ko sam ja">
           <span className="shadow" />
           <div className="in"><div className="flag" /><small>STRUČNO ZVANJE, NEMAČKA</small><b>Kaufmann für<br />E-Commerce</b><small>IHK, DE / RS</small><div className="sig">DAVID NEDIĆ</div></div>
           <span className="tag">nemački standard</span>
+          <Tape className="l" />
+          <Tape className="r" />
         </div>
 
         <div className="obj o-score" data-k="score" data-open="poredjenje" tabIndex={0} role="button" aria-label="Otvori: poređenje">
@@ -308,6 +319,9 @@ export function Desk() {
             <div className="r" key={a}><span>{a}</span><span className="no">{b}</span><span className="ok">{c}</span></div>
           ))}
           <span className="tag">poređenje</span>
+          <Clip className="top" />
+          <Pencil kind="tick" className="m1" />
+          <Pencil kind="note" className="m2" />
         </div>
 
         <div className="obj o-sys" data-k="sys" data-open="sistemi" tabIndex={0} role="button" aria-label="Otvori: sistemi po meri">
@@ -328,6 +342,7 @@ export function Desk() {
             <h3>Adriaticum</h3><p>Booking platforma za opremu</p>
           </div>
           <span className="tag" style={{ bottom: -30 }}>radovi</span>
+          <Clip className="tl" />
         </div>
 
         <div className="obj o-biz" data-k="biz" data-open="kontakt" tabIndex={0} role="button" aria-label="Otvori: kontakt">
@@ -344,6 +359,8 @@ export function Desk() {
           </div>
           <p><b>David Nedić</b><br />{CONTACT.phone}<br />{CONTACT.email}</p>
           <span className="tag">kontakt</span>
+          <Ring className="bl" />
+          <Smudge className="sm" />
         </div>
 
         <div className="obj o-phone" data-k="phone" data-open="kontakt" tabIndex={0} role="button" aria-label="Otvori: poruka">
@@ -356,11 +373,13 @@ export function Desk() {
             <div className="bub out">Vidimo se.</div>
           </div>
           <span className="tag">piši nam</span>
+          <Smudge className="scr" />
         </div>
 
         <div className="obj o-sticky" data-k="sticky" data-open="sastanak" tabIndex={0} role="button" aria-label="Otvori: sastanak">
           <span className="shadow" /><b>Prvi sastanak je besplatan.</b><small>cena po dogovoru, bez obaveze</small>
           <span className="tag">sastanak</span>
+          <Fold className="br" />
         </div>
 
         <div className="obj o-pen" data-k="pen" aria-hidden="true">
