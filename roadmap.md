@@ -21,5 +21,6 @@
 - [x] Redraw both desk camera-tracking canvases and verify desktop plus 390px mobile
 - [ ] Refine desk CTAs, deep links, dialog accessibility, contrast, touch sizing, performance, metadata, and 404 page
 - [ ] Replace the mobile desk with a short four-object scene followed by SSR-rendered sheet sections
-- [ ] Prevent desk objects flashing at the top-left before their initial layout
+- [x] Prevent desk objects flashing at the top-left before their initial layout
 - [ ] Verify desktop 1440px and mobile 375/390px interactions, layout, hashes, browser back, console, and build
+- [x] Add traces-of-use layer (coffee rings, tape, folded corners, paperclips, pencil) to desk objects and desk surface
