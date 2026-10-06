@@ -423,3 +423,18 @@ html[data-tod=noc] .desk-root .o-phone.ping .scr::after{opacity:.1}
 .desk-root .tr-desk .marg{left:24%;top:13%;width:calc(14px*var(--s));height:calc(29px*var(--s));color:#C9CCD2;opacity:.14}
 .desk-root .tr-desk .scrap{left:76%;top:7%;width:calc(76px*var(--s));height:calc(22px*var(--s));color:#EDEEF0;opacity:.45;transform:rotate(-14deg)}
 @media (max-width:760px){.desk-root .tr-desk{display:none}}
+
+/* Phase 1: hover steam, card lift, pointer light */
+html{--px:0px;--py:0px}
+.desk-root .obj .shadow{box-shadow:calc(var(--shx)*.12 + var(--px)*.3) calc(2px + var(--py)*.3) 3px rgba(0,0,0,.45),calc(var(--shx) + var(--px)) calc(var(--shy) + var(--py)) 36px rgba(0,0,0,.38);transition:box-shadow .5s ease-out}
+@media (pointer:fine){
+  .desk-root .o-cup .steam{display:block}
+  .desk-root .o-cup .steam i{animation-play-state:paused;opacity:0;transition:opacity .6s}
+  html[data-tod=jutro] .desk-root .o-cup .steam i{animation-play-state:running}
+  .desk-root .o-cup:hover .steam i{animation-play-state:running}
+  html:not([data-tod=jutro]) .desk-root .o-cup:not(:hover) .steam{opacity:0;transition:opacity .6s}
+  .desk-root .o-cert:hover .shadow,.desk-root .o-biz:hover .shadow{box-shadow:calc(var(--shx)*.2 + var(--px)*.5) calc(5px + var(--py)*.5) 8px rgba(0,0,0,.35),calc(var(--shx)*1.5 + var(--px)*1.6) calc(var(--shy) + 16px + var(--py)*1.6) 54px rgba(0,0,0,.42)}
+  .desk-root .o-cert::after,.desk-root .o-biz::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.22) 50%,transparent 65%) no-repeat;background-size:250% 100%;background-position:120% 0;opacity:0;transition:opacity .3s,background-position .65s ease-out}
+  .desk-root .o-cert:hover::after,.desk-root .o-biz:hover::after{opacity:1;background-position:-20% 0}
+}
+@media (prefers-reduced-motion:reduce){.desk-root .o-cert::after,.desk-root .o-biz::after{display:none}}
