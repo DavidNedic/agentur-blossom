@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CONTACT } from "@/lib/i18n";
 import { createOffice } from "./office";
-import { Clip, DeskTraces, Fold, Pencil, Ring, Smudge, Tape } from "./Traces";
+import { Clip, DeskTraces, Fold, Pencil, Smudge, Tape } from "./Traces";
 import { SheetBody, SHOTS } from "./Sheets";
 
 type S = { x: number; y: number; r: number; vx: number; vy: number; tilt?: number };
@@ -265,7 +265,6 @@ export function Desk() {
           <h1><span>Hajde na</span><br /><em><span>sastanak.</span></em></h1>
           <div className="bot"><span>Prvo pričamo o tvom poslu i ciljevima.<br />Onda pravimo sajt.</span><b>David Nedić</b></div>
           <span className="tag">o nama</span>
-          <Ring />
           <Tape />
           <Fold className="flip" />
         </div>
@@ -301,7 +300,6 @@ export function Desk() {
           <div className="f"><i>SEO</i></div><div className="f"><i>Kamere</i></div><div className="f"><i>Kasa</i></div><div className="f"><i>Magacin</i></div>
           <div className="f"><i>Sajtovi</i><h3>Usluge</h3><p>Sajtovi, prodavnice, sistemi za magacin, kasu i kamere.</p></div>
           <span className="tag">usluge</span>
-          <Ring />
         </div>
 
         <div className="obj o-cert" data-k="cert" data-open="ja" tabIndex={0} role="button" aria-label="Otvori: ko sam ja">
@@ -359,7 +357,6 @@ export function Desk() {
           </div>
           <p><b>David Nedić</b><br />{CONTACT.phone}<br />{CONTACT.email}</p>
           <span className="tag">kontakt</span>
-          <Ring className="bl" />
           <Smudge className="sm" />
         </div>
 

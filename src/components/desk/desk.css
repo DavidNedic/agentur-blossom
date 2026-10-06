@@ -366,14 +366,10 @@ html[data-tod=noc] .desk-root .o-phone.ping .scr::after{opacity:.1}
 .desk-root .obj{visibility:hidden}
 .desk-root .desk.ready .obj{visibility:visible}
 
-/* ---- traces of use: coffee rings, tape, folded corners, paperclips, pencil ---- */
-.desk-root{--stain:#8A5A32;--stain-dry:#D9C9B4;--pencil:#5A5F68;--clip:#9AA0A8;--tape:#8E8B84}
+/* ---- traces of use: tape, folded corners, paperclips, pencil, smudges ---- */
+.desk-root{--pencil:#5A5F68;--clip:#9AA0A8;--tape:#8E8B84}
 .desk-root .tr{position:absolute;visibility:hidden;pointer-events:none;overflow:visible}
 .desk-root .desk.ready .tr{visibility:visible}
-.desk-root .tr-ring .r1,.desk-root .tr-ring .r2{fill:none;stroke:currentColor}
-.desk-root .tr-ring .r1{stroke-width:2.8}
-.desk-root .tr-ring .r2{stroke-width:1.1;opacity:.6}
-.desk-root .tr-ring .r3{fill:currentColor;opacity:.5}
 .desk-root .tr-tape .t1{fill:currentColor;opacity:.17}
 .desk-root .tr-tape .t2{fill:none;stroke:currentColor;stroke-width:1.3;opacity:.34}
 .desk-root .tr-fold .f1{fill:currentColor}
@@ -386,8 +382,7 @@ html[data-tod=noc] .desk-root .o-phone.ping .scr::after{opacity:.1}
 .desk-root .tr-smudge .s1{stroke-width:10;opacity:.07}
 .desk-root .tr-smudge .s2{stroke-width:4;opacity:.05}
 
-/* hero card: cup ring in the free corner, tape at the top edge, folded corner */
-.desk-root .o-card .tr-ring{left:73%;top:15%;width:calc(78px*var(--s));height:calc(78px*var(--s));color:var(--stain);opacity:.5;mix-blend-mode:multiply;transform:rotate(-8deg)}
+/* hero card: tape at the top edge, folded corner */
 .desk-root .o-card .tr-tape{left:calc(-24px*var(--s));top:calc(-10px*var(--s));width:calc(76px*var(--s));height:calc(22px*var(--s));color:var(--tape);transform:rotate(-8deg)}
 .desk-root .o-card .tr-fold{left:calc(-1px*var(--s));bottom:calc(-1px*var(--s));width:calc(19px*var(--s));height:calc(19px*var(--s));color:#FFFDF8}
 
@@ -407,14 +402,11 @@ html[data-tod=noc] .desk-root .o-phone.ping .scr::after{opacity:.1}
 .desk-root .o-cert .tr-tape.l{left:calc(-14px*var(--s));top:calc(16px*var(--s));transform:rotate(-40deg)}
 .desk-root .o-cert .tr-tape.r{right:calc(-14px*var(--s));bottom:calc(16px*var(--s));transform:rotate(-40deg)}
 
-/* service folder: ring on the cover */
-.desk-root .o-fold .tr-ring{right:calc(12px*var(--s));top:calc(12px*var(--s));width:calc(62px*var(--s));height:calc(62px*var(--s));color:var(--stain);opacity:.30;mix-blend-mode:multiply;transform:rotate(14deg)}
 
 /* work stack: clipped together */
 .desk-root .o-work .tr-clip{left:calc(40px*var(--s));top:calc(-25px*var(--s));width:calc(19px*var(--s));height:calc(30px*var(--s));color:var(--clip);transform:rotate(-6deg)}
 
-/* business card: dried ring, thumb smudge */
-.desk-root .o-biz .tr-ring.bl{left:calc(-30px*var(--s));bottom:calc(-34px*var(--s));width:calc(96px*var(--s));height:calc(96px*var(--s));color:#D8D5CE;opacity:.10}
+/* business card: thumb smudge */
 .desk-root .o-biz .tr-smudge.sm{right:calc(6px*var(--s));top:calc(8px*var(--s));width:calc(88px*var(--s));height:calc(39px*var(--s));color:#EDEEF0}
 
 /* phone: smudge across the screen */
@@ -424,12 +416,10 @@ html[data-tod=noc] .desk-root .o-phone.ping .scr::after{opacity:.1}
 .desk-root .o-sticky::before{content:"";position:absolute;left:0;right:0;top:0;height:calc(20px*var(--s));background:rgba(255,255,255,.18);pointer-events:none}
 .desk-root .o-sticky .tr-fold{right:calc(-1px*var(--s));bottom:calc(-1px*var(--s));width:calc(22px*var(--s));height:calc(22px*var(--s));color:#9EE9FF}
 
-/* the desk surface itself: where a cup stood, a pen was tested, a note was torn off */
+/* the desk surface itself: a pen was tested, a note was torn off */
 .desk-root .tr-desk{position:absolute;inset:0;pointer-events:none}
-.desk-root .tr-desk .wet{left:calc(10% - 100px);top:calc(38% - 60px);width:calc(190px*var(--s));height:calc(190px*var(--s));color:var(--stain-dry);opacity:.13}
-.desk-root .tr-desk .dry-a{left:22%;top:26%;width:calc(112px*var(--s));height:calc(112px*var(--s));color:var(--stain-dry);opacity:.10;transform:rotate(9deg)}
-.desk-root .tr-desk .dry-b{left:63%;top:38%;width:calc(132px*var(--s));height:calc(132px*var(--s));color:var(--stain-dry);opacity:.09;transform:rotate(-22deg)}
-.desk-root .tr-desk .dry-c{left:5%;top:84%;width:calc(96px*var(--s));height:calc(96px*var(--s));color:var(--stain-dry);opacity:.08;transform:rotate(18deg)}
+.desk-root .tr-desk .pens{left:70%;top:92%;width:calc(34px*var(--s));height:calc(30px*var(--s));color:#C9CCD2;opacity:.12}
+.desk-root .tr-desk .marg{left:24%;top:13%;width:calc(14px*var(--s));height:calc(29px*var(--s));color:#C9CCD2;opacity:.14}
 .desk-root .tr-desk .marg{left:24%;top:13%;width:calc(14px*var(--s));height:calc(29px*var(--s));color:#C9CCD2;opacity:.14}
 .desk-root .tr-desk .scrap{left:76%;top:7%;width:calc(76px*var(--s));height:calc(22px*var(--s));color:#EDEEF0;opacity:.45;transform:rotate(-14deg)}
 @media (max-width:760px){.desk-root .tr-desk{display:none}}
