@@ -123,7 +123,7 @@ export function Desk() {
       if (!s) return;
       bodies.set(o, physics.add(o.dataset.k || "paper", s.x + o.offsetWidth / 2, s.y + o.offsetHeight / 2, o.offsetWidth, o.offsetHeight, s.r * Math.PI / 180, (x, y, angle) => {
         s.x = x - o.offsetWidth / 2; s.y = y - o.offsetHeight / 2; s.r = angle * 180 / Math.PI; s.tilt = 0; draw(o);
-      }));
+      }, (gone) => { o.style.visibility = gone ? "hidden" : ""; }));
     });
     let lt: ReturnType<typeof setTimeout> | undefined;
     const onResize = () => { clearTimeout(lt); lt = setTimeout(layout, 120); };
@@ -250,7 +250,7 @@ export function Desk() {
       });
     };
     addEventListener("pointermove", onPt);
-    let neutralBeta: number | null = null;
+    let neutralBeta: number | null = null, steepSince = 0;
     const onTilt = (e: DeviceOrientationEvent) => {
       if (reduce || e.gamma == null || e.beta == null || pr) return;
       const gamma = e.gamma, beta = e.beta;
@@ -262,6 +262,14 @@ export function Desk() {
         html.style.setProperty("--py", (-Math.max(-30, Math.min(30, relativeBeta)) * 0.3).toFixed(1) + "px");
         const gx = Math.max(-35, Math.min(35, gamma)) / 35, gy = Math.max(-35, Math.min(35, relativeBeta)) / 35;
         physics.tilt(gx, gy);
+        // Easter egg: hold the phone steeply tilted for 2s and everything slides off the desk, returning after 6s.
+        if (Math.hypot(gx, gy) > .95) {
+          if (!steepSince) steepSince = performance.now();
+          else if (!physics.spilling && performance.now() - steepSince > 2000) {
+            physics.spill(); navigator.vibrate?.([30, 60, 30]);
+            timers.push(setTimeout(() => physics.restore(), 6000));
+          }
+        } else steepSince = 0;
       });
     };
     const startTilt = () => addEventListener("deviceorientation", onTilt);
