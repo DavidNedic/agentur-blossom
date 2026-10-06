@@ -231,7 +231,7 @@ function fbVase(){const g=new THREE.Group();const pts=[];for(let i=0;i<=20;i++){
   g.userData.h=2.6;return g;}
 // ---------- props: which file, where, how big (css px based) ----------
 const PROPS=[
-  {k:'plant',file:'/models/plant.glb',fb:fbPlant,at:(W,H,m)=>m?[W*.12,H-40]:[105,H-75],size:m=>m?170:250,rot:.4},
+  {k:'plant',file:'/models/plant.glb',fb:fbPlant,at:(W,H,m)=>m?[W*.12,H-95]:[105,H-75],size:m=>m?170:250,rot:.4},
   {k:'lamp',file:'/models/lamp.glb',fb:fbLamp,at:(W,H,m)=>m?[W-50,H*.42]:[W-70,H*.56],size:m=>m?130:180,rot:0,desk:true},
   {k:'phones',file:'/models/headphones.glb',fb:fbPhones,at:(W,H,m)=>[W-130,H-75],size:()=>170,rot:.5,desk:true},
   {k:'vase',file:'/models/vase.glb',fb:fbVase,at:(W,H,m)=>[560,75],size:()=>110,rot:0,desk:true}];
@@ -250,7 +250,7 @@ function holder(p,o,real){const h=new THREE.Group();h.add(o);fit(o,p.size(innerW
 PROPS.forEach(p=>{loader.load(p.file,g=>holder(p,g.scene,true),undefined,()=>holder(p,p.fb()));});
 let W=innerWidth,H=innerHeight,mob=W<=760;
 function place(){Object.values(objs).forEach(({h,p})=>{h.visible=!(mob&&p.desk);const [x,y]=p.at(W,H,mob);h.position.set(x/100-W/200,0,y/100-H/200);});}
-function size(){W=innerWidth;H=innerHeight;mob=W<=760;renderer.setSize(W,H,false);cam.aspect=W/H;
+function size(){W=innerWidth;mob=W<=760;H=mob?deskEl.clientHeight:innerHeight;cv.style.height=mob?H+'px':'';renderer.setSize(W,H,false);cam.aspect=W/H;
   const d=(H/100)/2/Math.tan(THREE.MathUtils.degToRad(cam.fov/2));cam.userData.d=d;cam.updateProjectionMatrix();place();}
 size();_on('resize',size);
 let mx=0,my=0,tx=0,ty=0;
