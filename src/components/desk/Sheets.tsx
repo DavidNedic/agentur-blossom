@@ -392,8 +392,8 @@ function Sistemi({ headingId }: { headingId: string }) {
 }
 
 export const PROJECTS: { name: string; img: string; url: string; who: string; did: string; demo?: keyof typeof SHOTS }[] = [
-  { name: "Geousluge", img: gGeo, url: "https://geousluge.com", who: "Geodetski biro iz Zrenjanina: ozakonjenje objekata, omeđavanje i deoba parcela.", did: "Sajt sa posebnom stranicom za svako mesto koje pokrivaju, lokalni SEO i poziv jednim dodirom." },
   { name: "MIZU Head Spa", img: gMizu, url: "https://mizuheilbronn.com", who: "Japanski head spa u Brackenheimu kod Heilbronna, Nemačka.", did: "Sajt na nemačkom sa tretmanima i trajanjima, i online zakazivanje termina." },
+  { name: "Geousluge", img: gGeo, url: "https://geousluge.com", who: "Geodetski biro iz Zrenjanina: ozakonjenje objekata, omeđavanje i deoba parcela.", did: "Sajt sa posebnom stranicom za svako mesto koje pokrivaju, lokalni SEO i poziv jednim dodirom." },
   { name: "The Golden Cosmetics", img: gGolden, url: "https://thegoldencosmetics.com", who: "Kozmetički studio i online akademija Lorene Kovačević u Brackenheimu.", did: "Sajt sa dva puta, tretmani za klijentkinje i akademija za kozmetičarke, sa zakazivanjem." },
   { name: "Adriaticum", img: gAdr, url: "https://adriaticum.rentals", who: "Iznajmljivanje stolica, stolova i posuđa za proslave u Zrenjaninu i okolini.", did: "Katalog opreme i booking korak po korak, od izbora do potvrde.", demo: "sala" },
   { name: "Unearthed Samples", img: gUne, url: "https://unearthed-samples.com", who: "Prodavnica semplova i paketa zvukova za tech house producente.", did: "Online prodavnica sa plaćanjem, brza na mobilnom. Shopify, Stripe, Meta Pixel.", demo: "unearthed" },
