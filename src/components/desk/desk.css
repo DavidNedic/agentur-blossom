@@ -405,6 +405,8 @@ html[data-tod=noc] .desk-root .o-phone.ping .scr::after{opacity:.1}
 
 
 /* work stack: clipped together */
+.desk-root .o-work .tr-clip{left:calc(126px*var(--s));top:calc(-16px*var(--s));width:calc(18px*var(--s));height:calc(30px*var(--s));color:var(--clip);transform:rotate(5deg)}
+
 
 /* business card: thumb smudge */
 .desk-root .o-biz .tr-smudge.sm{right:calc(6px*var(--s));top:calc(8px*var(--s));width:calc(88px*var(--s));height:calc(39px*var(--s));color:#EDEEF0}
