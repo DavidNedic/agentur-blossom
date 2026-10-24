@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { createOffice } from "./office";
 import { createDeskPhysics } from "./physics";
 import { Clip, DeskTraces, Fold, Pencil, Smudge, Tape } from "./Traces";
-import { SheetBody, SHOTS } from "./Sheets";
+import { PROJECTS, SheetBody, SHOTS } from "./Sheets";
 
 type S = { x: number; y: number; r: number; vx: number; vy: number; tilt?: number };
 

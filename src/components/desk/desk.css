@@ -30,17 +30,18 @@ body:has(.desk-root){margin:0;background:#1A1B1F;overflow:hidden}
 .desk-root .tag{position:absolute;left:0;bottom:-26px;font:500 11px var(--mono);color:var(--mat-print);letter-spacing:.05em;white-space:nowrap;pointer-events:none;transition:color .2s}
 .desk-root .obj:hover .tag,.desk-root .obj:focus-visible .tag{color:var(--cyan)}
 .desk-root .o-work{width:calc(270px*var(--s));height:calc(196px*var(--s))}
-.desk-root .o-work .wc{position:absolute;inset:0;background:#E9E6DF;border-radius:3px;box-shadow:0 2px 3px rgba(0,0,0,.4);color:var(--ink);padding:calc(16px*var(--s));font-size:calc(13px*var(--s))}
-.desk-root .o-work .wc:nth-child(1){transform:translate(calc(14px*var(--s)),calc(-14px*var(--s))) rotate(3deg);background:#D8D4CB}
-.desk-root .o-work .wc:nth-child(2){transform:translate(calc(7px*var(--s)),calc(-7px*var(--s))) rotate(1.5deg);background:#E1DDD5}
-.desk-root .o-work .wc:nth-child(3){background:var(--paper2);overflow:visible}
-.desk-root .o-work .tabx{position:absolute;top:calc(-18px*var(--s));left:calc(16px*var(--s));background:var(--cyan);color:var(--ink);font:700 calc(11px*var(--s)) var(--mono);padding:calc(3px*var(--s)) calc(10px*var(--s));border-radius:3px 3px 0 0}
-.desk-root .o-work h3{font:800 calc(30px*var(--s))/1 var(--display);letter-spacing:-.015em;margin-top:calc(16px*var(--s))}
-.desk-root .o-work p{color:#4A4E57;margin-top:calc(6px*var(--s))}
-.desk-root .o-work .wc-shot{padding:0}
-.desk-root .o-work .wc-shot img{display:block;width:100%;height:calc(110px*var(--s));object-fit:cover;object-position:top;border-radius:3px 3px 0 0;pointer-events:none}
-.desk-root .o-work .wc-shot h3{font-size:calc(22px*var(--s));margin:calc(8px*var(--s)) calc(14px*var(--s)) 0}
-.desk-root .o-work .wc-shot p{margin:calc(4px*var(--s)) calc(14px*var(--s)) 0;font-size:calc(12px*var(--s));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.desk-root .o-work .pl{position:absolute;inset:0;background:#F2F0EA;padding:calc(9px*var(--s)) calc(9px*var(--s)) 0;box-shadow:0 3px 6px rgba(0,0,0,.45);border-radius:2px}
+.desk-root .o-work .pl img{display:block;width:100%;height:calc(140px*var(--s));object-fit:cover;object-position:top;pointer-events:none;background:#2B2F35}
+.desk-root .o-work .pl span{display:block;font:500 max(11px,calc(12px*var(--s)))/calc(40px*var(--s)) var(--mono);color:#4A4E57;letter-spacing:.06em;text-transform:uppercase;text-align:center}
+.desk-root .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:26px 22px;margin-top:26px}
+.desk-root .pol{background:#F2F0EA;color:#1A1B1F;padding:10px 10px 16px;box-shadow:0 6px 16px rgba(0,0,0,.45);border-radius:2px;margin:0}
+.desk-root .pol img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;background:#2B2F35}
+.desk-root .pol h3{font:800 20px/1.1 var(--display);letter-spacing:-.015em;margin:14px 2px 8px}
+.desk-root .pol p{font-size:14px;line-height:1.45;color:#3A3D44;margin:0 2px 6px}
+.desk-root .pol p b{font:500 11px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:#4A4E57;display:block}
+.desk-root .pol .act{display:flex;gap:16px;flex-wrap:wrap;margin:12px 2px 0;font:500 12px var(--mono)}
+.desk-root .pol .act a{color:#00758F;text-decoration:underline;text-underline-offset:3px;min-height:24px}
+.desk-root .pol .wip{color:#1A1B1F;background:#3DDCFF;padding:3px 8px}
 .desk-root .o-biz{width:calc(300px*var(--s));height:calc(172px*var(--s));background:#24262B;border-radius:4px;padding:calc(18px*var(--s)) calc(20px*var(--s));display:grid;align-content:space-between;border:1px solid #33363D}
 .desk-root .o-biz .l{display:flex;align-items:center;gap:calc(7px*var(--s));font:800 calc(22px*var(--s)) "Geologica",system-ui,sans-serif;letter-spacing:-.045em}
 .desk-root .o-biz .l svg{width:calc(16px*var(--s));height:calc(20px*var(--s))}
@@ -404,7 +405,6 @@ html[data-tod=noc] .desk-root .o-phone.ping .scr::after{opacity:.1}
 
 
 /* work stack: clipped together */
-.desk-root .o-work .tr-clip{left:calc(40px*var(--s));top:calc(-25px*var(--s));width:calc(19px*var(--s));height:calc(30px*var(--s));color:var(--clip);transform:rotate(-6deg)}
 
 /* business card: thumb smudge */
 .desk-root .o-biz .tr-smudge.sm{right:calc(6px*var(--s));top:calc(8px*var(--s));width:calc(88px*var(--s));height:calc(39px*var(--s));color:#EDEEF0}
