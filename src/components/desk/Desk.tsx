@@ -415,12 +415,12 @@ export function Desk() {
         </div>
 
         <div className="obj o-work" data-k="work" data-open="radovi" tabIndex={0} role="button" aria-label="Otvori: radovi">
-          <div className="wc" /><div className="wc" />
-          <div className="wc wc-shot">
-            <span className="tabx">RADOVI 3</span>
-            <img src={SHOTS.sala.src} alt="" draggable={false} />
-            <h3>Adriaticum</h3><p>Booking platforma za opremu</p>
-          </div>
+          {PROJECTS.slice(0, 3).map((p, i) => (
+            <div className="pl" key={p.name} style={{ transform: `rotate(${[-7, 5, -1][i]}deg) translate(${[-10, 12, 0][i]}%, 0)` }}>
+              <img src={p.img} alt="" draggable={false} />
+              <span>{i === 2 ? "radovi 8" : p.name}</span>
+            </div>
+          ))}
           <span className="tag" style={{ bottom: -30 }}>radovi</span>
           <Clip className="tl" />
         </div>
