@@ -3,10 +3,18 @@ import { CONTACT } from "@/lib/i18n";
 import adriaticumImg from "@/assets/portfolio-adriaticum.webp";
 import unearthedImg from "@/assets/portfolio-unearthed.webp";
 import biteImg from "@/assets/portfolio-bite.png";
+import gGeo from "@/assets/gal-geousluge.webp";
+import gMizu from "@/assets/gal-mizu.webp";
+import gGolden from "@/assets/gal-golden.webp";
+import gAdr from "@/assets/gal-adriaticum.webp";
+import gUne from "@/assets/gal-unearthed.webp";
+import gCrowd from "@/assets/gal-crowdplay.webp";
+import gBite from "@/assets/gal-bite.webp";
+import gAlu from "@/assets/gal-aluinox.webp";
 
 export const SHOTS = {
   sala: { src: adriaticumImg, name: "Adriaticum", url: "https://adriaticum.rentals" },
-  bite: { src: biteImg, name: "Bite Catering", url: "" },
+  bite: { src: biteImg, name: "Bite Catering", url: "https://bitecatering023.com" },
   unearthed: { src: unearthedImg, name: "Unearthed Samples", url: "https://unearthed-samples.com" },
 } as const;
 
@@ -383,22 +391,36 @@ function Sistemi({ headingId }: { headingId: string }) {
   );
 }
 
+export const PROJECTS: { name: string; img: string; url: string; who: string; did: string; demo?: keyof typeof SHOTS }[] = [
+  { name: "Geousluge", img: gGeo, url: "https://geousluge.com", who: "Geodetski biro iz Zrenjanina: ozakonjenje objekata, omeđavanje i deoba parcela.", did: "Sajt sa posebnom stranicom za svako mesto koje pokrivaju, lokalni SEO i poziv jednim dodirom." },
+  { name: "MIZU Head Spa", img: gMizu, url: "https://mizuheilbronn.com", who: "Japanski head spa u Brackenheimu kod Heilbronna, Nemačka.", did: "Sajt na nemačkom sa tretmanima i trajanjima, i online zakazivanje termina." },
+  { name: "The Golden Cosmetics", img: gGolden, url: "https://thegoldencosmetics.com", who: "Kozmetički studio i online akademija Lorene Kovačević u Brackenheimu.", did: "Sajt sa dva puta, tretmani za klijentkinje i akademija za kozmetičarke, sa zakazivanjem." },
+  { name: "Adriaticum", img: gAdr, url: "https://adriaticum.rentals", who: "Iznajmljivanje stolica, stolova i posuđa za proslave u Zrenjaninu i okolini.", did: "Katalog opreme i booking korak po korak, od izbora do potvrde.", demo: "sala" },
+  { name: "Unearthed Samples", img: gUne, url: "https://unearthed-samples.com", who: "Prodavnica semplova i paketa zvukova za tech house producente.", did: "Online prodavnica sa plaćanjem, brza na mobilnom. Shopify, Stripe, Meta Pixel.", demo: "unearthed" },
+  { name: "CrowdPlay", img: gCrowd, url: "https://crowdplay.eu", who: "Besplatne interaktivne igre za Twitch i YouTube strimere.", did: "Platforma sa sedam igara koje publika igra preko chata tokom strima." },
+  { name: "Bite Catering", img: gBite, url: "https://bitecatering023.com", who: "Ketering iz Zrenjanina: finger food, mesne i sirne daske, slavska trpeza.", did: "Sajt sa menijima i paketima, i upitom za ponudu za svaki događaj.", demo: "bite" },
+  { name: "Metal Alu Inox", img: gAlu, url: "", who: "Porodična firma iz Zrenjanina od 1991: cevi, limovi, profili i inox.", did: "Sajt sa asortimanom, sečenjem na meru i 3D graditeljem za proračun materijala." },
+];
+
 function Radovi({ go, headingId }: { go: Go; headingId: string }) {
-  const items: [keyof typeof SHOTS, string, string][] = [
-    ["sala", "Booking platforma za iznajmljivanje opreme", "2026"],
-    ["unearthed", "Online prodavnica muzičkih semplova", "2025"],
-    ["bite", "Ketering, Zrenjanin", "2026"],
-  ];
   return (
     <div className="sh dark">
       <h2 id={headingId}>Radovi.</h2>
-      <div style={{ marginTop: 24, borderTop: "1px solid #33363D" }}>
-        {items.map(([k, desc, y]) => (
-          <a key={k} className="proj" href="#" onClick={(e) => { e.preventDefault(); go(k); }}>
-            <img src={SHOTS[k].src} alt="" loading="lazy" />
-            <div><h3>{SHOTS[k].name}</h3><span>{desc}</span></div>
-            <small>{y}</small>
-          </a>
+      <p className="lead">Pravi sajtovi, koje smo uradili. Ko su klijenti i šta smo napravili.</p>
+      <div className="gal">
+        {PROJECTS.map((p, i) => (
+          <figure key={p.name} className="pol" style={{ transform: `rotate(${[-1.4, 1, -0.6, 1.3, -1, 0.7, -1.2, 0.9][i]}deg)` }}>
+            <img src={p.img} alt={`Sajt ${p.name}`} loading="lazy" />
+            <figcaption>
+              <h3>{p.name}</h3>
+              <p><b>Ko su:</b> {p.who}</p>
+              <p><b>Šta smo uradili:</b> {p.did}</p>
+              <div className="act">
+                {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer">Pogledaj sajt ↗</a> : <span className="wip">u izradi</span>}
+                {p.demo && <a href="#" onClick={(e) => { e.preventDefault(); go(p.demo!); }}>Probaj demo</a>}
+              </div>
+            </figcaption>
+          </figure>
         ))}
       </div>
     </div>
