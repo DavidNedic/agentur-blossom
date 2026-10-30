@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as KonsultacijaRouteImport } from './routes/konsultacija'
+import { Route as ApiPublicHooksBookingRemindersRouteImport } from './routes/api/public/hooks/booking-reminders'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,41 @@ const KonsultacijaRoute = KonsultacijaRouteImport.update({
   path: '/konsultacija',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksBookingRemindersRoute =
+  ApiPublicHooksBookingRemindersRouteImport.update({
+    id: '/api/public/hooks/booking-reminders',
+    path: '/api/public/hooks/booking-reminders',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/konsultacija': typeof KonsultacijaRoute
+  '/api/public/hooks/booking-reminders': typeof ApiPublicHooksBookingRemindersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/konsultacija': typeof KonsultacijaRoute
+  '/api/public/hooks/booking-reminders': typeof ApiPublicHooksBookingRemindersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/konsultacija': typeof KonsultacijaRoute
+  '/api/public/hooks/booking-reminders': typeof ApiPublicHooksBookingRemindersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/konsultacija'
+  fullPaths: '/' | '/konsultacija' | '/api/public/hooks/booking-reminders'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/konsultacija'
-  id: '__root__' | '/' | '/konsultacija'
+  to: '/' | '/konsultacija' | '/api/public/hooks/booking-reminders'
+  id: '__root__' | '/' | '/konsultacija' | '/api/public/hooks/booking-reminders'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   KonsultacijaRoute: typeof KonsultacijaRoute
+  ApiPublicHooksBookingRemindersRoute: typeof ApiPublicHooksBookingRemindersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +76,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KonsultacijaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/booking-reminders': {
+      id: '/api/public/hooks/booking-reminders'
+      path: '/api/public/hooks/booking-reminders'
+      fullPath: '/api/public/hooks/booking-reminders'
+      preLoaderRoute: typeof ApiPublicHooksBookingRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   KonsultacijaRoute: KonsultacijaRoute,
+  ApiPublicHooksBookingRemindersRoute: ApiPublicHooksBookingRemindersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
