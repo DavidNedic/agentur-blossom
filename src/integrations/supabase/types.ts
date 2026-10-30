@@ -76,6 +76,7 @@ export type Database = {
           reminder_sent: boolean
           starts_at: string
           status: string
+          timezone: string
           zoom_join_url: string | null
           zoom_meeting_id: string | null
         }
@@ -95,6 +96,7 @@ export type Database = {
           reminder_sent?: boolean
           starts_at: string
           status?: string
+          timezone?: string
           zoom_join_url?: string | null
           zoom_meeting_id?: string | null
         }
@@ -114,6 +116,7 @@ export type Database = {
           reminder_sent?: boolean
           starts_at?: string
           status?: string
+          timezone?: string
           zoom_join_url?: string | null
           zoom_meeting_id?: string | null
         }

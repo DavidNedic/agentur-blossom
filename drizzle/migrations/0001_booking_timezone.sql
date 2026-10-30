@@ -1,0 +1,1 @@
+ALTER TABLE public.bookings ADD COLUMN timezone text NOT NULL DEFAULT 'Europe/Belgrade';
