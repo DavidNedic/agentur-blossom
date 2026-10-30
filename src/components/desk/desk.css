@@ -453,3 +453,47 @@ html{--px:0px;--py:0px}
 @media (max-width:760px){#props3d{position:absolute;top:0;left:0;bottom:auto}}
 .desk-root .tilt-enable{position:fixed;right:12px;top:12px;z-index:850;min-height:44px;padding:10px 14px;background:var(--cyan);color:var(--ink);font:500 12px var(--mono);border-radius:4px}
 .desk-root .tilt-enable:hover{background:var(--fg);color:var(--ink)}
+/* booking planner */
+.desk-root .bk{position:relative;background-image:repeating-linear-gradient(transparent 0 31px,#E4DFD4 31px 32px)}
+.desk-root .bk-lang{position:absolute;top:22px;right:96px;display:flex;border:1px solid #17181C}
+.desk-root .bk-lang button{background:transparent;border:0;font:500 12px var(--mono);padding:8px 10px;min-height:36px;color:#17181C;cursor:pointer}
+.desk-root .bk-lang button[aria-pressed=true]{background:#17181C;color:#EDEEF0}
+.desk-root .bk-steps{list-style:none;display:flex;gap:18px;flex-wrap:wrap;margin:22px 0 0;padding:0 0 10px;border-bottom:1px solid #17181C;font:500 12px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:#6B6F78}
+.desk-root .bk-steps li[aria-current=step]{color:#17181C;text-decoration:underline;text-decoration-color:#00758F;text-decoration-thickness:2px;text-underline-offset:6px}
+.desk-root .bk-note{font:13px/1.6 var(--mono);color:#4A4E57;margin-top:14px}
+.desk-root .bk-note a{color:#00758F;word-break:break-all}
+.desk-root .bk-err{font:500 14px/1.5 var(--body);color:#B3261E;margin-top:14px}
+.desk-root .bk-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:14px}
+.desk-root .bk-days button{border:1px solid #CFC9BC;background:#FFFDF8;border-radius:4px;padding:8px 4px;text-align:center;cursor:pointer;color:#17181C;display:flex;flex-direction:column;gap:2px;min-height:64px}
+.desk-root .bk-days small{font:500 11px var(--mono);text-transform:uppercase;color:#6B6F78}
+.desk-root .bk-days b{font:800 17px var(--display)}
+.desk-root .bk-days i{font:normal 11px var(--mono);color:#6B6F78}
+.desk-root .bk-days button:disabled{opacity:.45;cursor:default;text-decoration:line-through}
+.desk-root .bk-days button:not(:disabled):hover{border-color:#17181C}
+.desk-root .bk-days button[aria-selected=true]{background:#17181C;border-color:#17181C;color:#EDEEF0}
+.desk-root .bk-days button[aria-selected=true] small,.desk-root .bk-days button[aria-selected=true] i{color:#3DDCFF}
+.desk-root .bk-times{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.desk-root .bk-times button{font:500 15px var(--mono);border:1px solid #17181C;background:transparent;color:#17181C;padding:10px 14px;min-height:44px;border-radius:4px;cursor:pointer}
+.desk-root .bk-times button:hover,.desk-root .bk-times button[aria-pressed=true]{background:#3DDCFF}
+.desk-root .bk-when{font:18px/1.4 var(--body);margin-top:18px}
+.desk-root .bk-when span{font:13px var(--mono);color:#6B6F78}
+.desk-root .bk-form{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;margin-top:4px}
+.desk-root .bk-form .bk-when,.desk-root .bk-form .wide{grid-column:1/-1}
+.desk-root .bk-form label{display:flex;flex-direction:column;gap:6px;font:500 12px var(--mono);letter-spacing:.04em;color:#4A4E57}
+.desk-root .bk-form input:not([type=checkbox]),.desk-root .bk-form textarea{font:16px var(--body);color:#17181C;background:#FFFDF8;border:1px solid #CFC9BC;border-radius:4px;padding:11px 12px;resize:vertical}
+.desk-root .bk-form input:focus,.desk-root .bk-form textarea:focus{outline:2px solid #00758F;outline-offset:0;border-color:#00758F}
+.desk-root .bk-form .chk{flex-direction:row;align-items:flex-start;gap:10px;font:14px/1.5 var(--body);letter-spacing:0;color:#17181C}
+.desk-root .bk-form .chk input{width:20px;height:20px;margin-top:1px;accent-color:#00758F}
+.desk-root .bk-act{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.desk-root .bk-act .btn{margin-top:0}
+.desk-root .bk .btn:disabled{opacity:.5;cursor:default}
+.desk-root .bk-back{background:transparent;border:1px solid #17181C;color:#17181C;font:500 14px var(--mono);padding:13px 16px;border-radius:6px;cursor:pointer}
+.desk-root .bk-back:hover{background:#17181C;color:#EDEEF0}
+@media (max-width:640px){
+  .desk-root .sheet:has(.bk){left:0;top:0;width:100vw;height:100dvh;max-height:100dvh;border-radius:0;transform:none}
+  .desk-root .sheet:has(.bk).on{transform:none}
+  .desk-root .bk{min-height:100dvh}
+  .desk-root .bk-lang{position:static;display:inline-flex;margin-bottom:14px}
+  .desk-root .bk-days{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .desk-root .bk-form{grid-template-columns:1fr}
+}

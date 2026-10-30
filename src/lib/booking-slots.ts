@@ -70,7 +70,7 @@ export function computeSlots(opts: {
   for (let i = 0; i <= DAYS_AHEAD; i++) {
     const { date, weekday } = addDays(today, i);
     if (blocked.has(date)) continue;
-    let count = perDay.get(date) ?? 0;
+    const count = perDay.get(date) ?? 0;
     if (count >= MAX_PER_DAY) continue;
     const dayRules = rules.filter((r) => r.weekday === weekday);
     const daySlots: number[] = [];
@@ -84,7 +84,6 @@ export function computeSlots(opts: {
         if (!clash) daySlots.push(s);
       }
     }
-    void count;
     out.push(...Array.from(new Set(daySlots)).sort((a, b) => a - b));
   }
   return out;
