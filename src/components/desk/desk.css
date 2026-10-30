@@ -455,7 +455,7 @@ html{--px:0px;--py:0px}
 .desk-root .tilt-enable:hover{background:var(--fg);color:var(--ink)}
 /* booking planner */
 .desk-root .bk{position:relative}
-.desk-root .bk-lang{position:absolute;top:22px;right:96px;display:flex;border:1px solid #17181C}
+.desk-root .bk-lang{display:inline-flex;margin-bottom:16px;border:1px solid #17181C}
 .desk-root .bk-lang button{background:transparent;border:0;font:500 12px var(--mono);padding:8px 10px;min-height:36px;color:#17181C;cursor:pointer}
 .desk-root .bk-lang button[aria-pressed=true]{background:#17181C;color:#EDEEF0}
 .desk-root .bk-steps{list-style:none;display:flex;gap:18px;flex-wrap:wrap;margin:22px 0 0;padding:0 0 10px;border-bottom:1px solid #17181C;font:500 12px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:#6B6F78}
