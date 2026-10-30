@@ -10,11 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as KonsultacijaRouteImport } from './routes/konsultacija'
+import { Route as OtkaziRouteImport } from './routes/otkazi'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as ApiPublicHooksBookingRemindersRouteImport } from './routes/api/public/hooks/booking-reminders'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KonsultacijaRoute = KonsultacijaRouteImport.update({
@@ -22,31 +36,84 @@ const KonsultacijaRoute = KonsultacijaRouteImport.update({
   path: '/konsultacija',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OtkaziRoute = OtkaziRouteImport.update({
+  id: '/otkazi',
+  path: '/otkazi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ApiPublicHooksBookingRemindersRoute =
+  ApiPublicHooksBookingRemindersRouteImport.update({
+    id: '/api/public/hooks/booking-reminders',
+    path: '/api/public/hooks/booking-reminders',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/konsultacija': typeof KonsultacijaRoute
+  '/otkazi': typeof OtkaziRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/api/public/hooks/booking-reminders': typeof ApiPublicHooksBookingRemindersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/konsultacija': typeof KonsultacijaRoute
+  '/otkazi': typeof OtkaziRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/api/public/hooks/booking-reminders': typeof ApiPublicHooksBookingRemindersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/konsultacija': typeof KonsultacijaRoute
+  '/otkazi': typeof OtkaziRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/api/public/hooks/booking-reminders': typeof ApiPublicHooksBookingRemindersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/konsultacija'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/konsultacija'
+    | '/otkazi'
+    | '/admin'
+    | '/api/public/hooks/booking-reminders'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/konsultacija'
-  id: '__root__' | '/' | '/konsultacija'
+  to:
+    | '/'
+    | '/auth'
+    | '/konsultacija'
+    | '/otkazi'
+    | '/admin'
+    | '/api/public/hooks/booking-reminders'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/konsultacija'
+    | '/otkazi'
+    | '/_authenticated/admin'
+    | '/api/public/hooks/booking-reminders'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   KonsultacijaRoute: typeof KonsultacijaRoute
+  OtkaziRoute: typeof OtkaziRoute
+  ApiPublicHooksBookingRemindersRoute: typeof ApiPublicHooksBookingRemindersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +125,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/konsultacija': {
       id: '/konsultacija'
       path: '/konsultacija'
@@ -65,22 +146,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KonsultacijaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/otkazi': {
+      id: '/otkazi'
+      path: '/otkazi'
+      fullPath: '/otkazi'
+      preLoaderRoute: typeof OtkaziRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/public/hooks/booking-reminders': {
+      id: '/api/public/hooks/booking-reminders'
+      path: '/api/public/hooks/booking-reminders'
+      fullPath: '/api/public/hooks/booking-reminders'
+      preLoaderRoute: typeof ApiPublicHooksBookingRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   KonsultacijaRoute: KonsultacijaRoute,
+  OtkaziRoute: OtkaziRoute,
+  ApiPublicHooksBookingRemindersRoute: ApiPublicHooksBookingRemindersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

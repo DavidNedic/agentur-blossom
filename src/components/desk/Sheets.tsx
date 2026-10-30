@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { CONTACT } from "@/lib/i18n";
+import { Booking } from "./Booking";
 import adriaticumImg from "@/assets/portfolio-adriaticum.webp";
 import unearthedImg from "@/assets/portfolio-unearthed.webp";
 import biteImg from "@/assets/portfolio-bite.png";
@@ -251,7 +252,7 @@ function Intro({ headingId }: { headingId: string }) {
   );
 }
 
-function Sastanak({ headingId }: { headingId: string }) {
+export function Sastanak({ headingId }: { headingId: string }) {
   return (
     <div className="sh paper">
       <h2 id={headingId}>O čemu pričamo.</h2>
@@ -479,7 +480,7 @@ export function SheetBody({ name, go, time, idPrefix = "sheet" }: { name: string
   const headingId = `${idPrefix}-${name}`;
   switch (name) {
     case "intro": return <Intro headingId={headingId} />;
-    case "sastanak": return <Sastanak headingId={headingId} />;
+    case "sastanak": return <Booking headingId={headingId} />;
     case "nacin": return <Nacin headingId={headingId} />;
     case "dani": return <Dani headingId={headingId} />;
     case "usluge": return <Usluge headingId={headingId} />;

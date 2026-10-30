@@ -341,7 +341,7 @@ export function Desk() {
         <div className="print tl">PROMET DIGITAL<br /><b>sajtovi, prodavnice, sistemi</b></div>
         <div className="print br">Zrenjanin <span className="live">{time}</span><br /><b>promet.digital</b></div>
 
-        <div className="obj o-card" data-k="card" data-open="intro" tabIndex={0} role="button" aria-label="Otvori: o agenciji">
+        <div className="obj o-card" data-k="card" data-open="sastanak" tabIndex={0} role="button" aria-label="Otvori: o agenciji">
           <span className="shadow" />
           <div className="top"><span>PROMET DIGITAL</span><span>Zrenjanin / Beograd</span></div>
           <h1><span>Hajde na</span><br /><em><span>sastanak.</span></em></h1>

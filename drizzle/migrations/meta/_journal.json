@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1793387949040,
+      "tag": "0000_booking_system",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793387992050,
+      "tag": "0001_booking_timezone",
+      "breakpoints": true
+    }
+  ]
+}

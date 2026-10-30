@@ -14,6 +14,114 @@ export type Database = {
   }
   public: {
     Tables: {
+      availability_rules: {
+        Row: {
+          created_at: string
+          end_time: string
+          id: string
+          start_time: string
+          weekday: number
+        }
+        Insert: {
+          created_at?: string
+          end_time: string
+          id?: string
+          start_time: string
+          weekday: number
+        }
+        Update: {
+          created_at?: string
+          end_time?: string
+          id?: string
+          start_time?: string
+          weekday?: number
+        }
+        Relationships: []
+      }
+      blocked_dates: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          reason: string | null
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          reason?: string | null
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          reason?: string | null
+        }
+        Relationships: []
+      }
+      bookings: {
+        Row: {
+          cancel_token: string
+          cancelled_at: string | null
+          client_key: string | null
+          company: string
+          created_at: string
+          email: string
+          ends_at: string
+          id: string
+          lang: string
+          message: string
+          name: string
+          phone: string | null
+          reminder_sent: boolean
+          starts_at: string
+          status: string
+          timezone: string
+          zoom_join_url: string | null
+          zoom_meeting_id: string | null
+        }
+        Insert: {
+          cancel_token?: string
+          cancelled_at?: string | null
+          client_key?: string | null
+          company: string
+          created_at?: string
+          email: string
+          ends_at: string
+          id?: string
+          lang?: string
+          message: string
+          name: string
+          phone?: string | null
+          reminder_sent?: boolean
+          starts_at: string
+          status?: string
+          timezone?: string
+          zoom_join_url?: string | null
+          zoom_meeting_id?: string | null
+        }
+        Update: {
+          cancel_token?: string
+          cancelled_at?: string | null
+          client_key?: string | null
+          company?: string
+          created_at?: string
+          email?: string
+          ends_at?: string
+          id?: string
+          lang?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          reminder_sent?: boolean
+          starts_at?: string
+          status?: string
+          timezone?: string
+          zoom_join_url?: string | null
+          zoom_meeting_id?: string | null
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
           address: string
@@ -91,15 +199,39 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -226,6 +358,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
