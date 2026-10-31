@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Make the native meeting planner the primary desk action and streamline date selection and details; verify desktop/mobile without changing booking rules.
+
 - [x] Switch booking emails to Lovable managed sending, preserve localized event data, and provide calendar downloads; ten tests passed.
 - [ ] Verify live booking email delivery after appointment.promet.digital DNS verification; blocked by pending DNS.
 
