@@ -15,7 +15,9 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as KonsultacijaRouteImport } from './routes/konsultacija'
 import { Route as OtkaziRouteImport } from './routes/otkazi'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as ApiPublicBookingCalendarRouteImport } from './routes/api/public/booking/calendar'
 import { Route as ApiPublicHooksBookingRemindersRouteImport } from './routes/api/public/hooks/booking-reminders'
+import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,10 +48,22 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiPublicBookingCalendarRoute =
+  ApiPublicBookingCalendarRouteImport.update({
+    id: '/api/public/booking/calendar',
+    path: '/api/public/booking/calendar',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicHooksBookingRemindersRoute =
   ApiPublicHooksBookingRemindersRouteImport.update({
     id: '/api/public/hooks/booking-reminders',
     path: '/api/public/hooks/booking-reminders',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const LovableEmailTransactionalPreviewRoute =
+  LovableEmailTransactionalPreviewRouteImport.update({
+    id: '/lovable/email/transactional/preview',
+    path: '/lovable/email/transactional/preview',
     getParentRoute: () => rootRouteImport,
   } as any)
 
@@ -59,7 +73,9 @@ export interface FileRoutesByFullPath {
   '/konsultacija': typeof KonsultacijaRoute
   '/otkazi': typeof OtkaziRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/api/public/booking/calendar': typeof ApiPublicBookingCalendarRoute
   '/api/public/hooks/booking-reminders': typeof ApiPublicHooksBookingRemindersRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -67,7 +83,9 @@ export interface FileRoutesByTo {
   '/konsultacija': typeof KonsultacijaRoute
   '/otkazi': typeof OtkaziRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/api/public/booking/calendar': typeof ApiPublicBookingCalendarRoute
   '/api/public/hooks/booking-reminders': typeof ApiPublicHooksBookingRemindersRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,7 +95,9 @@ export interface FileRoutesById {
   '/konsultacija': typeof KonsultacijaRoute
   '/otkazi': typeof OtkaziRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/api/public/booking/calendar': typeof ApiPublicBookingCalendarRoute
   '/api/public/hooks/booking-reminders': typeof ApiPublicHooksBookingRemindersRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -87,7 +107,9 @@ export interface FileRouteTypes {
     | '/konsultacija'
     | '/otkazi'
     | '/admin'
+    | '/api/public/booking/calendar'
     | '/api/public/hooks/booking-reminders'
+    | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -95,7 +117,9 @@ export interface FileRouteTypes {
     | '/konsultacija'
     | '/otkazi'
     | '/admin'
+    | '/api/public/booking/calendar'
     | '/api/public/hooks/booking-reminders'
+    | '/lovable/email/transactional/preview'
   id:
     | '__root__'
     | '/'
@@ -104,7 +128,9 @@ export interface FileRouteTypes {
     | '/konsultacija'
     | '/otkazi'
     | '/_authenticated/admin'
+    | '/api/public/booking/calendar'
     | '/api/public/hooks/booking-reminders'
+    | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -113,7 +139,9 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   KonsultacijaRoute: typeof KonsultacijaRoute
   OtkaziRoute: typeof OtkaziRoute
+  ApiPublicBookingCalendarRoute: typeof ApiPublicBookingCalendarRoute
   ApiPublicHooksBookingRemindersRoute: typeof ApiPublicHooksBookingRemindersRoute
+  LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -160,11 +188,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/booking/calendar': {
+      id: '/api/public/booking/calendar'
+      path: '/api/public/booking/calendar'
+      fullPath: '/api/public/booking/calendar'
+      preLoaderRoute: typeof ApiPublicBookingCalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/booking-reminders': {
       id: '/api/public/hooks/booking-reminders'
       path: '/api/public/hooks/booking-reminders'
       fullPath: '/api/public/hooks/booking-reminders'
       preLoaderRoute: typeof ApiPublicHooksBookingRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/transactional/preview': {
+      id: '/lovable/email/transactional/preview'
+      path: '/lovable/email/transactional/preview'
+      fullPath: '/lovable/email/transactional/preview'
+      preLoaderRoute: typeof LovableEmailTransactionalPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -187,7 +229,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   KonsultacijaRoute: KonsultacijaRoute,
   OtkaziRoute: OtkaziRoute,
+  ApiPublicBookingCalendarRoute: ApiPublicBookingCalendarRoute,
   ApiPublicHooksBookingRemindersRoute: ApiPublicHooksBookingRemindersRoute,
+  LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

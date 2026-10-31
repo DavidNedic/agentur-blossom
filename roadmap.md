@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Switch booking emails to Lovable managed sending, preserve localized event data, and provide calendar downloads; ten tests passed.
+- [ ] Verify live booking email delivery after appointment.promet.digital DNS verification; blocked by pending DNS.
+
 - [x] Correct office graphics cleanup and context recovery, remove independent plant sway, preserve physics positions during mobile browser-height changes, and hide/restore 3D props during the spill egg. Background and shadows visible at 1440px/390px, no browser runtime errors; physical iPhone remains unverified.
 
 - [x] Replace grouped tilt offsets with independent rigid bodies for desk objects and 3D props; simulated iPhone permission and individual movement checked at 390px, desktop sheets checked, collision transfer and eventual settling verified in isolated physics test. Reduced motion bypasses simulation. Physical iPhone remains unverified.
