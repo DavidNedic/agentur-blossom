@@ -51,6 +51,11 @@ const button = { display: 'inline-block', backgroundColor: '#3DDCFF', color: '#1
 const entry = (kind: Kind, to?: string): TemplateEntry => ({
   component: (props: Props) => <BookingEmail {...props} kind={kind} />,
   subject: (data) => bookingSubject(data.booking, kind),
+  previewData: { booking: {
+    id: 'preview', starts_at: '2026-11-03T09:00:00Z', ends_at: '2026-11-03T09:30:00Z', name: 'Marko', company: 'Primer',
+    email: 'marko@example.com', phone: '+381 60 000 0000', message: 'Želim online prodavnicu.', lang: 'sr', timezone: 'Europe/Belgrade',
+    zoom_join_url: 'https://zoom.us', zoom_meeting_id: null, cancel_token: '', status: 'confirmed',
+  } },
   displayName: `Promet: ${kind}`, ...(to ? { to } : {}),
 });
 export const template = entry('confirmation');

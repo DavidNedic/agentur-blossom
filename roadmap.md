@@ -1,6 +1,7 @@
 # Roadmap
 
-- [ ] Switch booking emails to Lovable managed sending, preserve localized event data, and provide calendar downloads; sending awaits appointment.promet.digital DNS verification.
+- [x] Switch booking emails to Lovable managed sending, preserve localized event data, and provide calendar downloads; ten tests passed.
+- [ ] Verify live booking email delivery after appointment.promet.digital DNS verification; blocked by pending DNS.
 
 - [x] Correct office graphics cleanup and context recovery, remove independent plant sway, preserve physics positions during mobile browser-height changes, and hide/restore 3D props during the spill egg. Background and shadows visible at 1440px/390px, no browser runtime errors; physical iPhone remains unverified.
 
