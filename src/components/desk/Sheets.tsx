@@ -160,7 +160,7 @@ function Bite({ headingId }: { headingId: string }) {
       <Shot k="bite" />
       <p className="demo-h">{t("PROBAJ: KOLIKO GOSTIJU?")}</p>
       <div className="guests">
-        <label htmlFor="gs"><span>{t("Broj gostiju")}</span><b>{t(n)}</b></label>
+        <label htmlFor="gs"><span>{t("Broj gostiju")}</span><b>{n}</b></label>
         <input type="range" id="gs" min={10} max={300} step={5} defaultValue={60} onInput={(e) => upd(+(e.target as HTMLInputElement).value)} />
       </div>
       <div className="calc">
