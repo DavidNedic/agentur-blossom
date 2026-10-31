@@ -1,9 +1,9 @@
 # Roadmap
 
-- [ ] Make the native meeting planner the primary desk action and streamline date selection and details; verify desktop/mobile without changing booking rules.
+- [x] Make the native meeting planner the primary desk action; unified meeting CTAs, first available day selected, compact two-step form; desktop 1440px and mobile 375/390px checked, ten tests passed. Live submission remains untested.
 
 - [x] Switch booking emails to Lovable managed sending, preserve localized event data, and provide calendar downloads; ten tests passed.
-- [ ] Verify live booking email delivery after appointment.promet.digital DNS verification; blocked by pending DNS.
+- [ ] Verify live booking email delivery; sender DNS is verified, but a real booking and configured Zoom credentials remain unverified.
 
 - [x] Correct office graphics cleanup and context recovery, remove independent plant sway, preserve physics positions during mobile browser-height changes, and hide/restore 3D props during the spill egg. Background and shadows visible at 1440px/390px, no browser runtime errors; physical iPhone remains unverified.
 
