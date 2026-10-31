@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as KonsultacijaRouteImport } from './routes/konsultacija'
 import { Route as OtkaziRouteImport } from './routes/otkazi'
+import { Route as SastanakRouteImport } from './routes/sastanak'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ApiPublicBookingCalendarRouteImport } from './routes/api/public/booking/calendar'
 import { Route as ApiPublicHooksBookingRemindersRouteImport } from './routes/api/public/hooks/booking-reminders'
@@ -41,6 +42,11 @@ const KonsultacijaRoute = KonsultacijaRouteImport.update({
 const OtkaziRoute = OtkaziRouteImport.update({
   id: '/otkazi',
   path: '/otkazi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SastanakRoute = SastanakRouteImport.update({
+  id: '/sastanak',
+  path: '/sastanak',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/konsultacija': typeof KonsultacijaRoute
   '/otkazi': typeof OtkaziRoute
+  '/sastanak': typeof SastanakRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/api/public/booking/calendar': typeof ApiPublicBookingCalendarRoute
   '/api/public/hooks/booking-reminders': typeof ApiPublicHooksBookingRemindersRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/konsultacija': typeof KonsultacijaRoute
   '/otkazi': typeof OtkaziRoute
+  '/sastanak': typeof SastanakRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/api/public/booking/calendar': typeof ApiPublicBookingCalendarRoute
   '/api/public/hooks/booking-reminders': typeof ApiPublicHooksBookingRemindersRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/konsultacija': typeof KonsultacijaRoute
   '/otkazi': typeof OtkaziRoute
+  '/sastanak': typeof SastanakRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/api/public/booking/calendar': typeof ApiPublicBookingCalendarRoute
   '/api/public/hooks/booking-reminders': typeof ApiPublicHooksBookingRemindersRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/konsultacija'
     | '/otkazi'
+    | '/sastanak'
     | '/admin'
     | '/api/public/booking/calendar'
     | '/api/public/hooks/booking-reminders'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/konsultacija'
     | '/otkazi'
+    | '/sastanak'
     | '/admin'
     | '/api/public/booking/calendar'
     | '/api/public/hooks/booking-reminders'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/konsultacija'
     | '/otkazi'
+    | '/sastanak'
     | '/_authenticated/admin'
     | '/api/public/booking/calendar'
     | '/api/public/hooks/booking-reminders'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   KonsultacijaRoute: typeof KonsultacijaRoute
   OtkaziRoute: typeof OtkaziRoute
+  SastanakRoute: typeof SastanakRoute
   ApiPublicBookingCalendarRoute: typeof ApiPublicBookingCalendarRoute
   ApiPublicHooksBookingRemindersRoute: typeof ApiPublicHooksBookingRemindersRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -179,6 +192,13 @@ declare module '@tanstack/react-router' {
       path: '/otkazi'
       fullPath: '/otkazi'
       preLoaderRoute: typeof OtkaziRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sastanak': {
+      id: '/sastanak'
+      path: '/sastanak'
+      fullPath: '/sastanak'
+      preLoaderRoute: typeof SastanakRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -229,6 +249,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   KonsultacijaRoute: KonsultacijaRoute,
   OtkaziRoute: OtkaziRoute,
+  SastanakRoute: SastanakRoute,
   ApiPublicBookingCalendarRoute: ApiPublicBookingCalendarRoute,
   ApiPublicHooksBookingRemindersRoute: ApiPublicHooksBookingRemindersRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
