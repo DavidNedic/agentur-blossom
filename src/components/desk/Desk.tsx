@@ -122,19 +122,27 @@ export function Desk() {
       const s = st.get(o);
       if (!s) return;
       bodies.set(o, physics.add(o.dataset.k || "paper", s.x + o.offsetWidth / 2, s.y + o.offsetHeight / 2, o.offsetWidth, o.offsetHeight, s.r * Math.PI / 180, (x, y, angle) => {
-        s.x = x - o.offsetWidth / 2; s.y = y - o.offsetHeight / 2; s.r = angle * 180 / Math.PI; s.tilt = 0; draw(o);
+        const current = st.get(o);
+        if (!current) return;
+        current.x = x - o.offsetWidth / 2; current.y = y - o.offsetHeight / 2; current.r = angle * 180 / Math.PI; current.tilt = 0; draw(o);
       }, (gone) => { o.style.visibility = gone ? "hidden" : ""; }));
     });
     let lt: ReturnType<typeof setTimeout> | undefined;
     let layoutWidth = desk.clientWidth, layoutHeight = desk.clientHeight;
+    let objectSizes = objs.map((o) => `${o.offsetWidth}:${o.offsetHeight}`).join(",");
     const onResize = () => {
       clearTimeout(lt);
       lt = setTimeout(() => {
-        if (layoutWidth === desk.clientWidth && layoutHeight === desk.clientHeight) return;
+        const nextSizes = objs.map((o) => `${o.offsetWidth}:${o.offsetHeight}`).join(",");
+        if (layoutWidth === desk.clientWidth && layoutHeight === desk.clientHeight && objectSizes === nextSizes) return;
+        objectSizes = nextSizes;
         layoutWidth = desk.clientWidth; layoutHeight = desk.clientHeight; layout();
       }, 120);
     };
     addEventListener("resize", onResize);
+    const deskResize = new ResizeObserver(onResize);
+    deskResize.observe(desk);
+    objs.forEach((o) => deskResize.observe(o));
 
     let z = 10;
     objs.forEach((o) => (o.style.zIndex = String(z++)));
@@ -327,7 +335,7 @@ export function Desk() {
     return () => {
       desk.classList.remove("ready");
       dead = true; field.destroy(); physics.destroy(); clearInterval(siteInt); clearInterval(stockInt); clearTimeout(lt); timers.forEach(clearTimeout);
-      removeEventListener("resize", onResize); cleanups.forEach((c) => c());
+      deskResize.disconnect(); removeEventListener("resize", onResize); cleanups.forEach((c) => c());
     };
   }, [open, hideHint]);
 
@@ -341,12 +349,13 @@ export function Desk() {
         <div className="print tl">PROMET DIGITAL<br /><b>sajtovi, prodavnice, sistemi</b></div>
         <div className="print br">Zrenjanin <span className="live">{time}</span><br /><b>promet.digital</b></div>
 
-        <div className="obj o-card" data-k="card" data-open="sastanak" tabIndex={0} role="button" aria-label="Otvori: o agenciji">
+        <div className="obj o-card" data-k="card" data-open="sastanak" tabIndex={0} role="button" aria-label="Zakaži besplatan sastanak">
           <span className="shadow" />
           <div className="top"><span>PROMET DIGITAL</span><span>Zrenjanin / Beograd</span></div>
           <h1><span>Hajde na</span><br /><em><span>sastanak.</span></em></h1>
-          <div className="bot"><span>Prvo pričamo o tvom poslu i ciljevima.<br />Onda pravimo sajt.</span><b>David Nedić</b></div>
-          <span className="tag">o nama</span>
+          <div className="meeting-invite"><span className="meeting-action">Izaberi termin <span aria-hidden="true">↗</span></span><span className="meeting-meta">30 min / Zoom / besplatno</span></div>
+          <div className="bot"><span>Tvoj posao. Tvoji ciljevi.<br />Prvi korak, bez obaveze.</span><b>David Nedić</b></div>
+          <span className="tag">zakaži sastanak</span>
           <Tape />
           <Fold className="flip" />
         </div>
@@ -472,9 +481,10 @@ export function Desk() {
         {[["radovi", "Radovi", ""], ["usluge", "Usluge", ""], ["sistemi", "Sistemi", ""], ["ja", "Ko sam ja", "me"], ["kontakt", "Kontakt", ""]].map(([k, label, cls]) => (
           <button key={k} type="button" className={cls || undefined} onClick={(e) => { hideHint(); open(k, e.currentTarget); }}>{label}</button>
         ))}
+        <Button type="button" className="booking-tab" onClick={(e) => { hideHint(); open("sastanak", e.currentTarget); }}><span className="booking-full">Zakaži sastanak</span><span className="booking-short">Zakaži</span><span aria-hidden="true">↗</span></Button>
       </nav>
       <div className={"veil" + (on ? " on" : "")} onClick={close} />
-      <div ref={sheetRef} className={"sheet" + (on ? " on" : "")} role="dialog" aria-modal="true" aria-labelledby="sheetTitle" aria-hidden={!on}>
+      <div ref={sheetRef} className={"sheet" + (on ? " on" : "")} role="dialog" aria-modal="true" aria-labelledby={name ? `sheet-${name}` : undefined} aria-hidden={!on}>
         <button className="close" ref={closeRef} type="button" onClick={close}>vrati na sto ✕</button>
         <div>{name && <SheetBody key={name + seq} name={name} go={go} time={time} />}</div>
       </div>

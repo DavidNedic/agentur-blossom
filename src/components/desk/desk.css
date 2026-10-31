@@ -454,7 +454,44 @@ html{--px:0px;--py:0px}
 .desk-root .tilt-enable{position:fixed;right:12px;top:12px;z-index:850;min-height:44px;padding:10px 14px;background:var(--cyan);color:var(--ink);font:500 12px var(--mono);border-radius:4px}
 .desk-root .tilt-enable:hover{background:var(--fg);color:var(--ink)}
 /* booking planner */
-.desk-root .bk{position:relative}
+.desk-root{--planner-muted:#4A4E57;--planner-line:#CFC9BC;--planner-link:#00758F}
+.desk-root .o-card{height:calc(380px*var(--s))}
+.desk-root .o-card h1{font-size:calc(76px*var(--s))}
+.desk-root .meeting-invite{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(10px*var(--s)) 0}
+.desk-root .meeting-action{display:inline-flex;align-items:center;gap:calc(20px*var(--s));background:var(--cyan);color:var(--ink);padding:calc(12px*var(--s)) calc(16px*var(--s));font:700 max(14px,calc(17px*var(--s))) var(--body);white-space:nowrap}
+.desk-root .meeting-meta{font:500 max(11px,calc(12px*var(--s)))/1.5 var(--mono);color:var(--planner-muted);max-width:12ch}
+.desk-root .o-card .top{font-size:max(11px,calc(11px*var(--s)))}
+.desk-root .o-card .bot{font-size:max(11px,calc(14px*var(--s)))}
+.desk-root .o-card .bot b{font-size:max(11px,calc(12px*var(--s)))}
+.desk-root .tabs button{min-height:44px}
+.desk-root .tabs .booking-tab{background:var(--cyan);color:var(--ink);height:auto;gap:12px;font-weight:700}
+.desk-root .tabs .booking-tab:hover{background:var(--fg);color:var(--ink)}
+.desk-root .booking-short{display:none}
+.desk-root .bk{position:relative;padding-top:60px}
+.desk-root .bk h2{font-size:42px;max-width:100%;line-height:1.05}
+.desk-root .bk .lead{font-size:17px;margin-top:12px}
+.desk-root .bk button{box-shadow:none;white-space:normal;height:auto}
+.desk-root .bk .bk-lang button{min-height:44px}
+.desk-root .bk-help{display:inline-block;margin:16px;color:var(--planner-link);text-underline-offset:4px}
+.desk-root .bk-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--planner-line);margin-bottom:8px}
+.desk-root .bk-summary .bk-when{margin:0;font-size:16px}
+.desk-root .bk-summary .bk-when span{display:block;font:11px/1.6 var(--mono);color:var(--planner-muted);margin-top:4px;overflow-wrap:anywhere}
+.desk-root .bk-change{color:var(--planner-link);text-decoration:underline;text-underline-offset:4px;background:transparent;min-height:44px;font:500 12px var(--mono);padding:8px}
+.desk-root .bk-optional summary{cursor:pointer;color:var(--planner-muted);font:13px var(--mono);padding:8px 0}
+.desk-root .bk-optional label{margin-top:8px}
+.desk-root .bk-reassurance{font:12px/1.5 var(--body);color:var(--planner-muted)}
+.desk-root .bk-time-label{width:100%;font:500 12px var(--mono);color:var(--planner-muted)}
+@media(max-width:560px){
+  .desk-root .booking-full{display:none}.desk-root .booking-short{display:inline}
+  .desk-root .tabs{gap:2px;max-width:calc(100vw - 8px)}
+  .desk-root .tabs button{padding:10px 7px 12px;font-size:11px}
+  .desk-root .tabs button.me{padding-left:7px}
+  .desk-root .tabs .booking-tab{gap:5px}
+  .desk-root .o-card .top span:last-child{display:none}
+  .desk-root .bk h2{font-size:34px}
+  .desk-root .bk-summary{align-items:flex-start}
+  .desk-root .bk-act .btn{width:100%;min-height:48px}
+}
 .desk-root .bk-lang{display:inline-flex;margin-bottom:16px;border:1px solid #17181C}
 .desk-root .bk-lang button{background:transparent;border:0;font:500 12px var(--mono);padding:8px 10px;min-height:36px;color:#17181C;cursor:pointer}
 .desk-root .bk-lang button[aria-pressed=true]{background:#17181C;color:#EDEEF0}
@@ -464,7 +501,7 @@ html{--px:0px;--py:0px}
 .desk-root .bk-note a{color:#00758F;word-break:break-all}
 .desk-root .bk-err{font:500 14px/1.5 var(--body);color:#B3261E;margin-top:14px}
 .desk-root .bk-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:14px}
-.desk-root .bk-days button{border:1px solid #CFC9BC;background:#FFFDF8;border-radius:4px;padding:8px 4px;text-align:center;cursor:pointer;color:#17181C;display:flex;flex-direction:column;gap:2px;min-height:64px}
+.desk-root .bk-days button{border:1px solid var(--planner-line);background:var(--paper2);border-radius:4px;padding:8px 4px;text-align:center;cursor:pointer;color:var(--ink);display:flex;flex-direction:column;gap:2px;min-height:56px}
 .desk-root .bk-days small{font:500 11px var(--mono);text-transform:uppercase;color:#6B6F78}
 .desk-root .bk-days b{font:800 17px var(--display)}
 .desk-root .bk-days i{font:normal 11px var(--mono);color:#6B6F78}
@@ -494,6 +531,7 @@ html{--px:0px;--py:0px}
   .desk-root .sheet:has(.bk).on{transform:none}
   .desk-root .bk{min-height:100dvh}
   .desk-root .bk-lang{position:static;display:inline-flex;margin-bottom:14px}
-  .desk-root .bk-days{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .desk-root .bk-days{grid-template-columns:repeat(7,minmax(0,1fr))}
+  .desk-root .bk-days b{font-size:13px}.desk-root .bk-days small{font-size:11px}
   .desk-root .bk-form{grid-template-columns:1fr}
 }

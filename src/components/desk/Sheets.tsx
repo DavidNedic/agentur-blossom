@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { CONTACT } from "@/lib/i18n";
 import { Booking } from "./Booking";
 import adriaticumImg from "@/assets/portfolio-adriaticum.webp";
@@ -20,6 +21,7 @@ export const SHOTS = {
 } as const;
 
 type Go = (name: string) => void;
+const BookingAction = createContext<Go | null>(null);
 export const MEETING_URL = `https://wa.me/${CONTACT.wa}?text=Zdravo%2C%20hteo%20bih%20da%20zaka%C5%BEem%20sastanak.`;
 
 function Shot({ k }: { k: keyof typeof SHOTS }) {
@@ -39,8 +41,9 @@ function Shot({ k }: { k: keyof typeof SHOTS }) {
 }
 
 function GoBtn() {
+  const go = useContext(BookingAction);
   return (
-    <a className="btn" href={MEETING_URL} target="_blank" rel="noopener noreferrer">Zakaži sastanak</a>
+    <Button className="btn" type="button" onClick={() => go?.("sastanak")}>Zakaži sastanak <span aria-hidden="true">↗</span></Button>
   );
 }
 
@@ -476,7 +479,11 @@ function Kontakt({ time, headingId }: { time: string; headingId: string }) {
   );
 }
 
-export function SheetBody({ name, go, time, idPrefix = "sheet" }: { name: string; go: Go; time: string; idPrefix?: string }) {
+export function SheetBody(props: { name: string; go: Go; time: string; idPrefix?: string }) {
+  return <BookingAction.Provider value={props.go}><SheetContent {...props} /></BookingAction.Provider>;
+}
+
+function SheetContent({ name, go, time, idPrefix = "sheet" }: { name: string; go: Go; time: string; idPrefix?: string }) {
   const headingId = `${idPrefix}-${name}`;
   switch (name) {
     case "intro": return <Intro headingId={headingId} />;
