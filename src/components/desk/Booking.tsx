@@ -1,11 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { createBooking, getSlots } from "@/lib/booking.functions";
+import { Button } from "@/components/ui/button";
+import { CONTACT } from "@/lib/i18n";
 
 type Lang = "sr" | "de";
 const T = {
   sr: {
     h: "Besplatan sastanak.", lead: "30 minuta preko Zooma. Pričamo o tvom poslu i ciljevima, bez obaveze.",
-    s1: "1  dan i termin", s2: "2  o tebi", s3: "3  potvrda",
+    s1: "01  termin", s2: "02  tvoji podaci", s3: "potvrđeno",
+    optional: "Dodaj telefon (nije obavezno)", change: "Promeni termin", next: "Slobodni termini", retry: "Pokušaj ponovo", whatsapp: "Piši na WhatsApp", reassurance: "Besplatno. Bez obaveze. Potvrda stiže e-mailom.",
     tz: (z: string) => `Vremena su u tvojoj vremenskoj zoni (${z}).`, loading: "Učitavam slobodne termine...",
     none: "Trenutno nema slobodnih termina. Javi se na WhatsApp.", err: "Termini trenutno ne mogu da se učitaju.",
     pickDay: "Izaberi dan.", noSlots: "nema termina", slots: (n: number) => `${n} ${n === 1 ? "termin" : "termina"}`,
@@ -18,7 +21,8 @@ const T = {
   },
   de: {
     h: "Kostenloses Erstgespräch.", lead: "30 Minuten per Zoom. Wir sprechen über dein Geschäft und deine Ziele, unverbindlich.",
-    s1: "1  Tag und Uhrzeit", s2: "2  über dich", s3: "3  Bestätigung",
+    s1: "01  Termin", s2: "02  Deine Angaben", s3: "bestätigt",
+    optional: "Telefon hinzufügen (optional)", change: "Termin ändern", next: "Freie Termine", retry: "Erneut versuchen", whatsapp: "Auf WhatsApp schreiben", reassurance: "Kostenlos. Unverbindlich. Bestätigung per E-Mail.",
     tz: (z: string) => `Zeiten in deiner Zeitzone (${z}).`, loading: "Lade freie Termine...",
     none: "Gerade keine freien Termine. Schreib mir auf WhatsApp.", err: "Termine können gerade nicht geladen werden.",
     pickDay: "Wähle einen Tag.", noSlots: "keine Termine", slots: (n: number) => `${n} ${n === 1 ? "Termin" : "Termine"}`,
@@ -68,6 +72,14 @@ export function Booking({ headingId }: { headingId: string }) {
   }, [slots]);
   const daySlots = days.find((d) => d.key === day)?.slots ?? [];
 
+  useEffect(() => {
+    if (!day && slots?.length) setDay(dayKey(new Date(slots[0])));
+  }, [slots, day]);
+
+  useEffect(() => {
+    if (step === 2) document.querySelector<HTMLInputElement>(".bk-form input[name=name]")?.focus({ preventScroll: true });
+  }, [step]);
+
   const fmtDay = (d: Date) => new Intl.DateTimeFormat(t.locale, { weekday: "short" }).format(d);
   const fmtTime = (s: string) => new Intl.DateTimeFormat(t.locale, { hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(s));
   const fmtLong = (s: string) => new Intl.DateTimeFormat(t.locale, { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(s));
@@ -89,36 +101,36 @@ export function Booking({ headingId }: { headingId: string }) {
   return (
     <div className="sh paper bk">
       <div className="bk-lang" role="group" aria-label="Jezik / Sprache">
-        <button type="button" aria-pressed={lang === "sr"} onClick={() => switchLang("sr")}>SR</button>
-        <button type="button" aria-pressed={lang === "de"} onClick={() => switchLang("de")}>DE</button>
+        <Button variant="ghost" type="button" aria-pressed={lang === "sr"} onClick={() => switchLang("sr")}>SR</Button>
+        <Button variant="ghost" type="button" aria-pressed={lang === "de"} onClick={() => switchLang("de")}>DE</Button>
       </div>
       <h2 id={headingId}>{step === 3 ? t.done : t.h}</h2>
       <p className="lead">{step === 3 ? t.doneLead : t.lead}</p>
-      <ol className="bk-steps" aria-label="Koraci">
-        {[t.s1, t.s2, t.s3].map((s, i) => <li key={s} aria-current={step === i + 1 ? "step" : undefined}>{s}</li>)}
-      </ol>
+      {step !== 3 && <ol className="bk-steps" aria-label={lang === "de" ? "Schritte" : "Koraci"}>
+        {[t.s1, t.s2].map((s, i) => <li key={s} aria-current={step === i + 1 ? "step" : undefined}>{s}</li>)}
+      </ol>}
 
       {step === 1 && (
         <div className="bk-pick">
           <p className="bk-note">{t.tz(tz)}</p>
           {slots === null ? <p className="bk-note">{t.loading}</p>
-            : loadErr ? <p className="bk-err">{t.err}</p>
-            : slots.length === 0 ? <p className="bk-err">{t.none}</p>
+            : loadErr ? <div><p className="bk-err" role="alert">{t.err}</p><Button variant="outline" className="bk-back" onClick={load}>{t.retry}</Button><a className="bk-help" href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener noreferrer">{t.whatsapp}</a></div>
+            : slots.length === 0 ? <div><p className="bk-err">{t.none}</p><a className="bk-help" href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener noreferrer">{t.whatsapp}</a></div>
             : (
               <>
                 <div className="bk-days" role="listbox" aria-label={t.pickDay}>
                   {days.map((d) => (
-                    <button type="button" key={d.key} role="option" aria-selected={day === d.key} disabled={!d.slots.length}
+                    <Button variant="ghost" type="button" key={d.key} role="option" aria-label={`${d.date.toLocaleDateString(t.locale, { weekday: "long", day: "numeric", month: "long" })}, ${t.slots(d.slots.length)}`} aria-selected={day === d.key} disabled={!d.slots.length}
                       onClick={() => { setDay(d.key); setSlot(null); }}>
                       <small>{fmtDay(d.date)}</small><b>{d.date.getDate()}.{d.date.getMonth() + 1}.</b>
-                      <i>{d.slots.length ? t.slots(d.slots.length) : t.noSlots}</i>
-                    </button>
+                    </Button>
                   ))}
                 </div>
                 {day ? (
                   <div className="bk-times">
+                    <p className="bk-time-label">{t.next}</p>
                     {daySlots.map((s) => (
-                      <button type="button" key={s} aria-pressed={slot === s} onClick={() => { setSlot(s); setStep(2); setErr(null); }}>{fmtTime(s)}</button>
+                      <Button variant="ghost" type="button" key={s} aria-pressed={slot === s} onClick={() => { setSlot(s); setStep(2); setErr(null); }}>{fmtTime(s)}</Button>
                     ))}
                   </div>
                 ) : <p className="bk-note">{t.pickDay}</p>}
@@ -130,17 +142,17 @@ export function Booking({ headingId }: { headingId: string }) {
 
       {step === 2 && slot && (
         <form className="bk-form" onSubmit={submit}>
-          <p className="bk-when"><b>{fmtLong(slot)}</b> <span>({tz})</span></p>
-          <label>{t.name}<input required minLength={2} maxLength={100} value={form.name} onChange={set("name")} autoComplete="name" /></label>
+          <div className="bk-summary wide"><p className="bk-when"><b>{fmtLong(slot)}</b><span>{tz} / Zoom / 30 min</span></p><Button variant="ghost" type="button" className="bk-change" onClick={() => setStep(1)}>{t.change}</Button></div>
+          <label>{t.name}<input name="name" required minLength={2} maxLength={100} value={form.name} onChange={set("name")} autoComplete="name" /></label>
           <label>{t.company}<input required maxLength={120} value={form.company} onChange={set("company")} autoComplete="organization" /></label>
-          <label>{t.email}<input required type="email" maxLength={200} value={form.email} onChange={set("email")} autoComplete="email" /></label>
-          <label>{t.phone}<input type="tel" maxLength={40} value={form.phone} onChange={set("phone")} autoComplete="tel" /></label>
-          <label className="wide">{t.msg}<textarea required minLength={5} maxLength={1000} rows={3} value={form.message} onChange={set("message")} /></label>
+          <label className="wide">{t.email}<input required type="email" maxLength={200} value={form.email} onChange={set("email")} autoComplete="email" /></label>
+          <label className="wide">{t.msg}<textarea required minLength={5} maxLength={1000} rows={2} value={form.message} onChange={set("message")} /></label>
+          <details className="wide bk-optional"><summary>{t.optional}</summary><label>{t.phone}<input type="tel" maxLength={40} value={form.phone} onChange={set("phone")} autoComplete="tel" /></label></details>
           <label className="wide chk"><input type="checkbox" required checked={form.privacy} onChange={set("privacy")} /><span>{t.privacy}</span></label>
           {err && <p className="bk-err wide" role="alert">{err}</p>}
           <div className="wide bk-act">
-            <button type="button" className="bk-back" onClick={() => setStep(1)}>{t.back}</button>
-            <button type="submit" className="btn" disabled={busy || !form.privacy}>{busy ? t.sending : t.book}</button>
+            <Button type="submit" className="btn" disabled={busy || !form.privacy}>{busy ? t.sending : t.book}<span aria-hidden="true">↗</span></Button>
+            <p className="bk-reassurance">{t.reassurance}</p>
           </div>
         </form>
       )}

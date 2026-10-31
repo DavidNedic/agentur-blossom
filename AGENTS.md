@@ -15,3 +15,4 @@
 - Booking email templates use React Email and the managed server-only send helper with event-derived idempotency keys; calendar files are token-protected downloads, not attachments; why: managed sending supports rendered templates and links, not file attachments.
 - Admin access is `has_role(uid,'admin')` from `user_roles`, auto-granted only to the owner email by an auth trigger; why: roles never come from client data.
 - Let HTML parsing dependencies resolve their own `entities` versions and package exports without global aliases or overrides; why: old and new parsers require different subpaths and incompatible major versions.
+- All meeting CTAs use the native planner through the sheet navigation callback; why: visitors follow one date-and-details booking path rather than switching to WhatsApp, which remains a contact fallback.
