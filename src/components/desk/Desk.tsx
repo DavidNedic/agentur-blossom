@@ -135,6 +135,8 @@ export function Desk() {
       }, 120);
     };
     addEventListener("resize", onResize);
+    const deskResize = new ResizeObserver(onResize);
+    deskResize.observe(desk);
 
     let z = 10;
     objs.forEach((o) => (o.style.zIndex = String(z++)));
@@ -327,7 +329,7 @@ export function Desk() {
     return () => {
       desk.classList.remove("ready");
       dead = true; field.destroy(); physics.destroy(); clearInterval(siteInt); clearInterval(stockInt); clearTimeout(lt); timers.forEach(clearTimeout);
-      removeEventListener("resize", onResize); cleanups.forEach((c) => c());
+      deskResize.disconnect(); removeEventListener("resize", onResize); cleanups.forEach((c) => c());
     };
   }, [open, hideHint]);
 
