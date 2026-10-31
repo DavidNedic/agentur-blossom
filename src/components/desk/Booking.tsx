@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { createBooking, getSlots } from "@/lib/booking.functions";
 import { Button } from "@/components/ui/button";
 import { CONTACT } from "@/lib/i18n";
+import { useDeskLang } from "./language";
 
-type Lang = "sr" | "de";
 const T = {
   sr: {
     h: "Besplatan sastanak.", lead: "30 minuta preko Zooma. Pričamo o tvom poslu i ciljevima, bez obaveze.",
@@ -38,7 +38,7 @@ const T = {
 const dayKey = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
 export function Booking({ headingId }: { headingId: string }) {
-  const [lang, setLang] = useState<Lang>("sr");
+  const { lang, setLang } = useDeskLang();
   const t = T[lang];
   const [tz, setTz] = useState("Europe/Belgrade");
   const [slots, setSlots] = useState<string[] | null>(null);
@@ -57,10 +57,8 @@ export function Booking({ headingId }: { headingId: string }) {
   };
   useEffect(() => {
     setTz(Intl.DateTimeFormat().resolvedOptions().timeZone || "Europe/Belgrade");
-    try { if (localStorage.getItem("promet-booking-lang") === "de") setLang("de"); } catch { /* ignore */ }
     load();
   }, []);
-  const switchLang = (l: Lang) => { setLang(l); try { localStorage.setItem("promet-booking-lang", l); } catch { /* ignore */ } };
 
   const days = useMemo(() => {
     const map = new Map<string, string[]>();
@@ -101,8 +99,8 @@ export function Booking({ headingId }: { headingId: string }) {
   return (
     <div className="sh paper bk">
       <div className="bk-lang" role="group" aria-label="Jezik / Sprache">
-        <Button variant="ghost" type="button" aria-pressed={lang === "sr"} onClick={() => switchLang("sr")}>SR</Button>
-        <Button variant="ghost" type="button" aria-pressed={lang === "de"} onClick={() => switchLang("de")}>DE</Button>
+        <Button variant="ghost" type="button" aria-pressed={lang === "sr"} onClick={() => setLang("sr")}>SR</Button>
+        <Button variant="ghost" type="button" aria-pressed={lang === "de"} onClick={() => setLang("de")}>DE</Button>
       </div>
       <h2 id={headingId}>{step === 3 ? t.done : t.h}</h2>
       <p className="lead">{step === 3 ? t.doneLead : t.lead}</p>

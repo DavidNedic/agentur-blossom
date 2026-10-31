@@ -1,3 +1,4 @@
+import { useDeskLang, DeskLanguageProvider, LanguageSwitch } from "./language";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CONTACT } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
@@ -25,7 +26,10 @@ const SITES: Site[] = [
 
 const fmtT = () => new Intl.DateTimeFormat("sr-RS", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Belgrade" }).format(new Date());
 
-export function Desk() {
+export function Desk() { return <DeskLanguageProvider><DeskContent /></DeskLanguageProvider>; }
+
+function DeskContent() {
+  const { t } = useDeskLang();
   const rootRef = useRef<HTMLDivElement>(null);
   const cvRef = useRef<HTMLCanvasElement>(null);
   const deskRef = useRef<HTMLDivElement>(null);
@@ -314,7 +318,7 @@ export function Desk() {
       mockParts.forEach((p) => p.classList.remove("on")); lapph.classList.remove("on"); lapsc.classList.remove("go");
       timers.push(setTimeout(() => {
         if (dead) return;
-        lapl.textContent = "u izradi: " + x.n.toLowerCase();
+        lapl.textContent = (document.documentElement.dataset.deskLang === "de" ? "in Arbeit: " : "u izradi: ") + (x.n === "TVOJA FIRMA" && document.documentElement.dataset.deskLang === "de" ? "deine firma" : x.n.toLowerCase());
         if (x.img) { lapph.style.backgroundImage = "url(" + x.img + ")"; void lapsc.offsetWidth; lapsc.classList.add("go"); lapph.classList.add("on"); return; }
         const v = (k: string, val: string) => lapv.style.setProperty(k, val);
         v("--vbg", x.bg!); v("--vfg", x.fg!); v("--vhero", x.hero!); v("--vhfg", x.hfg!); v("--vacc", x.acc!); v("--vcard", x.card!); v("--vf", x.f || "var(--display)"); v("--vw", x.w!);
@@ -343,98 +347,99 @@ export function Desk() {
 
   return (
     <div className="desk-root" ref={rootRef}>
+      <LanguageSwitch />
       <canvas id="field" ref={cvRef} aria-hidden="true" />
-      <div className="desk" ref={deskRef} aria-label="Radni sto agencije Promet Digital">
+      <div className="desk" ref={deskRef} aria-label={t("Radni sto agencije Promet Digital")}>
         <DeskTraces />
-        <div className="print tl">PROMET DIGITAL<br /><b>sajtovi, prodavnice, sistemi</b></div>
-        <div className="print br">Zrenjanin <span className="live">{time}</span><br /><b>promet.digital</b></div>
+        <div className="print tl">{t("PROMET DIGITAL")}<br /><b>{t("sajtovi, prodavnice, sistemi")}</b></div>
+        <div className="print br">{t("Zrenjanin")} <span className="live">{time}</span><br /><b>{t("promet.digital")}</b></div>
 
-        <div className="obj o-card" data-k="card" data-open="sastanak" tabIndex={0} role="button" aria-label="Zakaži besplatan sastanak">
+        <div className="obj o-card" data-k="card" data-open="sastanak" tabIndex={0} role="button" aria-label={t("Zakaži besplatan sastanak")}>
           <span className="shadow" />
-          <div className="top"><span>PROMET DIGITAL</span><span>Zrenjanin / Beograd</span></div>
-          <h1><span>Hajde na</span><br /><em><span>sastanak.</span></em></h1>
-          <div className="meeting-invite"><span className="meeting-action">Izaberi termin <span aria-hidden="true">↗</span></span><span className="meeting-meta">30 min / Zoom / besplatno</span></div>
-          <div className="bot"><span>Tvoj posao. Tvoji ciljevi.<br />Prvi korak, bez obaveze.</span><b>David Nedić</b></div>
-          <span className="tag">zakaži sastanak</span>
+          <div className="top"><span>{t("PROMET DIGITAL")}</span><span>{t("Zrenjanin / Beograd")}</span></div>
+          <h1><span>{t("Hajde na")}</span><br /><em><span>{t("sastanak.")}</span></em></h1>
+          <div className="meeting-invite"><span className="meeting-action">{t("Izaberi termin")} <span aria-hidden="true">↗</span></span><span className="meeting-meta">{t("30 min / Zoom / besplatno")}</span></div>
+          <div className="bot"><span>{t("Tvoj posao. Tvoji ciljevi.")}<br />{t("Prvi korak, bez obaveze.")}</span><b>{t("David Nedić")}</b></div>
+          <span className="tag">{t("zakaži sastanak")}</span>
           <Tape />
           <Fold className="flip" />
         </div>
 
-        <div className="obj o-lap" data-k="lap" data-open="nacin" tabIndex={0} role="button" aria-label="Otvori: kako radimo">
-          <span className="lbl">u izradi</span>
-          <div className="scr"><div className="view v"><div className="nv"><b>FIRMA</b><i /></div><div className="hr"><b>Naslov</b></div><div className="cta" /><div className="cr"><i /><i /><i /></div><div className="ph" /><span className="scan" /></div></div>
+        <div className="obj o-lap" data-k="lap" data-open="nacin" tabIndex={0} role="button" aria-label={t("Otvori: kako radimo")}>
+          <span className="lbl">{t("u izradi")}</span>
+          <div className="scr"><div className="view v"><div className="nv"><b>{t("FIRMA")}</b><i /></div><div className="hr"><b>{t("Naslov")}</b></div><div className="cta" /><div className="cr"><i /><i /><i /></div><div className="ph" /><span className="scan" /></div></div>
           <div className="deck" />
-          <span className="tag">kako radimo</span>
+          <span className="tag">{t("kako radimo")}</span>
         </div>
 
-        <div className="obj o-cup" data-k="cup" data-open="sastanak" tabIndex={0} role="button" aria-label="Otvori: sastanak">
+        <div className="obj o-cup" data-k="cup" data-open="sastanak" tabIndex={0} role="button" aria-label={t("Otvori: sastanak")}>
           <span className="shadow" /><span className="sp" /><span className="c" /><span className="h" />
-          <span className="tag" style={{ left: "12%" }}>sastanak</span>
+          <span className="tag" style={{ left: "12%" }}>{t("sastanak")}</span>
         </div>
 
-        <div className="obj o-cal" data-k="cal" data-open="dani" tabIndex={0} role="button" aria-label="Otvori: live za 14 dana">
+        <div className="obj o-cal" data-k="cal" data-open="dani" tabIndex={0} role="button" aria-label={t("Otvori: live za 14 dana")}>
           <span className="shadow" />
-          <div className="bind">14 DANA</div>
+          <div className="bind">{t("14 DANA")}</div>
           <div className="grid">
             {Array.from({ length: 14 }, (_, i) => (
               <div className="d" key={i}>{i + 1}<svg viewBox="0 0 20 20"><path d="M3 3 L17 17 M17 3 L3 17" /></svg></div>
             ))}
           </div>
-          <div className="foot">i online je.<small>od sastanka do lansiranja</small></div>
-          <span className="tag">proces</span>
+          <div className="foot">{t("i online je.")}<small>{t("od sastanka do lansiranja")}</small></div>
+          <span className="tag">{t("proces")}</span>
           <Tape className="l" />
           <Tape className="r" />
           <Fold className="br" />
         </div>
 
-        <div className="obj o-fold" data-k="fold" data-open="usluge" tabIndex={0} role="button" aria-label="Otvori: usluge">
-          <div className="f"><i>SEO</i></div><div className="f"><i>Kamere</i></div><div className="f"><i>Kasa</i></div><div className="f"><i>Magacin</i></div>
-          <div className="f"><i>Sajtovi</i><h3>Usluge</h3><p>Sajtovi, prodavnice, sistemi za magacin, kasu i kamere.</p></div>
-          <span className="tag">usluge</span>
+        <div className="obj o-fold" data-k="fold" data-open="usluge" tabIndex={0} role="button" aria-label={t("Otvori: usluge")}>
+          <div className="f"><i>{t("SEO")}</i></div><div className="f"><i>{t("Kamere")}</i></div><div className="f"><i>{t("Kasa")}</i></div><div className="f"><i>{t("Magacin")}</i></div>
+          <div className="f"><i>{t("Sajtovi")}</i><h3>{t("Usluge")}</h3><p>{t("Sajtovi, prodavnice, sistemi za magacin, kasu i kamere.")}</p></div>
+          <span className="tag">{t("usluge")}</span>
         </div>
 
-        <div className="obj o-cert" data-k="cert" data-open="ja" tabIndex={0} role="button" aria-label="Otvori: ko sam ja">
+        <div className="obj o-cert" data-k="cert" data-open="ja" tabIndex={0} role="button" aria-label={t("Otvori: ko sam ja")}>
           <span className="shadow" />
-          <div className="in"><div className="flag" /><small>STRUČNO ZVANJE, NEMAČKA</small><b>Kaufmann für<br />E-Commerce</b><small>IHK, DE / RS</small><div className="sig">DAVID NEDIĆ</div></div>
-          <span className="tag">nemački standard</span>
+          <div className="in"><div className="flag" /><small>{t("STRUČNO ZVANJE, NEMAČKA")}</small><b>{t("Kaufmann für")}<br />{t("E-Commerce")}</b><small>{t("IHK, DE / RS")}</small><div className="sig">{t("DAVID NEDIĆ")}</div></div>
+          <span className="tag">{t("nemački standard")}</span>
           <Tape className="l" />
           <Tape className="r" />
         </div>
 
-        <div className="obj o-score" data-k="score" data-open="poredjenje" tabIndex={0} role="button" aria-label="Otvori: poređenje">
+        <div className="obj o-score" data-k="score" data-open="poredjenje" tabIndex={0} role="button" aria-label={t("Otvori: poređenje")}>
           <span className="shadow" />
-          <div className="h"><span>&nbsp;</span><span>obično</span><span>kod nas</span></div>
+          <div className="h"><span>&nbsp;</span><span>{t("obično")}</span><span>{t("kod nas")}</span></div>
           {[["dizajn", "šablon", "po meri"], ["prvi korak", "ponuda", "sastanak"], ["isporuka", "6+ ned.", "14 d."], ["sagovornik", "3+", "1"], ["kod i domen", "?", "tvoje"]].map(([a, b, c]) => (
-            <div className="r" key={a}><span>{a}</span><span className="no">{b}</span><span className="ok">{c}</span></div>
+            <div className="r" key={a}><span>{t(a)}</span><span className="no">{t(b)}</span><span className="ok">{t(c)}</span></div>
           ))}
-          <span className="tag">poređenje</span>
+          <span className="tag">{t("poređenje")}</span>
           <Clip className="top" />
           <Pencil kind="tick" className="m1" />
           <Pencil kind="note" className="m2" />
         </div>
 
-        <div className="obj o-sys" data-k="sys" data-open="sistemi" tabIndex={0} role="button" aria-label="Otvori: sistemi po meri">
+        <div className="obj o-sys" data-k="sys" data-open="sistemi" tabIndex={0} role="button" aria-label={t("Otvori: sistemi po meri")}>
           <span className="shadow" />
-          <div className="head">SISTEMI PO MERI</div>
-          <div className="row"><span>MAGACIN</span><span className="bars"><i /><i /><i /><i /><i /><i /></span></div>
-          <div className="row"><span>KASA</span><span className="on">povezano</span></div>
-          <div className="row"><span>KAMERE</span><span className="on">brojanje</span></div>
-          <div className="row"><span>REZERVACIJE</span><span className="on">online</span></div>
-          <span className="tag">sistemi</span>
+          <div className="head">{t("SISTEMI PO MERI")}</div>
+          <div className="row"><span>{t("MAGACIN")}</span><span className="bars"><i /><i /><i /><i /><i /><i /></span></div>
+          <div className="row"><span>{t("KASA")}</span><span className="on">{t("povezano")}</span></div>
+          <div className="row"><span>{t("KAMERE")}</span><span className="on">{t("brojanje")}</span></div>
+          <div className="row"><span>{t("REZERVACIJE")}</span><span className="on">{t("online")}</span></div>
+          <span className="tag">{t("sistemi")}</span>
         </div>
 
-        <div className="obj o-work" data-k="work" data-open="radovi" tabIndex={0} role="button" aria-label="Otvori: radovi">
+        <div className="obj o-work" data-k="work" data-open="radovi" tabIndex={0} role="button" aria-label={t("Otvori: radovi")}>
           {[PROJECTS[1], PROJECTS[6], PROJECTS[0]].map((p, i) => (
             <div className="pl" key={p.name} style={{ transform: `rotate(${[-7, 5, -1][i]}deg) translate(${[-10, 12, 0][i]}%, 0)` }}>
-              <img src={p.img} alt="" draggable={false} />
-              <span>{i === 2 ? "radovi 8" : p.name}</span>
+              <img src={p.img} alt={t("")} draggable={false} />
+              <span>{i === 2 ? t("radovi 8") : p.name}</span>
             </div>
           ))}
-          <span className="tag" style={{ bottom: -30 }}>radovi</span>
+          <span className="tag" style={{ bottom: -30 }}>{t("radovi")}</span>
           <Clip className="tl" />
         </div>
 
-        <div className="obj o-biz" data-k="biz" data-open="kontakt" tabIndex={0} role="button" aria-label="Otvori: kontakt">
+        <div className="obj o-biz" data-k="biz" data-open="kontakt" tabIndex={0} role="button" aria-label={t("Otvori: kontakt")}>
           <span className="shadow" />
           <div className="l">
             <svg viewBox="-110 40 1550 1960" aria-hidden="true">
@@ -444,29 +449,29 @@ export function Desk() {
               <line x1="216" y1="417" x2="11" y2="274" stroke="#EDEEF0" strokeWidth="101" strokeLinecap="round" />
               <line x1="174" y1="603" x2="-72" y2="647" stroke="#EDEEF0" strokeWidth="101" strokeLinecap="round" />
             </svg>
-            promet
+            {t("promet")}
           </div>
-          <p><b>David Nedić</b><br />{CONTACT.phone}<br />{CONTACT.email}</p>
-          <span className="tag">kontakt</span>
+          <p><b>{t("David Nedić")}</b><br />{CONTACT.phone}<br />{CONTACT.email}</p>
+          <span className="tag">{t("kontakt")}</span>
           <Smudge className="sm" />
         </div>
 
-        <div className="obj o-phone" data-k="phone" data-open="kontakt" tabIndex={0} role="button" aria-label="Otvori: poruka">
+        <div className="obj o-phone" data-k="phone" data-open="kontakt" tabIndex={0} role="button" aria-label={t("Otvori: poruka")}>
           <span className="shadow" />
           <div className="scr">
-            <span className="who">Promet Digital</span>
-            <div className="bub in">Zdravo, treba mi sajt za moju firmu.</div>
-            <div className="bub out">Hajde na sastanak. Ispričaj nam šta radiš i šta želiš da postigneš.</div>
-            <div className="bub in">Može sutra u 10?</div>
-            <div className="bub out">Vidimo se.</div>
+            <span className="who">{t("Promet Digital")}</span>
+            <div className="bub in">{t("Zdravo, treba mi sajt za moju firmu.")}</div>
+            <div className="bub out">{t("Hajde na sastanak. Ispričaj nam šta radiš i šta želiš da postigneš.")}</div>
+            <div className="bub in">{t("Može sutra u 10?")}</div>
+            <div className="bub out">{t("Vidimo se.")}</div>
           </div>
-          <span className="tag">piši nam</span>
+          <span className="tag">{t("piši nam")}</span>
           <Smudge className="scr" />
         </div>
 
-        <div className="obj o-sticky" data-k="sticky" data-open="sastanak" tabIndex={0} role="button" aria-label="Otvori: sastanak">
-          <span className="shadow" /><b>Prvi sastanak je besplatan.</b><small>cena po dogovoru, bez obaveze</small>
-          <span className="tag">sastanak</span>
+        <div className="obj o-sticky" data-k="sticky" data-open="sastanak" tabIndex={0} role="button" aria-label={t("Otvori: sastanak")}>
+          <span className="shadow" /><b>{t("Prvi sastanak je besplatan.")}</b><small>{t("cena po dogovoru, bez obaveze")}</small>
+          <span className="tag">{t("sastanak")}</span>
           <Fold className="br" />
         </div>
 
@@ -475,17 +480,17 @@ export function Desk() {
         </div>
       </div>
 
-      <div className="hintbar" ref={hintRef}>pomeri stvari po stolu, klikni na predmet</div>
-      {tiltPermission !== "hidden" && <Button type="button" variant="ghost" className="tilt-enable" onClick={requestTilt}>{tiltPermission === "denied" ? "Pokušaj ponovo: nagib" : "Uključi nagib"}</Button>}
-      <nav className="tabs" aria-label="Brzi pristup">
+      <div className="hintbar" ref={hintRef}>{t("pomeri stvari po stolu, klikni na predmet")}</div>
+      {tiltPermission !== "hidden" && <Button type="button" variant="ghost" className="tilt-enable" onClick={requestTilt}>{t(tiltPermission === "denied" ? "Pokušaj ponovo: nagib" : "Uključi nagib")}</Button>}
+      <nav className="tabs" aria-label={t("Brzi pristup")}>
         {[["radovi", "Radovi", ""], ["usluge", "Usluge", ""], ["sistemi", "Sistemi", ""], ["ja", "Ko sam ja", "me"], ["kontakt", "Kontakt", ""]].map(([k, label, cls]) => (
-          <button key={k} type="button" className={cls || undefined} onClick={(e) => { hideHint(); open(k, e.currentTarget); }}>{label}</button>
+          <button key={k} type="button" className={cls || undefined} onClick={(e) => { hideHint(); open(k, e.currentTarget); }}>{t(label)}</button>
         ))}
-        <Button type="button" className="booking-tab" onClick={(e) => { hideHint(); open("sastanak", e.currentTarget); }}><span className="booking-full">Zakaži sastanak</span><span className="booking-short">Zakaži</span><span aria-hidden="true">↗</span></Button>
+        <Button type="button" className="booking-tab" onClick={(e) => { hideHint(); open("sastanak", e.currentTarget); }}><span className="booking-full">{t("Zakaži sastanak")}</span><span className="booking-short">{t("Zakaži")}</span><span aria-hidden="true">↗</span></Button>
       </nav>
       <div className={"veil" + (on ? " on" : "")} onClick={close} />
       <div ref={sheetRef} className={"sheet" + (on ? " on" : "")} role="dialog" aria-modal="true" aria-labelledby={name ? `sheet-${name}` : undefined} aria-hidden={!on}>
-        <button className="close" ref={closeRef} type="button" onClick={close}>vrati na sto ✕</button>
+        <button className="close" ref={closeRef} type="button" onClick={close}>{t("vrati na sto ✕")}</button>
         <div>{name && <SheetBody key={name + seq} name={name} go={go} time={time} />}</div>
       </div>
     </div>

@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Add top Serbian/German flags with shared, remembered language across desk, sheets and booking; desktop/mobile switches, form preservation, reload persistence and ten tests passed.
+
 - [x] Make the native meeting planner the primary desk action; unified meeting CTAs, first available day selected, compact two-step form; desktop 1440px and mobile 375/390px checked, ten tests passed. Live submission remains untested.
 
 - [x] Switch booking emails to Lovable managed sending, preserve localized event data, and provide calendar downloads; ten tests passed.
