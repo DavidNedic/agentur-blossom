@@ -15,6 +15,13 @@
       "when": 1793387992050,
       "tag": "0001_booking_timezone",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793445040810,
+      "tag": "0002_booking_hold_status",
+      "breakpoints": true
     }
   ]
 }
