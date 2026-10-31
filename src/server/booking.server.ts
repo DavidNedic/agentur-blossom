@@ -68,7 +68,7 @@ export async function availableSlots(now = Date.now()) {
   const [rules, blocked, bookings, busy] = await Promise.all([
     supabaseAdmin.from("availability_rules").select("weekday,start_time,end_time"),
     supabaseAdmin.from("blocked_dates").select("date"),
-    supabaseAdmin.from("bookings").select("starts_at").eq("status", "confirmed")
+    supabaseAdmin.from("bookings").select("starts_at").in("status", ["confirmed", "hold"])
       .gte("starts_at", new Date(now - 86_400_000).toISOString()).lte("starts_at", new Date(until).toISOString()),
     googleBusy(now, until),
   ]);

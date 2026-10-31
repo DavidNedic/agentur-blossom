@@ -96,7 +96,7 @@ function AdminPage() {
       {items.length === 0 && <p className="p-4 text-sm text-muted-foreground">Nema sastanaka.</p>}
       {items.map((b) => (
         <div key={b.id} className={`p-4 grid gap-1 md:grid-cols-[220px_1fr_auto] md:gap-6 ${b.status === "cancelled" ? "opacity-50" : ""}`}>
-          <div className="font-mono text-sm">{fmt(b.starts_at)}{b.status === "cancelled" && <span className="block text-xs">otkazan</span>}</div>
+          <div className="font-mono text-sm">{fmt(b.starts_at)}{b.status === "cancelled" && <span className="block text-xs">otkazan</span>}{b.status === "hold" && <span className="block text-xs">blokirano</span>}</div>
           <div className="text-sm">
             <b>{b.name}</b>, {b.company} <span className="text-muted-foreground">· {b.email}{b.phone ? ` · ${b.phone}` : ""}</span>
             <p className="text-muted-foreground mt-1 whitespace-pre-wrap">{b.message}</p>
