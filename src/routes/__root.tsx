@@ -68,6 +68,8 @@ export const Route = createRootRoute({
       { rel: "preload", href: onestLatinExt, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       { rel: "preload", href: jetbrainsLatin, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico", sizes: "48x48" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
       {
         rel: "stylesheet",
         href: appCss,
