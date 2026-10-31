@@ -31,21 +31,24 @@ export function createOffice(bgCanvas: HTMLCanvasElement, deskEl: HTMLElement, p
       noc:{g:'Kasno je',a:'Ostavi',b:'poruku.',t:'Odgovaram ujutru.<br>Onda idemo na sastanak.'}};
     const phase=T=>T>=5&&T<11?'jutro':T>=11&&T<17?'dan':T>=17&&T<22?'vece':'noc';
     let cur=null,lastShx=null;
-    function apply(p){if(p===cur)return;cur=p;root.dataset.tod=p;const c=COPY[p];
+    const DE={jutro:{g:'Guten Morgen',a:'Zeit für',b:'Kaffee.',t:'Bei einem Kaffee sprechen wir über dein Geschäft und deine Ziele.<br>Dann bauen wir deine Website.'},dan:{g:'Guten Tag',a:'Lass uns',b:'sprechen.',t:'Erst sprechen wir über dein Geschäft und deine Ziele.<br>Dann bauen wir deine Website.'},vece:{g:'Guten Abend',a:'Lass uns',b:'morgen reden.',t:'Melde dich heute Abend, wir sprechen morgen.<br>Erst reden, dann die Website.'},noc:{g:'Es ist spät',a:'Schreib uns',b:'eine Nachricht.',t:'Ich antworte am Morgen.<br>Dann vereinbaren wir ein Gespräch.'}};
+    function apply(p){const lang=root.dataset.deskLang==='de'?'de':'sr';if(p+lang===cur)return;cur=p+lang;root.dataset.tod=p;const c=(lang==='de'?DE:COPY)[p];
       top.textContent=c.g;
       h1.innerHTML='<span>'+c.a+'</span><br><em><span>'+c.b+'</span></em>';
-      h1.style.fontSize=p==='vece'?'calc(70px*var(--s))':'';
+      h1.style.fontSize=lang==='de'?'calc(64px*var(--s))':p==='vece'?'calc(70px*var(--s))':'';
       bot.innerHTML=c.t;h1.setAttribute('aria-label',c.a+' '+c.b);}
     function shadows(T,day){const k=Math.min(1,Math.max(0,(T-6)/13));
       const x=day>.5?Math.round((1-2*k)*22):10, y=day>.5?Math.round(14+Math.abs(1-2*k)*-4+8):20;
       if(x!==lastShx){lastShx=x;root.style.setProperty('--shx',x+'px');root.style.setProperty('--shy',y+'px');}}
     // phone pings now and then
     const MSG=['online prodavnica','sajt za restoran','sistem za magacin','kasa za radnju','sajt za salon','rezervacije online'];let mi=0;
-    function ping(){if(!ph||document.hidden)return;note.innerHTML='<small>Novi upit</small>'+MSG[mi++%MSG.length];
+    const MSGDE=['Onlineshop','Restaurant-Website','Lagersystem','Kasse für den Laden','Salon-Website','Onlinebuchungen'];
+    function ping(){if(!ph||document.hidden)return;const de=root.dataset.deskLang==='de';note.innerHTML='<small>'+(de?'Neue Anfrage':'Novi upit')+'</small>'+(de?MSGDE:MSG)[mi++%MSG.length];
       ph.classList.add('ping','buzz');_st(()=>ph.classList.remove('buzz'),1100);_st(()=>ph.classList.remove('ping'),4200);}
     function sched(){_st(()=>{ping();sched();},(cur==='noc'?45000:22000)+Math.random()*14000);}
     _st(()=>{ping();sched();},6500);
-    return {update(T){apply(phase(T));const day=(T>=6.5&&T<19.5)?1:0;shadows(T,day);},sleeping:()=>cur==='noc'};
+    _on('promet:language',()=>apply(phase(window.__T??12)));
+    return {update(T){apply(phase(T));const day=(T>=6.5&&T<19.5)?1:0;shadows(T,day);},sleeping:()=>cur?.startsWith('noc')};
   })();
 
   // ---- virtual office: walnut desk + real time-of-day light ----
