@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><rect width="1000" height="1000" fill="#17181C"/><g transform="translate(500 500) scale(0.84) translate(-533 -475)"><polygon points="420,270 457,797 577,669 673,854 756,812 664,633 822,622" fill="#EDEEF0" stroke="#EDEEF0" stroke-width="109" stroke-linejoin="round"/><polygon points="420,270 457,797 577,669 673,854 756,812 664,633 822,622" fill="#3DDCFF" stroke="#3DDCFF" stroke-width="30" stroke-linejoin="round"/><line x1="402" y1="166" x2="383" y2="62" stroke="#EDEEF0" stroke-width="43" stroke-linecap="round"/><line x1="333" y1="209" x2="247" y2="149" stroke="#EDEEF0" stroke-width="43" stroke-linecap="round"/><line x1="316" y1="288" x2="212" y2="307" stroke="#EDEEF0" stroke-width="43" stroke-linecap="round"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-432 -77 2240 2240">
+  <rect x="-432" y="-77" width="2240" height="2240" fill="#17181C"/>
+  <g fill="#3DDCFF" stroke="#3DDCFF" stroke-linejoin="round">
+    <polygon points="420,560 507,1805 791,1504 1017,1941 1213,1842 996,1419 1370,1393" stroke-width="70"/>
+    <g stroke-width="101" stroke-linecap="round">
+      <line x1="377" y1="314" x2="333" y2="68"/>
+      <line x1="216" y1="417" x2="11" y2="274"/>
+      <line x1="174" y1="603" x2="-72" y2="647"/>
+    </g>
+  </g>
+</svg>
