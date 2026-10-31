@@ -1,3 +1,4 @@
+import { useDeskLang } from "./language";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CONTACT } from "@/lib/i18n";
@@ -25,31 +26,34 @@ const BookingAction = createContext<Go | null>(null);
 export const MEETING_URL = `https://wa.me/${CONTACT.wa}?text=Zdravo%2C%20hteo%20bih%20da%20zaka%C5%BEem%20sastanak.`;
 
 function Shot({ k }: { k: keyof typeof SHOTS }) {
+  const { t } = useDeskLang();
   const s = SHOTS[k];
   return (
     <figure className="shot">
       <div className="frame">
         <div className="bar"><i /><i /><i /><span>{s.name}</span></div>
-        <img src={s.src} alt={`Sajt ${s.name}`} loading="lazy" />
+        <img src={s.src} alt={`${t("Sajt")} ${s.name}`} loading="lazy" />
       </div>
-      <figcaption>Pravi sajt, koji smo uradili.</figcaption>
+      <figcaption>{t("Pravi sajt, koji smo uradili.")}</figcaption>
       {s.url && (
-        <a className="live" href={s.url} target="_blank" rel="noopener noreferrer">Pogledaj sajt ↗</a>
+        <a className="live" href={s.url} target="_blank" rel="noopener noreferrer">{t("Pogledaj sajt ↗")}</a>
       )}
     </figure>
   );
 }
 
 function GoBtn() {
+  const { t } = useDeskLang();
   const go = useContext(BookingAction);
   return (
-    <Button className="btn" type="button" onClick={() => go?.("sastanak")}>Zakaži sastanak <span aria-hidden="true">↗</span></Button>
+    <Button className="btn" type="button" onClick={() => go?.("sastanak")}>{t("Zakaži sastanak")} <span aria-hidden="true">↗</span></Button>
   );
 }
 
 const PAD_NAMES = ["kick", "snare", "hat", "clap", "bas C", "bas E♭", "akord", "zvono"];
 
 function Unearthed({ headingId }: { headingId: string }) {
+  const { t } = useDeskLang();
   const padsRef = useRef<HTMLDivElement>(null);
   const cvRef = useRef<HTMLCanvasElement>(null);
   const playRef = useRef<(i: number) => void>(() => {});
@@ -111,19 +115,19 @@ function Unearthed({ headingId }: { headingId: string }) {
 
   return (
     <div className="sh dark">
-      <h2 id={headingId}>Unearthed Samples.</h2>
-      <p className="lead">Online prodavnica muzičkih semplova sa integrisanim plaćanjem, brza na mobilnom i građena za konverziju. Shopify, Stripe, Meta Pixel.</p>
+      <h2 id={headingId}>{t("Unearthed Samples.")}</h2>
+      <p className="lead">{t("Online prodavnica muzičkih semplova sa integrisanim plaćanjem, brza na mobilnom i građena za konverziju. Shopify, Stripe, Meta Pixel.")}</p>
       <Shot k="unearthed" />
-      <p className="demo-h">PROBAJ: KLIKNI ILI PRITISNI 1 DO 8</p>
+      <p className="demo-h">{t("PROBAJ: KLIKNI ILI PRITISNI 1 DO 8")}</p>
       <div className="pads" ref={padsRef}>
         {PAD_NAMES.map((n, i) => (
           <button
-            key={n}
+            key={t(n)}
             type="button"
             onPointerDown={() => playRef.current(i)}
             onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); playRef.current(i); } }}
           >
-            <kbd>{i + 1}</kbd><span>{n}</span>
+            <kbd>{i + 1}</kbd><span>{t(n)}</span>
           </button>
         ))}
       </div>
@@ -133,6 +137,7 @@ function Unearthed({ headingId }: { headingId: string }) {
 }
 
 function Bite({ headingId }: { headingId: string }) {
+  const { t } = useDeskLang();
   const [n, setN] = useState(60);
   const c1 = useRef<HTMLElement>(null), c2 = useRef<HTMLElement>(null), c3 = useRef<HTMLElement>(null);
   const anim = (el: HTMLElement | null, v: number) => {
@@ -150,25 +155,26 @@ function Bite({ headingId }: { headingId: string }) {
   };
   return (
     <div className="sh paper" style={{ background: "#F4EFE4", color: "#2A2420" }}>
-      <h2 id={headingId}>Bite Catering.</h2>
-      <p className="lead" style={{ color: "#6E625A" }}>Ketering iz Zrenjanina: finger food, mesne i sirne daske, mini deserti i slavska trpeza. Sajt sa menijem i upitom za ponudu.</p>
+      <h2 id={headingId}>{t("Bite Catering.")}</h2>
+      <p className="lead" style={{ color: "#6E625A" }}>{t("Ketering iz Zrenjanina: finger food, mesne i sirne daske, mini deserti i slavska trpeza. Sajt sa menijem i upitom za ponudu.")}</p>
       <Shot k="bite" />
-      <p className="demo-h">PROBAJ: KOLIKO GOSTIJU?</p>
+      <p className="demo-h">{t("PROBAJ: KOLIKO GOSTIJU?")}</p>
       <div className="guests">
-        <label htmlFor="gs"><span>Broj gostiju</span><b>{n}</b></label>
+        <label htmlFor="gs"><span>{t("Broj gostiju")}</span><b>{t(n)}</b></label>
         <input type="range" id="gs" min={10} max={300} step={5} defaultValue={60} onInput={(e) => upd(+(e.target as HTMLInputElement).value)} />
       </div>
       <div className="calc">
-        <div><b ref={c1}>480</b><span>zalogaja</span></div>
-        <div><b ref={c2}>12</b><span>tacni</span></div>
-        <div><b ref={c3}>3</b><span>konobara</span></div>
+        <div><b ref={c1}>480</b><span>{t("zalogaja")}</span></div>
+        <div><b ref={c2}>12</b><span>{t("tacni")}</span></div>
+        <div><b ref={c3}>3</b><span>{t("konobara")}</span></div>
       </div>
-      <p className="lead" style={{ fontSize: 14, color: "#6E625A" }}>Primer potpisa. Brojke su ilustracija.</p>
+      <p className="lead" style={{ fontSize: 14, color: "#6E625A" }}>{t("Primer potpisa. Brojke su ilustracija.")}</p>
     </div>
   );
 }
 
 function Sala({ headingId }: { headingId: string }) {
+  const { t } = useDeskLang();
   const floorRef = useRef<HTMLDivElement>(null);
   const totRef = useRef<HTMLSpanElement>(null);
   const api = useRef<{ add: (p: number, x: number, y: number) => void; clear: () => void }>({ add: () => {}, clear: () => {} });
@@ -201,21 +207,22 @@ function Sala({ headingId }: { headingId: string }) {
   const rnd = (p: number) => api.current.add(p, 0.15 + Math.random() * 0.7, 0.3 + Math.random() * 0.6);
   return (
     <div className="sh paper" style={{ background: "#F3EEE6", color: "#2A2420" }}>
-      <h2 id={headingId}>Adriaticum.</h2>
-      <p className="lead" style={{ color: "#6E625A" }}>Booking platforma za iznajmljivanje opreme za događaje. Vođeni upitnik u nekoliko koraka, katalog i direktna rezervacija.</p>
+      <h2 id={headingId}>{t("Adriaticum.")}</h2>
+      <p className="lead" style={{ color: "#6E625A" }}>{t("Booking platforma za iznajmljivanje opreme za događaje. Vođeni upitnik u nekoliko koraka, katalog i direktna rezervacija.")}</p>
       <Shot k="sala" />
-      <p className="demo-h">PROBAJ: PLAN SALE SA CENOM</p>
+      <p className="demo-h">{t("PROBAJ: PLAN SALE SA CENOM")}</p>
       <div className="addrow">
-        <button type="button" onClick={() => rnd(1200)}>+ okrugli sto, 1.200 RSD</button>
-        <button type="button" onClick={() => rnd(900)}>+ aranžman, 900 RSD</button>
-        <button type="button" onClick={() => api.current.clear()}>očisti</button>
+        <button type="button" onClick={() => rnd(1200)}>{t("+ okrugli sto, 1.200 RSD")}</button>
+        <button type="button" onClick={() => rnd(900)}>{t("+ aranžman, 900 RSD")}</button>
+        <button type="button" onClick={() => api.current.clear()}>{t("očisti")}</button>
       </div>
-      <div className="floor" ref={floorRef}><span className="bina">bina</span><span className="tot" ref={totRef}>0, 0 RSD</span></div>
+      <div className="floor" ref={floorRef}><span className="bina">{t("bina")}</span><span className="tot" ref={totRef}>{t("0, 0 RSD")}</span></div>
     </div>
   );
 }
 
 function CopyBtn({ value }: { value: string }) {
+  const { t } = useDeskLang();
   const [label, setLabel] = useState("kopiraj");
   return (
     <button
@@ -228,54 +235,58 @@ function CopyBtn({ value }: { value: string }) {
         );
       }}
     >
-      {label}
+      {t(label)}
     </button>
   );
 }
 
 type Step = [string, string, string];
 function Steps({ items }: { items: Step[] }) {
+  const { t } = useDeskLang();
   return (
     <div className="steps">
       {items.map(([n, h, p]) => (
-        <div key={n}><b>{n}</b><div><h3>{h}</h3><p>{p}</p></div></div>
+        <div key={t(n)}><b>{t(n)}</b><div><h3>{t(h)}</h3><p>{t(p)}</p></div></div>
       ))}
     </div>
   );
 }
 
 function Intro({ headingId }: { headingId: string }) {
+  const { t } = useDeskLang();
   return (
     <div className="sh paper">
-      <h2 id={headingId}>Hajde na sastanak.</h2>
-      <p className="lead">Promet Digital pravi sajtove, online prodavnice i sisteme po meri: za magacin, kasu, rezervacije i kamere. Za firme u Srbiji i Nemačkoj.</p>
-      <p className="lead">Ne počinjemo od dizajna, nego od tebe. Na prvom sastanku pričamo šta radiš, ko su tvoji kupci i šta želiš da postigneš. Tek onda pravimo sajt koji za to služi.</p>
+      <h2 id={headingId}>{t("Hajde na sastanak.")}</h2>
+      <p className="lead">{t("Promet Digital pravi sajtove, online prodavnice i sisteme po meri: za magacin, kasu, rezervacije i kamere. Za firme u Srbiji i Nemačkoj.")}</p>
+      <p className="lead">{t("Ne počinjemo od dizajna, nego od tebe. Na prvom sastanku pričamo šta radiš, ko su tvoji kupci i šta želiš da postigneš. Tek onda pravimo sajt koji za to služi.")}</p>
       <GoBtn />
     </div>
   );
 }
 
 export function Sastanak({ headingId }: { headingId: string }) {
+  const { t } = useDeskLang();
   return (
     <div className="sh paper">
-      <h2 id={headingId}>O čemu pričamo.</h2>
-      <p className="lead">Pola sata, uživo u Zrenjaninu ili Beogradu, ili online. Prvi sastanak je besplatan.</p>
+      <h2 id={headingId}>{t("O čemu pričamo.")}</h2>
+      <p className="lead">{t("Pola sata, uživo u Zrenjaninu ili Beogradu, ili online. Prvi sastanak je besplatan.")}</p>
       <Steps items={[
         ["01", "Šta radiš", "Tvoj posao, tvoji proizvodi ili usluge, i kako danas dolaze kupci."],
         ["02", "Ko su tvoji kupci", "Ko kupuje, šta traže i gde te nalaze: Instagram, Google, preporuka."],
         ["03", "Koji su tvoji ciljevi", "Više upita, online prodaja, manje posla oko rezervacija, novi kupci u Nemačkoj. Šta tačno treba da se promeni."],
         ["04", "Šta je sledeći korak", "Posle sastanka dobijaš jasan plan i rok. Cena po dogovoru, bez obaveze."],
       ]} />
-      <a className="btn" href={MEETING_URL} target="_blank" rel="noopener noreferrer">Zakaži sastanak</a>
-      <small className="wa-note">otvara WhatsApp</small>
+      <a className="btn" href={MEETING_URL} target="_blank" rel="noopener noreferrer">{t("Zakaži sastanak")}</a>
+      <small className="wa-note">{t("otvara WhatsApp")}</small>
     </div>
   );
 }
 
 function Nacin({ headingId }: { headingId: string }) {
+  const { t } = useDeskLang();
   return (
     <div className="sh paper">
-      <h2 id={headingId}>Kako radimo.</h2>
+      <h2 id={headingId}>{t("Kako radimo.")}</h2>
       <Steps items={[
         ["01", "Sastanak", "Pričamo o tvom poslu, kupcima i ciljevima. Uživo ili online."],
         ["02", "Plan i dogovor", "Šta pravimo, zašto i kad je gotovo. Cenu dogovaramo pre nego što išta počne."],
@@ -296,32 +307,33 @@ const STAGES: [number, number, string, string, string][] = [
 ];
 
 function Dani({ headingId }: { headingId: string }) {
+  const { t } = useDeskLang();
   const [d, setD] = useState(0);
   const i = STAGES.findIndex(([a, b]) => d >= a && d <= b);
   const st = STAGES[i];
   return (
     <div className="sh paper">
-      <h2 id={headingId}>Live za 14 dana.</h2>
-      <p className="lead">Od prvog sastanka do sajta koji radi. Pomeri dane i gledaj kako nastaje.</p>
+      <h2 id={headingId}>{t("Live za 14 dana.")}</h2>
+      <p className="lead">{t("Od prvog sastanka do sajta koji radi. Pomeri dane i gledaj kako nastaje.")}</p>
       <div className="days">
-        <label htmlFor="dd"><span>Dan</span><b>{d}</b></label>
+        <label htmlFor="dd"><span>{t("Dan")}</span><b>{d}</b></label>
         <input type="range" id="dd" min={0} max={14} step={1} value={d} onChange={(e) => setD(+e.target.value)} />
       </div>
       <div className="build">
-        <div className="stage"><small>{st[2]}</small><h3>{st[3]}</h3><p>{st[4]}</p></div>
+        <div className="stage"><small>{t(st[2])}</small><h3>{t(st[3])}</h3><p>{t(st[4])}</p></div>
         <div className={"mock s" + (i + 1)}>
           <div className="bar"><i /><i /><i /></div>
           <div className="pg">
-            <div className="note">šta radiš?<br />kupci?<br />ciljevi?</div>
+            <div className="note">{t("šta radiš?")}<br />{t("kupci?")}<br />{t("ciljevi?")}</div>
             <div className="w">
-              <div className="blk hero">Tvoja prodavnica</div>
-              <div className="row"><div className="blk">proizvod</div><div className="blk">proizvod</div><div className="blk">proizvod</div></div>
-              <div className="row"><div className="blk">proizvod</div><div className="blk">proizvod</div><div className="blk">proizvod</div></div>
+              <div className="blk hero">{t("Tvoja prodavnica")}</div>
+              <div className="row"><div className="blk">{t("proizvod")}</div><div className="blk">{t("proizvod")}</div><div className="blk">{t("proizvod")}</div></div>
+              <div className="row"><div className="blk">{t("proizvod")}</div><div className="blk">{t("proizvod")}</div><div className="blk">{t("proizvod")}</div></div>
             </div>
-            <span className="cartb">korpa: 2</span>
-            <span className="pay">kartica, pouzeće, dostava</span>
-            <div className="chk">porudžbina <span>✓</span><br />plaćanje <span>✓</span><br />obaveštenja <span>✓</span></div>
-            <div className="live"><i />online, prva porudžbina</div>
+            <span className="cartb">{t("korpa: 2")}</span>
+            <span className="pay">{t("kartica, pouzeće, dostava")}</span>
+            <div className="chk">{t("porudžbina")} <span>✓</span><br />{t("plaćanje")} <span>✓</span><br />{t("obaveštenja")} <span>✓</span></div>
+            <div className="live"><i />{t("online, prva porudžbina")}</div>
           </div>
         </div>
       </div>
@@ -339,15 +351,16 @@ const SVC: [string, string, string, string[]][] = [
 ];
 
 function Usluge({ headingId }: { headingId: string }) {
+  const { t } = useDeskLang();
   return (
     <div className="sh paper">
-      <h2 id={headingId}>Šta radimo.</h2>
-      <p className="lead">Jedan partner za softver, prodaju i svakodnevni digitalni rad.</p>
+      <h2 id={headingId}>{t("Šta radimo.")}</h2>
+      <p className="lead">{t("Jedan partner za softver, prodaju i svakodnevni digitalni rad.")}</p>
       <div className="svc">
         {SVC.map(([h, sm, p, li], i) => (
-          <details key={h} open={i === 0}>
-            <summary><h3>{h}</h3><small>{sm}</small></summary>
-            <div className="body"><p>{p}</p><ul>{li.map((x) => <li key={x}>{x}</li>)}</ul></div>
+          <details key={t(h)} open={i === 0}>
+            <summary><h3>{t(h)}</h3><small>{t(sm)}</small></summary>
+            <div className="body"><p>{t(p)}</p><ul>{li.map((x) => <li key={t(x)}>{t(x)}</li>)}</ul></div>
           </details>
         ))}
       </div>
@@ -356,6 +369,7 @@ function Usluge({ headingId }: { headingId: string }) {
 }
 
 function Poredjenje({ headingId }: { headingId: string }) {
+  const { t } = useDeskLang();
   const rows = [
     ["Prvi korak", "Gotova ponuda iz šablona", "Sastanak o tvom poslu i ciljevima"],
     ["Dizajn", "Šablon i stock fotografije", "Po meri tvoje firme i tvojih kupaca"],
@@ -365,11 +379,11 @@ function Poredjenje({ headingId }: { headingId: string }) {
   ];
   return (
     <div className="sh paper">
-      <h2 id={headingId}>Obično, i kod nas.</h2>
+      <h2 id={headingId}>{t("Obično, i kod nas.")}</h2>
       <div className="tw">
         <table className="cmp">
-          <thead><tr><th>Kriterijum</th><th>Tipična agencija</th><th>Promet Digital</th></tr></thead>
-          <tbody>{rows.map((r) => <tr key={r[0]}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td></tr>)}</tbody>
+          <thead><tr><th>{t("Kriterijum")}</th><th>{t("Tipična agencija")}</th><th>{t("Promet Digital")}</th></tr></thead>
+          <tbody>{rows.map((r) => <tr key={t(r[0])}><td>{t(r[0])}</td><td>{t(r[1])}</td><td>{t(r[2])}</td></tr>)}</tbody>
         </table>
       </div>
       <GoBtn />
@@ -378,6 +392,7 @@ function Poredjenje({ headingId }: { headingId: string }) {
 }
 
 function Sistemi({ headingId }: { headingId: string }) {
+  const { t } = useDeskLang();
   const cards = [
     ["Magacin i zalihe", "Prijem, izdavanje i stanje robe na jednom mestu. Upozorenje kad nešto počne da fali.", "lager, barkod, izveštaji"],
     ["Kasa i prodaja", "Prodaja u radnji i online prodavnica dele iste zalihe i iste brojeve.", "kasa, zalihe, online shop"],
@@ -386,10 +401,10 @@ function Sistemi({ headingId }: { headingId: string }) {
   ];
   return (
     <div className="sh dark">
-      <h2 id={headingId}>Sistemi po meri.</h2>
-      <p className="lead">Ne samo sajtovi. Pravimo softver koji radi u tvojoj radnji i magacinu, i povezuje sve sa online prodajom.</p>
-      <div className="sysg">{cards.map(([h, p, s]) => <div key={h}><h3>{h}</h3><p>{p}</p><small>{s}</small></div>)}</div>
-      <p className="small">Cena i obim po dogovoru, posle sastanka.</p>
+      <h2 id={headingId}>{t("Sistemi po meri.")}</h2>
+      <p className="lead">{t("Ne samo sajtovi. Pravimo softver koji radi u tvojoj radnji i magacinu, i povezuje sve sa online prodajom.")}</p>
+      <div className="sysg">{cards.map(([h, p, s]) => <div key={t(h)}><h3>{t(h)}</h3><p>{t(p)}</p><small>{t(s)}</small></div>)}</div>
+      <p className="small">{t("Cena i obim po dogovoru, posle sastanka.")}</p>
       <GoBtn />
     </div>
   );
@@ -407,21 +422,22 @@ export const PROJECTS: { name: string; img: string; url: string; who: string; di
 ];
 
 function Radovi({ go, headingId }: { go: Go; headingId: string }) {
+  const { t } = useDeskLang();
   return (
     <div className="sh dark">
-      <h2 id={headingId}>Radovi.</h2>
-      <p className="lead">Pravi sajtovi, koje smo uradili. Ko su klijenti i šta smo napravili.</p>
+      <h2 id={headingId}>{t("Radovi.")}</h2>
+      <p className="lead">{t("Pravi sajtovi, koje smo uradili. Ko su klijenti i šta smo napravili.")}</p>
       <div className="gal">
         {PROJECTS.map((p, i) => (
           <figure key={p.name} className="pol" style={{ transform: `rotate(${[-1.4, 1, -0.6, 1.3, -1, 0.7, -1.2, 0.9][i]}deg)` }}>
-            <img src={p.img} alt={`Sajt ${p.name}`} loading="lazy" />
+            <img src={p.img} alt={`${t("Sajt")} ${p.name}`} loading="lazy" />
             <figcaption>
               <h3>{p.name}</h3>
-              <p><b>Ko su:</b> {p.who}</p>
-              <p><b>Šta smo uradili:</b> {p.did}</p>
+              <p><b>{t("Ko su:")}</b> {t(p.who)}</p>
+              <p><b>{t("Šta smo uradili:")}</b> {t(p.did)}</p>
               <div className="act">
-                {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer">Pogledaj sajt ↗</a> : <span className="wip">u izradi</span>}
-                {p.demo && <a href="#" onClick={(e) => { e.preventDefault(); go(p.demo!); }}>Probaj demo</a>}
+                {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer">{t("Pogledaj sajt ↗")}</a> : <span className="wip">{t("u izradi")}</span>}
+                {p.demo && <a href="#" onClick={(e) => { e.preventDefault(); go(p.demo!); }}>{t("Probaj demo")}</a>}
               </div>
             </figcaption>
           </figure>
@@ -440,23 +456,24 @@ const DIPLOMAS = [
 ];
 
 function Ja({ headingId }: { headingId: string }) {
+  const { t } = useDeskLang();
   return (
     <div className="sh paper">
-      <h2 id={headingId}>Nemački standard. Za srpski biznis.</h2>
-      <p className="lead">Ja sam David Nedić, osnivač Promet Digital. Školovao sam se i radio u Nemačkoj, a danas to iskustvo primenjujem za firme u Srbiji i Nemačkoj: precizno, pouzdano i transparentno.</p>
+      <h2 id={headingId}>{t("Nemački standard. Za srpski biznis.")}</h2>
+      <p className="lead">{t("Ja sam David Nedić, osnivač Promet Digital. Školovao sam se i radio u Nemačkoj, a danas to iskustvo primenjujem za firme u Srbiji i Nemačkoj: precizno, pouzdano i transparentno.")}</p>
       <div className="dip">
         {DIPLOMAS.map((d) => (
           <div className="row" key={d.title}>
-            <div><h3>{d.title}</h3><p>{d.text}</p></div>
+            <div><h3>{d.title}</h3><p>{t(d.text)}</p></div>
             <span className="de">{d.country}</span>
           </div>
         ))}
       </div>
       <div className="pts">
-        <div><b>Fiksni rokovi</b>Dogovoreni datumi, jasne faze i odgovornost za isporuku.</div>
-        <div><b>Jasni ugovori</b>Obim posla i uslovi definišu se pre početka.</div>
-        <div><b>Dokumentovani procesi</b>Odluke, pristupi i sledeći koraci ostaju uredno zabeleženi.</div>
-        <div><b>GDPR nivo rada sa podacima</b>Pristupi, podaci kupaca i analitika tretiraju se pažljivo.</div>
+        <div><b>{t("Fiksni rokovi")}</b>{t("Dogovoreni datumi, jasne faze i odgovornost za isporuku.")}</div>
+        <div><b>{t("Jasni ugovori")}</b>{t("Obim posla i uslovi definišu se pre početka.")}</div>
+        <div><b>{t("Dokumentovani procesi")}</b>{t("Odluke, pristupi i sledeći koraci ostaju uredno zabeleženi.")}</div>
+        <div><b>{t("GDPR nivo rada sa podacima")}</b>{t("Pristupi, podaci kupaca i analitika tretiraju se pažljivo.")}</div>
       </div>
       <GoBtn />
     </div>
@@ -464,16 +481,17 @@ function Ja({ headingId }: { headingId: string }) {
 }
 
 function Kontakt({ time, headingId }: { time: string; headingId: string }) {
+  const { t } = useDeskLang();
   return (
     <div className="sh dark">
-      <h2 id={headingId}>Javi se.</h2>
-      <p className="lead">Javi se i dogovorimo termin, uživo ili online. Pričamo o tvom poslu i ciljevima. Prvi sastanak je besplatan.</p>
+      <h2 id={headingId}>{t("Javi se.")}</h2>
+      <p className="lead">{t("Javi se i dogovorimo termin, uživo ili online. Pričamo o tvom poslu i ciljevima. Prvi sastanak je besplatan.")}</p>
       <GoBtn />
       <div className="contact">
-        <div><span>WhatsApp i telefon</span><b><a href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener noreferrer">{CONTACT.phone}</a></b> <CopyBtn value={CONTACT.phone} /></div>
-        <div><span>E-mail</span><b><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></b> <CopyBtn value={CONTACT.email} /></div>
-        <div><span>Gde smo</span><b>Zrenjanin / Beograd</b></div>
-        <div><span>Sada je u Zrenjaninu</span><b>{time}</b></div>
+        <div><span>{t("WhatsApp i telefon")}</span><b><a href={`https://wa.me/${CONTACT.wa}`} target="_blank" rel="noopener noreferrer">{CONTACT.phone}</a></b> <CopyBtn value={CONTACT.phone} /></div>
+        <div><span>{t("E-mail")}</span><b><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></b> <CopyBtn value={CONTACT.email} /></div>
+        <div><span>{t("Gde smo")}</span><b>{t("Zrenjanin / Beograd")}</b></div>
+        <div><span>{t("Sada je u Zrenjaninu")}</span><b>{time}</b></div>
       </div>
     </div>
   );
