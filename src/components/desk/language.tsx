@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 
 export type DeskLang = "sr" | "de";
 const translations: Record<string, string> = {
+  "usluge": "Leistungen",
   "Hajde na": "Lass uns", "sastanak.": "sprechen.", "Izaberi termin": "Termin wählen", "30 min / Zoom / besplatno": "30 Min / Zoom / kostenlos",
   "Tvoj posao. Tvoji ciljevi.": "Dein Geschäft. Deine Ziele.", "Prvi korak, bez obaveze.": "Der erste Schritt, unverbindlich.",
   "zakaži sastanak": "Termin buchen", "Zakaži sastanak": "Termin buchen", "Zakaži": "Buchen",

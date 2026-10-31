@@ -45,7 +45,7 @@ export function createOffice(bgCanvas: HTMLCanvasElement, deskEl: HTMLElement, p
     const MSGDE=['Onlineshop','Restaurant-Website','Lagersystem','Kasse für den Laden','Salon-Website','Onlinebuchungen'];
     function ping(){if(!ph||document.hidden)return;const de=root.dataset.deskLang==='de';note.innerHTML='<small>'+(de?'Neue Anfrage':'Novi upit')+'</small>'+(de?MSGDE:MSG)[mi++%MSG.length];
       ph.classList.add('ping','buzz');_st(()=>ph.classList.remove('buzz'),1100);_st(()=>ph.classList.remove('ping'),4200);}
-    function sched(){_st(()=>{ping();sched();},(cur==='noc'?45000:22000)+Math.random()*14000);}
+    function sched(){_st(()=>{ping();sched();},(cur?.startsWith('noc')?45000:22000)+Math.random()*14000);}
     _st(()=>{ping();sched();},6500);
     _on('promet:language',()=>apply(phase(window.__T??12)));
     return {update(T){apply(phase(T));const day=(T>=6.5&&T<19.5)?1:0;shadows(T,day);},sleeping:()=>cur?.startsWith('noc')};
