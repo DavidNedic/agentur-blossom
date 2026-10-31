@@ -1,10 +1,12 @@
-// Server-only booking helpers: Google free/busy, Zoom, Resend, ICS, cancellation.
+// Server-only booking helpers: Google free/busy, Zoom, Lovable email, ICS, cancellation.
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { BASE_TZ, DAYS_AHEAD, SLOT_MIN, computeSlots, type Interval } from "@/lib/booking-slots";
 
 export const SITE_URL = "https://promet.digital";
 export const OWNER_EMAIL = "davidnedic@web.de";
-const FROM = "Promet Digital <sastanak@promet.digital>";
+import { sendTemplateEmail } from "@/lib/email-templates/send-email";
+import type { BookingRow } from "@/lib/booking-email-data";
+export { buildIcs, fmtWhen, type BookingRow } from "@/lib/booking-email-data";
 
 function missing(...names: string[]) {
   const m = names.filter((n) => !process.env[n]);
@@ -18,12 +20,6 @@ const b64url = (buf: ArrayBuffer | Uint8Array | string) => {
   bytes.forEach((b) => (s += String.fromCharCode(b)));
   return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 };
-const b64utf8 = (str: string) => {
-  let s = "";
-  new TextEncoder().encode(str).forEach((b) => (s += String.fromCharCode(b)));
-  return btoa(s);
-};
-
 /* ---------- Google Calendar free/busy ---------- */
 async function googleToken(): Promise<string | null> {
   if (missing("GOOGLE_SERVICE_ACCOUNT_JSON", "GOOGLE_CALENDAR_ID")) return null;
@@ -123,92 +119,24 @@ export async function deleteZoomMeeting(id: string) {
 }
 
 /* ---------- Email ---------- */
-type Mail = { to: string; subject: string; html: string; replyTo?: string; ics?: string };
+type Mail = { to: string; template: string; booking: BookingRow; replyTo?: string };
 export async function sendMail(m: Mail) {
-  if (missing("RESEND_API_KEY")) return false;
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from: FROM, to: [m.to], subject: m.subject, html: m.html,
-      ...(m.replyTo ? { reply_to: m.replyTo } : {}),
-      ...(m.ics ? { attachments: [{ filename: "sastanak.ics", content: b64utf8(m.ics), content_type: "text/calendar" }] } : {}),
-    }),
-  });
-  if (!res.ok) { console.error(`[booking] Resend failed [${res.status}]: ${await res.text()}`); return false; }
-  return true;
+  try {
+    const result = await sendTemplateEmail(m.template, m.to, {
+      templateData: { booking: m.booking },
+      idempotencyKey: `${m.template}-${m.booking.id}`,
+      replyTo: m.replyTo,
+    });
+    if (!result.sent) console.warn(`[booking] ${m.template}: recipient suppressed`);
+    return result.sent;
+  } catch (error) {
+    console.error(`[booking] Lovable email failed (${m.template}):`, error);
+    return false;
+  }
 }
-
-export const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
-
-export type BookingRow = {
-  id: string; starts_at: string; ends_at: string; name: string; company: string; email: string; phone: string | null;
-  message: string; lang: string; timezone: string; zoom_join_url: string | null; zoom_meeting_id: string | null; cancel_token: string; status: string;
-};
-
-export function fmtWhen(iso: string, lang: string, tz: string) {
-  let zone = tz;
-  try { new Intl.DateTimeFormat("en", { timeZone: tz }); } catch { zone = BASE_TZ; }
-  const s = new Intl.DateTimeFormat(lang === "de" ? "de-DE" : "sr-Latn-RS", {
-    timeZone: zone, weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", hourCycle: "h23",
-  }).format(new Date(iso));
-  return `${s} (${zone})`;
-}
-
-export function buildIcs(b: BookingRow) {
-  const f = (iso: string) => new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
-  const t = (s: string) => s.replace(/[\\,;]/g, (c) => `\\${c}`).replace(/\n/g, "\\n");
-  return [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Promet Digital//Sastanak//SR", "METHOD:PUBLISH", "BEGIN:VEVENT",
-    `UID:${b.id}@promet.digital`, `DTSTAMP:${f(new Date().toISOString())}`, `DTSTART:${f(b.starts_at)}`, `DTEND:${f(b.ends_at)}`,
-    `SUMMARY:${t(b.lang === "de" ? "Kostenloses Erstgespräch, Promet Digital" : "Besplatan sastanak, Promet Digital")}`,
-    `DESCRIPTION:${t(`Zoom: ${b.zoom_join_url ?? ""}`)}`, `LOCATION:${t(b.zoom_join_url ?? "Zoom")}`,
-    `ORGANIZER;CN=Promet Digital:mailto:sastanak@promet.digital`, "END:VEVENT", "END:VCALENDAR",
-  ].join("\r\n");
-}
-
-const wrap = (body: string) =>
-  `<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#17181C;max-width:560px">${body}<p style="color:#6B6F78;font-size:13px;margin-top:28px">Promet Digital, Zrenjanin / Beograd<br>promet.digital</p></div>`;
-const btn = (href: string, label: string) =>
-  `<p><a href="${href}" style="display:inline-block;background:#3DDCFF;color:#17181C;padding:12px 18px;text-decoration:none;font-weight:bold">${label}</a></p>`;
-
-export function customerConfirmation(b: BookingRow) {
-  const de = b.lang === "de";
-  const when = esc(fmtWhen(b.starts_at, b.lang, b.timezone));
-  const cancel = `${SITE_URL}/otkazi?token=${b.cancel_token}`;
-  return {
-    to: b.email, replyTo: OWNER_EMAIL, ics: buildIcs(b),
-    subject: de ? "Termin bestätigt: kostenloses Erstgespräch" : "Sastanak je zakazan",
-    html: wrap(de
-      ? `<p>Hallo ${esc(b.name)},</p><p>dein kostenloses Erstgespräch (30 Min., Zoom) ist bestätigt:</p><p><b>${when}</b></p>${btn(b.zoom_join_url ?? "#", "Zoom beitreten")}<p>Den Termin findest du auch im Anhang (.ics).</p><p>Doch keine Zeit? <a href="${cancel}">Termin absagen</a></p><p>Bis bald,<br>David Nedić</p>`
-      : `<p>Zdravo ${esc(b.name)},</p><p>tvoj besplatan sastanak (30 min, Zoom) je zakazan:</p><p><b>${when}</b></p>${btn(b.zoom_join_url ?? "#", "Uđi na Zoom")}<p>Termin je i u prilogu (.ics), za tvoj kalendar.</p><p>Ne stižeš? <a href="${cancel}">Otkaži sastanak</a></p><p>Vidimo se,<br>David Nedić</p>`),
-  };
-}
-
-export function ownerNotification(b: BookingRow) {
-  const rows: [string, string][] = [
-    ["Termin", fmtWhen(b.starts_at, "sr", BASE_TZ)], ["Ime", b.name], ["Firma", b.company], ["E-mail", b.email],
-    ["Telefon", b.phone || "-"], ["Jezik", b.lang.toUpperCase()], ["Vremenska zona posetioca", b.timezone],
-    ["Šta radi i šta želi", b.message], ["Zoom", b.zoom_join_url ?? "-"],
-  ];
-  return {
-    to: OWNER_EMAIL, replyTo: b.email, subject: `Novi sastanak: ${b.name}, ${b.company}`,
-    html: wrap(`<p><b>Novi zakazan sastanak</b></p><table cellpadding="6" style="border-collapse:collapse">${rows.map(([k, v]) => `<tr><td style="color:#6B6F78;vertical-align:top">${esc(k)}</td><td style="white-space:pre-wrap">${esc(v)}</td></tr>`).join("")}</table>`),
-  };
-}
-
-export function reminderMail(b: BookingRow) {
-  const de = b.lang === "de";
-  const when = esc(fmtWhen(b.starts_at, b.lang, b.timezone));
-  const cancel = `${SITE_URL}/otkazi?token=${b.cancel_token}`;
-  return {
-    to: b.email, replyTo: OWNER_EMAIL, ics: buildIcs(b),
-    subject: de ? "Erinnerung: Erstgespräch morgen" : "Podsetnik: sastanak sutra",
-    html: wrap(de
-      ? `<p>Hallo ${esc(b.name)},</p><p>kurze Erinnerung an unser Gespräch:</p><p><b>${when}</b></p>${btn(b.zoom_join_url ?? "#", "Zoom beitreten")}<p><a href="${cancel}">Termin absagen</a></p>`
-      : `<p>Zdravo ${esc(b.name)},</p><p>kratak podsetnik za naš sastanak:</p><p><b>${when}</b></p>${btn(b.zoom_join_url ?? "#", "Uđi na Zoom")}<p><a href="${cancel}">Otkaži sastanak</a></p>`),
-  };
-}
+export const customerConfirmation = (b: BookingRow): Mail => ({ to: b.email, replyTo: OWNER_EMAIL, template: "booking-confirmation", booking: b });
+export const ownerNotification = (b: BookingRow): Mail => ({ to: OWNER_EMAIL, replyTo: b.email, template: "booking-notification", booking: b });
+export const reminderMail = (b: BookingRow): Mail => ({ to: b.email, replyTo: OWNER_EMAIL, template: "booking-reminder", booking: b });
 
 /** Cancels a confirmed booking, removes the Zoom meeting and notifies both sides. */
 export async function cancelBookingRow(where: { id?: string; token?: string }, by: "customer" | "admin") {
@@ -219,16 +147,9 @@ export async function cancelBookingRow(where: { id?: string; token?: string }, b
   const b = data?.[0] as BookingRow | undefined;
   if (!b) return null;
   if (b.zoom_meeting_id) await deleteZoomMeeting(b.zoom_meeting_id);
-  const when = esc(fmtWhen(b.starts_at, b.lang, b.timezone));
-  const de = b.lang === "de";
-  await sendMail({
-    to: b.email, replyTo: OWNER_EMAIL,
-    subject: de ? "Termin abgesagt" : "Sastanak je otkazan",
-    html: wrap(de ? `<p>Hallo ${esc(b.name)},</p><p>der Termin am <b>${when}</b> wurde abgesagt.</p>${btn(SITE_URL + "/#sastanak", "Neuen Termin wählen")}`
-      : `<p>Zdravo ${esc(b.name)},</p><p>sastanak <b>${when}</b> je otkazan.</p>${btn(SITE_URL + "/#sastanak", "Izaberi novi termin")}`),
-  });
+  await sendMail({ to: b.email, replyTo: OWNER_EMAIL, template: "booking-cancellation", booking: b });
   if (by === "customer") {
-    await sendMail({ to: OWNER_EMAIL, subject: `Otkazan sastanak: ${b.name}, ${b.company}`, html: wrap(`<p>${esc(b.name)} (${esc(b.email)}) je otkazao sastanak ${esc(fmtWhen(b.starts_at, "sr", BASE_TZ))}.</p>`) });
+    await sendMail({ to: OWNER_EMAIL, template: "booking-owner-cancellation", booking: b });
   }
   return b;
 }
