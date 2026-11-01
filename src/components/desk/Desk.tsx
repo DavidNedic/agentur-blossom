@@ -20,7 +20,7 @@ const Lm: Record<string, [number, number, number]> = {
 
 type Site = { n: string; img?: string; h?: string; bg?: string; fg?: string; hero?: string; hfg?: string; acc?: string; card?: string; f?: string; w?: string };
 const SITES: Site[] = [
-  { n: "ADRIATICUM", img: SHOTS.sala.src }, { n: "BITE CATERING", img: SHOTS.bite.src }, { n: "UNEARTHED", img: SHOTS.unearthed.src },
+  { n: "ADRIATICUM", img: SHOTS.sala.src }, { n: "UNEARTHED", img: SHOTS.unearthed.src },
   { n: "TVOJA FIRMA", h: "Sledeći je tvoj sajt", bg: "#FFF8EC", fg: "#5A3A1A", hero: "#F3E1C2", hfg: "#4A2E12", acc: "#C8672B", card: "#EED9B8", f: "", w: "800" },
 ];
 
@@ -393,8 +393,8 @@ function DeskContent() {
         </div>
 
         <div className="obj o-fold" data-k="fold" data-open="usluge" tabIndex={0} role="button" aria-label={t("Otvori: usluge")}>
-          <div className="f"><i>{t("SEO")}</i></div><div className="f"><i>{t("Kamere")}</i></div><div className="f"><i>{t("Kasa")}</i></div><div className="f"><i>{t("Magacin")}</i></div>
-          <div className="f"><i>{t("Sajtovi")}</i><h3>{t("Usluge")}</h3><p>{t("Sajtovi, prodavnice, sistemi za magacin, kasu i kamere.")}</p></div>
+          <div className="f"><i>{t("SEO")}</i></div><div className="f"><i>{t("Rezervacije")}</i></div><div className="f"><i>{t("Kasa")}</i></div><div className="f"><i>{t("Magacin")}</i></div>
+          <div className="f"><i>{t("Sajtovi")}</i><h3>{t("Usluge")}</h3><p>{t("Sajtovi, prodavnice i sistemi po meri.")}</p></div>
           <span className="tag">{t("usluge")}</span>
         </div>
 
@@ -423,7 +423,6 @@ function DeskContent() {
           <div className="head">{t("SISTEMI PO MERI")}</div>
           <div className="row"><span>{t("MAGACIN")}</span><span className="bars"><i /><i /><i /><i /><i /><i /></span></div>
           <div className="row"><span>{t("KASA")}</span><span className="on">{t("povezano")}</span></div>
-          <div className="row"><span>{t("KAMERE")}</span><span className="on">{t("brojanje")}</span></div>
           <div className="row"><span>{t("REZERVACIJE")}</span><span className="on">{t("online")}</span></div>
           <span className="tag">{t("sistemi")}</span>
         </div>

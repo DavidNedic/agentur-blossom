@@ -550,3 +550,4 @@ html[data-desk-lang=de] .desk-root .tabs button{padding-left:12px;padding-right:
   .desk-root .bk-days b{font-size:13px}.desk-root .bk-days small{font-size:11px}
   .desk-root .bk-form{grid-template-columns:1fr}
 }
+.desk-root .sysg>div:last-child:nth-child(odd){grid-column:1/-1}
