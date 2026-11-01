@@ -9,7 +9,7 @@ import jetbrainsLatin from "../assets/fonts/jetbrains-mono-latin.woff2?url";
 
 const TITLE = "Promet Digital | Sajtovi, prodavnice i sistemi po meri";
 const DESC =
-  "Sajtovi, online prodavnice i sistemi po meri za magacin, kasu i kamere. Prvi sastanak je besplatan. Zrenjanin · Beograd.";
+  "Sajtovi, online prodavnice i sistemi po meri za magacin, kasu i rezervacije. Prvi sastanak je besplatan. Zrenjanin · Beograd.";
 const SOCIAL_IMAGE = "https://promet.digital/og-image.png";
 
 function NotFoundComponent() {

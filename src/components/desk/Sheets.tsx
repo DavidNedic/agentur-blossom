@@ -5,19 +5,16 @@ import { CONTACT } from "@/lib/i18n";
 import { Booking } from "./Booking";
 import adriaticumImg from "@/assets/portfolio-adriaticum.webp";
 import unearthedImg from "@/assets/portfolio-unearthed.webp";
-import biteImg from "@/assets/portfolio-bite.png";
 import gGeo from "@/assets/gal-geousluge.webp";
 import gMizu from "@/assets/gal-mizu.webp";
 import gGolden from "@/assets/gal-golden.webp";
 import gAdr from "@/assets/gal-adriaticum.webp";
 import gUne from "@/assets/gal-unearthed.webp";
 import gCrowd from "@/assets/gal-crowdplay.webp";
-import gBite from "@/assets/gal-bite.webp";
 import gAlu from "@/assets/gal-aluinox.webp";
 
 export const SHOTS = {
   sala: { src: adriaticumImg, name: "Adriaticum", url: "https://adriaticum.rentals" },
-  bite: { src: biteImg, name: "Bite Catering", url: "https://bitecatering023.com" },
   unearthed: { src: unearthedImg, name: "Unearthed Samples", url: "https://unearthed-samples.com" },
 } as const;
 
@@ -136,43 +133,6 @@ function Unearthed({ headingId }: { headingId: string }) {
   );
 }
 
-function Bite({ headingId }: { headingId: string }) {
-  const { t } = useDeskLang();
-  const [n, setN] = useState(60);
-  const c1 = useRef<HTMLElement>(null), c2 = useRef<HTMLElement>(null), c3 = useRef<HTMLElement>(null);
-  const anim = (el: HTMLElement | null, v: number) => {
-    if (!el) return;
-    const from = +el.textContent!.replace(/\D/g, "") || 0, t0 = performance.now();
-    const st = (now: number) => {
-      const k = Math.min(1, (now - t0) / 250);
-      el.textContent = Math.round(from + (v - from) * k).toLocaleString("sr-RS");
-      if (k < 1) requestAnimationFrame(st);
-    };
-    requestAnimationFrame(st);
-  };
-  const upd = (v: number) => {
-    setN(v); anim(c1.current, v * 8); anim(c2.current, Math.ceil((v * 8) / 40)); anim(c3.current, Math.max(1, Math.ceil(v / 25)));
-  };
-  return (
-    <div className="sh paper" style={{ background: "#F4EFE4", color: "#2A2420" }}>
-      <h2 id={headingId}>{t("Bite Catering.")}</h2>
-      <p className="lead" style={{ color: "#6E625A" }}>{t("Ketering iz Zrenjanina: finger food, mesne i sirne daske, mini deserti i slavska trpeza. Sajt sa menijem i upitom za ponudu.")}</p>
-      <Shot k="bite" />
-      <p className="demo-h">{t("PROBAJ: KOLIKO GOSTIJU?")}</p>
-      <div className="guests">
-        <label htmlFor="gs"><span>{t("Broj gostiju")}</span><b>{n}</b></label>
-        <input type="range" id="gs" min={10} max={300} step={5} defaultValue={60} onInput={(e) => upd(+(e.target as HTMLInputElement).value)} />
-      </div>
-      <div className="calc">
-        <div><b ref={c1}>480</b><span>{t("zalogaja")}</span></div>
-        <div><b ref={c2}>12</b><span>{t("tacni")}</span></div>
-        <div><b ref={c3}>3</b><span>{t("konobara")}</span></div>
-      </div>
-      <p className="lead" style={{ fontSize: 14, color: "#6E625A" }}>{t("Primer potpisa. Brojke su ilustracija.")}</p>
-    </div>
-  );
-}
-
 function Sala({ headingId }: { headingId: string }) {
   const { t } = useDeskLang();
   const floorRef = useRef<HTMLDivElement>(null);
@@ -257,7 +217,7 @@ function Intro({ headingId }: { headingId: string }) {
   return (
     <div className="sh paper">
       <h2 id={headingId}>{t("Hajde na sastanak.")}</h2>
-      <p className="lead">{t("Promet Digital pravi sajtove, online prodavnice i sisteme po meri: za magacin, kasu, rezervacije i kamere. Za firme u Srbiji i Nemačkoj.")}</p>
+      <p className="lead">{t("Promet Digital pravi sajtove, online prodavnice i sisteme po meri: za magacin, kasu i rezervacije. Za firme u Srbiji i Nemačkoj.")}</p>
       <p className="lead">{t("Ne počinjemo od dizajna, nego od tebe. Na prvom sastanku pričamo šta radiš, ko su tvoji kupci i šta želiš da postigneš. Tek onda pravimo sajt koji za to služi.")}</p>
       <GoBtn />
     </div>
@@ -342,12 +302,12 @@ function Dani({ headingId }: { headingId: string }) {
 }
 
 const SVC: [string, string, string, string[]][] = [
-  ["SaaS i softverski sistemi", "primer: Adriaticum", "Booking i rental sistemi, CRM rešenja, interni alati i dashboard-i napravljeni prema stvarnom procesu firme.", ["Specifikacija i UX", "Korisničke uloge", "Integracije i automatizacija", "Održavanje i razvoj"]],
-  ["E-commerce izrada", "primer: Unearthed Samples", "Shopify i custom prodavnice sa katalogom, korpom, plaćanjem, dostavom i povezanim poslovnim alatima.", ["Shopify ili custom", "Unos proizvoda", "Plaćanje i dostava", "ERP i CRM integracije"]],
-  ["E-commerce prodaja", "prodajni sistemi", "Vodimo i razvijamo online prodaju kroz oglase, optimizaciju konverzije, marketplace kanale i preciznu analitiku.", ["Google i Meta Ads", "CRO i A/B testovi", "Marketplace kanali", "GA4 i izveštaji"]],
-  ["Sajtovi i landing stranice", "po dogovoru", "Brzi poslovni sajtovi i landing stranice sa jasnom ponudom.", ["Dizajn po meri", "Mobile first", "SEO osnova", "Domen, SSL i hosting"]],
-  ["Sistemi za magacin, kasu i kamere", "po meri", "Softver koji prati robu, prodaju i kretanje kupaca u radnji. Povezano sa tvojom online prodavnicom.", ["Magacin i zalihe", "Kasa i prodaja u radnji", "Kamera tracking", "Izveštaji i upozorenja"]],
-  ["SEO, automatizacija i marketing", "kontinuirani rast", "Tehnički SEO, sadržaj, automatizovani tokovi i kampanje povezani sa konkretnim poslovnim ciljem.", ["Tehnički SEO", "Automatizovani tokovi", "Sadržaj i kampanje", "Mesečna analiza"]],
+  ["Softver po meri", "primer: Adriaticum", "Prvo sednemo i pričamo o tome kako tvoja firma radi. Onda napravimo alat koji prati taj posao, a ne obrnuto.", []],
+  ["Online prodavnice", "primer: Unearthed Samples", "Radili smo prodavnice za različite branše. Znamo šta kupcu treba da bi lako kupio, i šta tebi treba da bi to lako vodio.", []],
+  ["Online prodaja", "posle sastanka", "Zajedno pogledamo gde su tvoji kupci. Iz iskustva znamo šta tu radi, pa ne trošimo novac na probanje.", []],
+  ["Sajtovi", "po dogovoru", "Jasan sajt koji kaže ko si i šta nudiš. Brz, lep na telefonu i lako se nađe.", []],
+  ["Sistemi za magacin i kasu", "po meri", "Vidimo kako radiš u radnji i magacinu. Mnogo takvih sistema smo već upoznali, pa znamo šta će tebi stvarno pomoći.", []],
+  ["Vidljivost i marketing", "kontinuirano", "Da te ljudi nađu i da se vrate. Polako, mesec po mesec, uz jasne brojke.", []],
 ];
 
 function Usluge({ headingId }: { headingId: string }) {
@@ -355,12 +315,12 @@ function Usluge({ headingId }: { headingId: string }) {
   return (
     <div className="sh paper">
       <h2 id={headingId}>{t("Šta radimo.")}</h2>
-      <p className="lead">{t("Jedan partner za softver, prodaju i svakodnevni digitalni rad.")}</p>
+      <p className="lead">{t("Prvo sednemo i razgovaramo. Radili smo u mnogo branši i znamo sisteme, zato znamo šta tebi odgovara.")}</p>
       <div className="svc">
         {SVC.map(([h, sm, p, li], i) => (
           <details key={t(h)} open={i === 0}>
             <summary><h3>{t(h)}</h3><small>{t(sm)}</small></summary>
-            <div className="body"><p>{t(p)}</p><ul>{li.map((x) => <li key={t(x)}>{t(x)}</li>)}</ul></div>
+            <div className="body"><p>{t(p)}</p>{li.length > 0 && <ul>{li.map((x) => <li key={t(x)}>{t(x)}</li>)}</ul>}</div>
           </details>
         ))}
       </div>
@@ -394,16 +354,15 @@ function Poredjenje({ headingId }: { headingId: string }) {
 function Sistemi({ headingId }: { headingId: string }) {
   const { t } = useDeskLang();
   const cards = [
-    ["Magacin i zalihe", "Prijem, izdavanje i stanje robe na jednom mestu. Upozorenje kad nešto počne da fali.", "lager, barkod, izveštaji"],
-    ["Kasa i prodaja", "Prodaja u radnji i online prodavnica dele iste zalihe i iste brojeve.", "kasa, zalihe, online shop"],
-    ["Kamera tracking", "Koliko ljudi uđe, kuda se kreću kroz radnju i gde se zadržavaju. Anonimno, bez prepoznavanja lica.", "brojanje, kretanje, toplotna mapa"],
-    ["Rezervacije i booking", "Kalendar, dostupnost i potvrde, kao kod Adriaticum-a.", "booking, kalendar, WhatsApp"],
+    ["Magacin", "Uvek znaš šta imaš i šta treba da naručiš."],
+    ["Kasa", "Radnja i online prodavnica gledaju iste brojeve."],
+    ["Rezervacije", "Kupci sami biraju termin, ti samo potvrdiš."],
   ];
   return (
     <div className="sh dark">
       <h2 id={headingId}>{t("Sistemi po meri.")}</h2>
-      <p className="lead">{t("Ne samo sajtovi. Pravimo softver koji radi u tvojoj radnji i magacinu, i povezuje sve sa online prodajom.")}</p>
-      <div className="sysg">{cards.map(([h, p, s]) => <div key={t(h)}><h3>{t(h)}</h3><p>{t(p)}</p><small>{t(s)}</small></div>)}</div>
+      <p className="lead">{t("Prvo sednemo i razgovaramo o tome kako radiš. Imamo puno iskustva, radili smo u mnogo branši i znamo ove sisteme. Zato tačno znamo šta tebi odgovara.")}</p>
+      <div className="sysg">{cards.map(([h, p]) => <div key={t(h)}><h3>{t(h)}</h3><p>{t(p)}</p></div>)}</div>
       <p className="small">{t("Cena i obim po dogovoru, posle sastanka.")}</p>
       <GoBtn />
     </div>
@@ -417,7 +376,6 @@ export const PROJECTS: { name: string; img: string; url: string; who: string; di
   { name: "Adriaticum", img: gAdr, url: "https://adriaticum.rentals", who: "Iznajmljivanje stolica, stolova i posuđa za proslave u Zrenjaninu i okolini.", did: "Katalog opreme i booking korak po korak, od izbora do potvrde.", demo: "sala" },
   { name: "Unearthed Samples", img: gUne, url: "https://unearthed-samples.com", who: "Prodavnica semplova i paketa zvukova za tech house producente.", did: "Online prodavnica sa plaćanjem, brza na mobilnom. Shopify, Stripe, Meta Pixel.", demo: "unearthed" },
   { name: "CrowdPlay", img: gCrowd, url: "https://crowdplay.eu", who: "Besplatne interaktivne igre za Twitch i YouTube strimere.", did: "Platforma sa sedam igara koje publika igra preko chata tokom strima." },
-  { name: "Bite Catering", img: gBite, url: "https://bitecatering023.com", who: "Ketering iz Zrenjanina: finger food, mesne i sirne daske, slavska trpeza.", did: "Sajt sa menijima i paketima, i upitom za ponudu za svaki događaj.", demo: "bite" },
   { name: "Metal Alu Inox", img: gAlu, url: "", who: "Porodična firma iz Zrenjanina od 1991: cevi, limovi, profili i inox.", did: "Sajt sa asortimanom, sečenjem na meru i 3D graditeljem za proračun materijala." },
 ];
 
@@ -512,7 +470,6 @@ function SheetContent({ name, go, time, idPrefix = "sheet" }: { name: string; go
     case "poredjenje": return <Poredjenje headingId={headingId} />;
     case "sistemi": return <Sistemi headingId={headingId} />;
     case "unearthed": return <Unearthed headingId={headingId} />;
-    case "bite": return <Bite headingId={headingId} />;
     case "sala": return <Sala headingId={headingId} />;
     case "radovi": return <Radovi go={go} headingId={headingId} />;
     case "ja": return <Ja headingId={headingId} />;
