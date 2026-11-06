@@ -6,6 +6,7 @@ import { createOffice } from "./office";
 import { createDeskPhysics } from "./physics";
 import { Clip, DeskTraces, Fold, Pencil, Smudge, Tape } from "./Traces";
 import { PROJECTS, SheetBody, SHOTS } from "./Sheets";
+import { runBlueprint, shouldRunBlueprint } from "./blueprint";
 
 type S = { x: number; y: number; r: number; vx: number; vy: number; tilt?: number };
 
@@ -153,7 +154,18 @@ function DeskContent() {
     desk.querySelector<HTMLElement>(".o-card")!.style.zIndex = String(++z);
     const raise = (o: HTMLElement) => (o.style.zIndex = String(++z));
 
-    if (!reduce) {
+    // First visit in a session: the desk is drawn as a blueprint and "programmed" into place.
+    // Later visits keep the fly-in. Reduced motion gets neither.
+    const blueprint = !reduce && shouldRunBlueprint();
+    let bp: ReturnType<typeof runBlueprint> | null = null;
+    if (blueprint) {
+      const dr = desk.getBoundingClientRect(), map = small() ? Lm : L;
+      bp = runBlueprint(root, objs.map((o) => {
+        const s = st.get(o)!, k = o.dataset.k!;
+        return { el: o, key: k, x: dr.left + s.x, y: dr.top + s.y, w: o.offsetWidth, h: o.offsetHeight, r: s.r, fx: map[k][0], fy: map[k][1] };
+      }), () => { physicsReady = true; });
+    }
+    if (!reduce && !blueprint) {
       const ordered = [...objs.filter((o) => o.dataset.k !== "card"), ...objs.filter((o) => o.dataset.k === "card")];
       ordered.forEach((o, i) => {
         const s = st.get(o);
@@ -326,7 +338,7 @@ function DeskContent() {
         mockParts.forEach((p, k) => timers.push(setTimeout(() => p.classList.add("on"), reduce ? 0 : k * 260)));
       }, reduce ? 0 : 450));
     };
-    const introEnd = reduce ? 0 : 200 + objs.length * 110 + 1300;
+    const introEnd = reduce ? 0 : bp ? bp.duration : 200 + objs.length * 110 + 1300;
     timers.push(setTimeout(() => { physicsReady = true; }, introEnd));
     let siteInt: ReturnType<typeof setInterval> | undefined;
     timers.push(setTimeout(runCal, introEnd * 0.6));
@@ -338,7 +350,7 @@ function DeskContent() {
 
     return () => {
       desk.classList.remove("ready");
-      dead = true; field.destroy(); physics.destroy(); clearInterval(siteInt); clearInterval(stockInt); clearTimeout(lt); timers.forEach(clearTimeout);
+      dead = true; bp?.destroy(); field.destroy(); physics.destroy(); clearInterval(siteInt); clearInterval(stockInt); clearTimeout(lt); timers.forEach(clearTimeout);
       deskResize.disconnect(); removeEventListener("resize", onResize); cleanups.forEach((c) => c());
     };
   }, [open, hideHint]);
