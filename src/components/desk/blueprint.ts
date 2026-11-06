@@ -50,8 +50,18 @@ export function runBlueprint(root: HTMLElement, items: BlueprintItem[], onDone: 
   const queue: { t: number; f: () => void }[] = [];
   const typers: { row: HTMLElement; text: string; t0: number; dur: number; shown: number }[] = [];
   const at = (ms: number, f: () => void) => { queue.push({ t: vt + ms, f }); };
+  // Hold the timeline until the main thread settles (hydration, WebGL setup), max 1.2s,
+  // so typing does not start and then stutter. The paper and grid are already on screen.
+  let calm = 0, born = 0;
   const tick = (now: number) => {
     if (finished) return;
+    if (!born) born = now;
+    if (calm < 3 && now - born < 1200) {
+      calm = last && now - last < 34 ? calm + 1 : 0;
+      last = now;
+      raf = requestAnimationFrame(tick);
+      return;
+    }
     if (last) vt += Math.min(cap, (now - last) * speed);
     last = now;
     const due = queue.filter((q) => q.t <= vt);
@@ -120,7 +130,11 @@ export function runBlueprint(root: HTMLElement, items: BlueprintItem[], onDone: 
   const T_SCAN = T_RENDER + 420, SCAN = 1500;
   const T_END = T_SCAN + SCAN + 60;
 
-  requestAnimationFrame(() => bp.classList.add("on"));
+  // The head script may already show the paper (html.bp-boot): continue from it without a fade.
+  const html = document.documentElement;
+  if (html.classList.contains("bp-boot")) bp.classList.add("instant", "on");
+  else requestAnimationFrame(() => bp.classList.add("on"));
+  // html.bp-boot stays until the reveal starts (a remount continues seamlessly from it)
   raf = requestAnimationFrame(tick);
   let count = 0;
   const addLine = (i: number, dur: number) => {
@@ -152,6 +166,7 @@ export function runBlueprint(root: HTMLElement, items: BlueprintItem[], onDone: 
   };
   const ease = (x: number) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
   at(T_SCAN, () => {
+    html.classList.remove("bp-boot");
     bp.classList.add("scanning");
     const t0 = vt, built = new Set<number>();
     const step = () => {
@@ -170,6 +185,7 @@ export function runBlueprint(root: HTMLElement, items: BlueprintItem[], onDone: 
     if (finished) return;
     finished = true;
     try { sessionStorage.setItem(KEY, "1"); } catch { /* private mode */ }
+    html.classList.remove("bp-boot");
     cancelAnimationFrame(raf);
     const fade = bp.animate([{ opacity: 1 }, { opacity: 0 }], { duration: fast ? 260 : 420, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" });
     fade.onfinish = () => bp.remove();

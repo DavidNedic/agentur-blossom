@@ -566,6 +566,14 @@ html[data-desk-lang=de] .desk-root .tabs button{padding-left:12px;padding-right:
     linear-gradient(var(--bp-line) 1px,transparent 1px) 0 0/24px 24px,
     linear-gradient(90deg,var(--bp-line) 1px,transparent 1px) 0 0/24px 24px}
 .desk-root .bp.on .bp-grid{opacity:1;transform:none}
+.desk-root .bp.instant .bp-grid{transition:none}
+html.bp-boot .desk-root::after{content:"";position:fixed;inset:0;z-index:879;pointer-events:none;
+  background:
+    linear-gradient(var(--bp-major) 1px,transparent 1px) 0 0/120px 120px,
+    linear-gradient(90deg,var(--bp-major) 1px,transparent 1px) 0 0/120px 120px,
+    linear-gradient(var(--bp-line) 1px,transparent 1px) 0 0/24px 24px,
+    linear-gradient(90deg,var(--bp-line) 1px,transparent 1px) 0 0/24px 24px,
+    var(--bp-bg)}
 .desk-root .bp-ruler{position:absolute;color:rgba(159,233,255,.45);font-size:9px;letter-spacing:.04em;opacity:0;transition:opacity .6s .15s var(--bp-out)}
 .desk-root .bp.on .bp-ruler{opacity:1}
 .desk-root .bp-ruler.x{left:0;right:0;top:0;height:18px;border-bottom:1px solid var(--bp-major);background:repeating-linear-gradient(90deg,var(--bp-major) 0 1px,transparent 1px 24px) 0 100%/100% 5px no-repeat}

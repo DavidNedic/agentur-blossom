@@ -6,6 +6,8 @@ const TITLE = "Promet Digital | Sajtovi, prodavnice i sistemi po meri";
 const DESC =
   "Sajtovi, online prodavnice i sistemi po meri za magacin, kasu i rezervacije. Prvi sastanak je besplatan. Zrenjanin · Beograd.";
 const SOCIAL_IMAGE = "https://promet.digital/og-image.png";
+const BLUEPRINT_BOOT =
+  'try{var d=document.documentElement;if(!matchMedia("(prefers-reduced-motion: reduce)").matches&&(/[?&]blueprint/.test(location.search)||sessionStorage.getItem("promet-blueprint-seen")!=="1")){d.classList.add("bp-boot");setTimeout(function(){d.classList.remove("bp-boot")},8000)}}catch(e){}';
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -32,6 +34,9 @@ export const Route = createFileRoute("/")({
       { name: "twitter:image", content: SOCIAL_IMAGE },
     ],
     links: [{ rel: "stylesheet", href: deskCss }],
+    // Before first paint: if the blueprint intro will run, cover the desk with the blueprint
+    // paper right away so the half-loaded desk never flashes. blueprint.ts takes over from it.
+    scripts: [{ children: BLUEPRINT_BOOT }],
   }),
 });
 
