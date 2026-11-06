@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /auth
+Disallow: /otkazi
+Disallow: /api/
+Disallow: /admin
+Disallow: /lovable/
+
+Sitemap: https://promet.digital/sitemap.xml

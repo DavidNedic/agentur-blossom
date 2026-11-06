@@ -442,7 +442,7 @@ function DeskContent() {
         <div className="obj o-work" data-k="work" data-open="radovi" tabIndex={0} role="button" aria-label={t("Otvori: radovi")}>
           {[PROJECTS[1], PROJECTS[6], PROJECTS[0]].map((p, i) => (
             <div className="pl" key={p.name} style={{ transform: `rotate(${[-7, 5, -1][i]}deg) translate(${[-10, 12, 0][i]}%, 0)` }}>
-              <img src={p.img} alt={t("")} draggable={false} />
+              <img src={p.img} alt={p.name} draggable={false} />
               <span>{i === 2 ? t("radovi 8") : p.name}</span>
             </div>
           ))}
